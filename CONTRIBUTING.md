@@ -56,20 +56,57 @@ Branch off `main`. One issue per branch.
 
 ## Team and ownership
 
-Work is split into three tracks (mirrors the project's own architecture: an
-environment layer, an algorithm layer, and an evaluation layer):
+Eight members, one owner per file. **Nobody edits a file they do not own** — that
+is what lets eight people work in parallel on the same repo without merge
+conflicts, and it is enforced by [`.github/CODEOWNERS`](.github/CODEOWNERS).
+Cross-cutting changes get an issue first.
 
-| Track | Owners | Scope |
-|---|---|---|
-| **Game engine & abstraction** | [@Aarush-Kanipakam](https://github.com/Aarush-Kanipakam), [@SaiAashishJ](https://github.com/SaiAashishJ) | Kuhn/Leduc environments, the shared Game/State interface, environment unit tests, reproducibility/config, 3-player extension |
-| **CFR engine** | [@mrlegendary25](https://github.com/mrlegendary25), Vik217 (pending invite) | Vanilla CFR, CFR+, Deep CFR (networks, replay buffer, hyperparameter sweep, ablations), exploitation-of-a-fixed-opponent study |
-| **Evaluation & process** | [@Samanyu-dev](https://github.com/Samanyu-dev), hippiegeneral (pending invite) | Exploitability/best-response, baselines, plotting, bluff/bet-size analysis, multi-seed rigor, reproducibility checks, proposal/ethics/scope writeup |
+Ownership mirrors the role table submitted in the project proposal, so the final
+report's Individual Contributions section matches what each member committed to.
+
+| Member | GitHub | Owns exclusively | Scope |
+|---|---|---|---|
+| Himnish Lalchandani | [@mrlegendary25](https://github.com/mrlegendary25) | `pokercfr/solvers/cfr.py`, `pokercfr/experiments/` | CFR / CFR+ / DCFR and the ablation cube; experiment runner; code review lead |
+| Samanyu Reddy Allipuram | [@Samanyu-dev](https://github.com/Samanyu-dev) | `pokercfr/games/leduc.py` | Leduc Hold'em: public card, two betting rounds, configurable raise cap, N players at a fixed deck |
+| Aarush Kanipakam | [@Aarush-Kanipakam](https://github.com/Aarush-Kanipakam) | `pokercfr/eval/best_response.py`, `pokercfr/eval/exploitability.py`, `pokercfr/experiments/registry.py` | Exact best response, exploitability, NashConv; experiment pre-registration and results matrix; report lead |
+| Sai Aashish Juryala | [@SaiAashishJ](https://github.com/SaiAashishJ) | `pokercfr/games/kuhn_family.py`, `pokercfr/core/config.py` | Kuhn-family ladder engine, environment tests, seeding, determinism and reproducibility |
+| Vikranth Reddy Vanga Reddy | `Vik217` (invite pending) | `pokercfr/solvers/mccfr.py`, `pokercfr/solvers/deep_cfr.py` | Outcome / external / chance-sampled MCCFR; Deep CFR (gated stretch) |
+| Siddhant Narlawar | _handle TBD_ | `pokercfr/solvers/lp_oracle.py`, `pokercfr/solvers/vectorized.py` | Sequence-form LP exact Nash oracle; vectorized traversal for large decks |
+| Shashwat Kumar | _handle TBD_ | `pokercfr/agents/`, `pokercfr/eval/tournament.py` | Baseline opponent pool; seat-rotated duplicate-deal match runner and cross-play |
+| Akhil Thindi | _handle TBD_ | `pokercfr/analysis/`, `figures/` | Bootstrap CIs, paired tests, scaling-exponent fits; every figure in the report; fresh-clone reproducibility check |
+
+Members whose handle reads _TBD_: open a one-line PR adding it to this table and
+to `.github/CODEOWNERS`. Until then CODEOWNERS routes review of those paths to
+the two leads, so review is never blocked — but per-file ownership is not
+enforced by GitHub for them.
+
+### The frozen contract
+
+[`pokercfr/core/protocols.py`](pokercfr/core/protocols.py) defines the
+`Game` / `GameState` / `Solver` interfaces that every game, solver and evaluator
+codes against. Changing it affects all eight members at once, so it requires a PR
+reviewed by **both** leads. Everything else is designed so it should not need one.
+
+### Working in parallel
+
+1. **Stub first, fill second.** Every module ships a type-correct stub whose
+   docstring states its task and acceptance criteria. An unfinished module still
+   imports, and the experiment runner prints `SKIP` rather than crashing, so no
+   member is ever blocked waiting on another.
+2. **Read your module's docstring before writing code.** It is the brief: what to
+   build, why it matters to the study, and the tests that must pass.
+3. **One branch and one PR per module**, under your own name. Commit history is a
+   graded accountability record — push early and often rather than in one batch.
+
+### Review
 
 `@Samanyu-dev` and `@mrlegendary25` are the two required reviewers (see
-Pull requests above) and also track owners — review load is split the same
-way work is: each mainly reviews PRs adjacent to their own track, but either
-can review any PR.
+[Pull requests](#pull-requests)). Review load follows the architecture: each
+mainly reviews PRs adjacent to their own layer, but either can review any PR.
 
-Issues are assigned on GitHub per this table. `Vik217` and `hippiegeneral`
-have pending repo invites — they'll be added as GitHub assignees on their
-existing issues once they accept; ownership is already final per this table.
+### Reproducibility rule
+
+Every number and every figure in the final report must be produced by a committed
+script and traceable to a file in `results/`. Nothing is hand-copied, estimated,
+or remembered. If a result cannot be regenerated from a fresh clone, it does not
+go in the report.
