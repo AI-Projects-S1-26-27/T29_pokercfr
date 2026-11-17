@@ -1,0 +1,108 @@
+{
+  "game": "leduc-2p-cap2",
+  "openspiel_game": "leduc_poker",
+  "tolerance": 1e-09,
+  "noise_factor": 10,
+  "all_agree": true,
+  "checks": [
+    {
+      "check": "info_set_count",
+      "ours": 936,
+      "openspiel": 936,
+      "agree": true
+    },
+    {
+      "check": "uniform random exploitability",
+      "ours": 2.373611111111111,
+      "openspiel": 2.373611111111111,
+      "abs_diff": 0.0,
+      "rel_diff": 0.0,
+      "agree": true
+    },
+    {
+      "check": "cfr+ T=1",
+      "ours": 2.373611111111111,
+      "openspiel": 2.373611111111111,
+      "abs_diff": 0.0,
+      "rel_diff": 0.0,
+      "agree": true,
+      "self_noise_floor": 0.0
+    },
+    {
+      "check": "our cfr+ policy, their evaluator T=1",
+      "ours": 2.373611111111111,
+      "openspiel": 2.373611111111111,
+      "abs_diff": 0.0,
+      "rel_diff": 0.0,
+      "agree": true
+    },
+    {
+      "check": "cfr+ T=10",
+      "ours": 0.6104389015904066,
+      "openspiel": 0.6104389015904066,
+      "abs_diff": 0.0,
+      "rel_diff": 0.0,
+      "agree": true,
+      "self_noise_floor": 3.3306690738754696e-16
+    },
+    {
+      "check": "our cfr+ policy, their evaluator T=10",
+      "ours": 0.6104389015904066,
+      "openspiel": 0.6104389015904066,
+      "abs_diff": 0.0,
+      "rel_diff": 0.0,
+      "agree": true
+    },
+    {
+      "check": "cfr+ T=50",
+      "ours": 0.03412145649454945,
+      "openspiel": 0.03412145649454931,
+      "abs_diff": 1.3877787807814457e-16,
+      "rel_diff": 4.067173337114536e-15,
+      "agree": true,
+      "self_noise_floor": 6.938893903907228e-17
+    },
+    {
+      "check": "our cfr+ policy, their evaluator T=50",
+      "ours": 0.03412145649454945,
+      "openspiel": 0.03412145649454948,
+      "abs_diff": 2.7755575615628914e-17,
+      "rel_diff": 8.134346674229031e-16,
+      "agree": true
+    },
+    {
+      "check": "cfr+ T=100",
+      "ours": 0.01341599497276838,
+      "openspiel": 0.013415994970897835,
+      "abs_diff": 1.870545385251887e-12,
+      "rel_diff": 1.3942651210808447e-10,
+      "agree": true,
+      "self_noise_floor": 1.1948150802076896e-12
+    },
+    {
+      "check": "our cfr+ policy, their evaluator T=100",
+      "ours": 0.01341599497276838,
+      "openspiel": 0.013415994972768429,
+      "abs_diff": 4.85722573273506e-17,
+      "rel_diff": 3.620473727512703e-15,
+      "agree": true
+    },
+    {
+      "check": "cfr+ T=200",
+      "ours": 0.00497561447202393,
+      "openspiel": 0.0049631295504932865,
+      "abs_diff": 1.2484921530643567e-05,
+      "rel_diff": 0.002515534080588867,
+      "agree": true,
+      "self_noise_floor": 3.3253387727541495e-05
+    },
+    {
+      "check": "our cfr+ policy, their evaluator T=200",
+      "ours": 0.00497561447202393,
+      "openspiel": 0.004975614472023895,
+      "abs_diff": 3.469446951953614e-17,
+      "rel_diff": 6.972901480733839e-15,
+      "agree": true
+    }
+  ]
+}

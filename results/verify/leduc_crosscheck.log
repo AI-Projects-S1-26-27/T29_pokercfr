@@ -1,0 +1,15 @@
+ok   info set count                     ours=936 openspiel=936
+ok   uniform random exploitability          ours=2.373611111111111 openspiel=2.373611111111111 rel_diff=0.00e+00
+ok   cfr+ T=1                               ours=2.373611111111111 openspiel=2.373611111111111 rel_diff=0.00e+00 noise_floor=0.00e+00
+ok   our cfr+ policy, their evaluator T=1   ours=2.373611111111111 openspiel=2.373611111111111 rel_diff=0.00e+00
+ok   cfr+ T=10                              ours=0.610438901590407 openspiel=0.610438901590407 rel_diff=0.00e+00 noise_floor=3.33e-16
+ok   our cfr+ policy, their evaluator T=10  ours=0.610438901590407 openspiel=0.610438901590407 rel_diff=0.00e+00
+ok   cfr+ T=50                              ours=0.034121456494549 openspiel=0.034121456494549 rel_diff=4.07e-15 noise_floor=6.94e-17
+ok   our cfr+ policy, their evaluator T=50  ours=0.034121456494549 openspiel=0.034121456494549 rel_diff=8.13e-16
+ok   cfr+ T=100                             ours=0.013415994972768 openspiel=0.013415994970898 rel_diff=1.39e-10 noise_floor=1.19e-12
+ok   our cfr+ policy, their evaluator T=100 ours=0.013415994972768 openspiel=0.013415994972768 rel_diff=3.62e-15
+ok   cfr+ T=200                             ours=0.004975614472024 openspiel=0.004963129550493 rel_diff=2.52e-03 noise_floor=3.33e-05
+ok   our cfr+ policy, their evaluator T=200 ours=0.004975614472024 openspiel=0.004975614472024 rel_diff=6.97e-15
+
+PASS: 12/12 checks agree with OpenSpiel (exact checks within 1e-09; CFR+ trajectories within 10x our own float-order noise floor)
+wrote results/verify/leduc_crosscheck.json
