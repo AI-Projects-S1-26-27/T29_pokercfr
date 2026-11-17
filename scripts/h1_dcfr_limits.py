@@ -10,6 +10,7 @@ Writes results/verify/dcfr_limits.json and prints a verdict.
 
     python scripts/h1_dcfr_limits.py                 # default 2000 iterations
     python scripts/h1_dcfr_limits.py --iterations 500
+    python scripts/h1_dcfr_limits.py --iterations 20 --out /tmp/smoke.json
 """
 from __future__ import annotations
 
@@ -33,7 +34,7 @@ from pokercfr.solvers.cfr import (  # noqa: E402
     ablation_cube,
 )
 
-OUT = ROOT / "results" / "verify" / "dcfr_limits.json"
+DEFAULT_OUT = ROOT / "results" / "verify" / "dcfr_limits.json"
 
 RUNGS = ("kuhn", "4rank-2suit")
 CHECKPOINTS = (10, 20, 50, 100, 200, 500, 1000, 2000)
@@ -76,9 +77,19 @@ def curve_distance(a: dict[int, float], b: dict[int, float]) -> float:
     return sum(terms) / len(terms)
 
 
+def _display(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--iterations", type=int, default=2000)
+    ap.add_argument("--out", type=Path, default=DEFAULT_OUT,
+                    help="where to write the JSON; point a smoke run somewhere "
+                         "else so it cannot clobber a real one")
     args = ap.parse_args()
 
     cube = ablation_cube()
@@ -156,15 +167,15 @@ def main() -> int:
     record["unification_reproduces"] = reproduces
     record["seconds"] = time.perf_counter() - started
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(record, indent=2))
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    args.out.write_text(json.dumps(record, indent=2))
 
     print("\n" + "=" * 62)
     print(f"VERDICT: DCFR's stated limits {'DO' if reproduces else 'DO NOT'} reproduce "
           f"their reference algorithms")
     print("Note: DCFR cannot express alternating updates, so its CFR+ limit is the")
     print("rm+/linear/sim corner rather than cfr+ itself.")
-    print(f"wrote {OUT.relative_to(ROOT)}  ({record['seconds']:.1f}s)")
+    print(f"wrote {_display(args.out)}  ({record['seconds']:.1f}s)")
     return 0 if reproduces else 1
 
 

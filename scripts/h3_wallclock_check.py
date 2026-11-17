@@ -17,12 +17,15 @@ Writes results/verify/wallclock_check.json.
 
     python scripts/h3_wallclock_check.py
     python scripts/h3_wallclock_check.py --budget 20 --rung 4rank-2suit-2dealt
+    python scripts/h3_wallclock_check.py --budget 2 --out /tmp/smoke.json
 """
 from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -35,18 +38,22 @@ from pokercfr.experiments import runner  # noqa: E402
 from pokercfr.games.kuhn_family import game  # noqa: E402
 from pokercfr.solvers.cfr import CFRSolver, ablation_cube  # noqa: E402
 
-OUT = ROOT / "results" / "verify" / "wallclock_check.json"
+DEFAULT_OUT = ROOT / "results" / "verify" / "wallclock_check.json"
 FAIRNESS_TOLERANCE = 0.02
 ISOLATION_TOLERANCE = 0.10
 
 
-def timed(rung: str, variant: str, budget: float, fractions=(1.0)) -> dict:
+def _display(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def timed(rung: str, variant: str, budget: float, fractions=(1.0,)) -> dict:
     spec = RunSpec(game=rung, variant=variant, seed=0,
-                   extra={"time_budget": budget,
-                          "time_checkpoints": tuple(fractions) if isinstance(fractions, tuple)
-                          else (fractions,)})
+                   extra={"time_budget": budget, "time_checkpoints": tuple(fractions)})
     record = runner.run_one(spec, resume=False, progress=lambda *_: None)
-    (ROOT / spec.result_path).unlink(missing_ok=True)
     last = record["curve"][-1]
     return {"iterations": last["iterations"], "train_seconds": last["train_seconds"],
             "exploitability": last["exploitability"]}
@@ -56,7 +63,26 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--budget", type=float, default=10.0, help="seconds per variant")
     ap.add_argument("--rung", default="4rank-2suit")
+    ap.add_argument("--out", type=Path, default=DEFAULT_OUT,
+                    help="where to write the JSON; point a smoke run somewhere "
+                         "else so it cannot clobber a real one")
     args = ap.parse_args()
+
+    # run_one writes a result file per cell. These are throwaway measurements,
+    # so redirect the runner at a temp tree rather than littering results/ and
+    # leaving strays behind if the script dies partway.
+    scratch = Path(tempfile.mkdtemp())
+    real_root, real_ckpt = runner.ROOT, runner.CKPT_DIR
+    runner.ROOT = scratch
+    runner.CKPT_DIR = scratch / "results" / ".ckpt"
+    try:
+        return _run(args)
+    finally:
+        runner.ROOT, runner.CKPT_DIR = real_root, real_ckpt
+        shutil.rmtree(scratch, ignore_errors=True)
+
+
+def _run(args) -> int:
 
     cube = ablation_cube()
     record: dict = {"rung": args.rung, "budget_seconds": args.budget}
@@ -118,13 +144,13 @@ def main() -> int:
         "rankings_agree": same,
         "seconds": time.perf_counter() - started,
     })
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(record, indent=2))
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    args.out.write_text(json.dumps(record, indent=2))
 
     print("\n" + "=" * 62)
     print(f"fairness   {'PASS' if fair else 'FAIL'}")
     print(f"isolation  {'PASS' if isolated else 'FAIL'}")
-    print(f"wrote {OUT.relative_to(ROOT)}  ({record['seconds']:.1f}s)")
+    print(f"wrote {_display(args.out)}  ({record['seconds']:.1f}s)")
     return 0 if (fair and isolated) else 1
 
 
