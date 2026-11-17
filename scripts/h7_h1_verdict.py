@@ -95,6 +95,12 @@ def main() -> int:
             "iterations": point["iterations"],
             "train_seconds": point["train_seconds"],
             "complete": record["complete"],
+            # H1 is a WALL-CLOCK comparison, so the machine is part of the
+            # measurement: 600 s on a fast core does more work than 600 s on a
+            # slow one. A pair drawn from two machines measures the hardware,
+            # not the algorithm.
+            "node": record["env"]["node"],
+            "machine": record["env"]["machine"],
         }
 
     print(f"H1 cells landed: {len(final)} / {len(registered)} "
@@ -110,13 +116,18 @@ def main() -> int:
         return 0
 
     per_cap: dict[str, dict] = {}
+    cross_machine: dict[int, list[int]] = {}
     print(f"\n{'cap':>4}{'seeds':>7}{'cfr':>14}{'cfr+':>14}{'cfr+ wins':>11}  verdict")
     for cap in CAPS:
         seeds = sorted({s for (c, v, s) in final if c == cap and v in PAIR})
-        paired = [(final[(cap, PAIR[0], s)]["exploitability"],
-                   final[(cap, PAIR[1], s)]["exploitability"])
-                  for s in seeds
-                  if (cap, PAIR[0], s) in final and (cap, PAIR[1], s) in final]
+        pairs = [(s, final[(cap, PAIR[0], s)], final[(cap, PAIR[1], s)])
+                 for s in seeds
+                 if (cap, PAIR[0], s) in final and (cap, PAIR[1], s) in final]
+        cross = [s for s, a, b in pairs if a["node"] != b["node"]]
+        pairs = [(s, a, b) for s, a, b in pairs if a["node"] == b["node"]]
+        if cross:
+            cross_machine[cap] = cross
+        paired = [(a["exploitability"], b["exploitability"]) for _s, a, b in pairs]
         if not paired:
             per_cap[str(cap)] = {"seeds": 0, "verdict": "no data"}
             print(f"{cap:>4}{0:>7}{'-':>14}{'-':>14}{'-':>11}  no data")
@@ -128,7 +139,9 @@ def main() -> int:
         # analysis/stats.py; until that lands this reports the paired direction,
         # the win count and the effect ratio, which is what the rule needs.
         supported = wins == len(paired)
+        nodes = sorted({a["node"] for _s, a, _b in pairs} | {b["node"] for _s, _a, b in pairs})
         per_cap[str(cap)] = {
+            "nodes": nodes,
             "seeds": len(paired),
             "cfr_mean": statistics.fmean(base),
             "cfr_plus_mean": statistics.fmean(plus),
@@ -167,6 +180,7 @@ def main() -> int:
 
     record = {
         "hypothesis": "H1",
+        "cross_machine_pairs_discarded": {str(k): v for k, v in cross_machine.items()},
         "claim": "at equal wall-clock budget, CFR+ reaches lower exploitability "
                  "than vanilla CFR on 2-player Leduc",
         "registered_cells": len(registered),
@@ -182,6 +196,19 @@ def main() -> int:
     args.out.write_text(json.dumps(record, indent=2))
 
     print("\n" + "=" * 66)
+    if cross_machine:
+        total = sum(len(v) for v in cross_machine.values())
+        print(f"WARNING: discarded {total} CFR/CFR+ pair(s) split across machines.")
+        print("H1 is a wall-clock comparison, so a pair from two machines measures")
+        print("the hardware rather than the algorithm. Re-run those cells together")
+        print("on one machine:")
+        for cap, seeds in sorted(cross_machine.items()):
+            print(f"  cap {cap}: seeds {seeds}")
+        print()
+    for cap, info in sorted(per_cap.items()):
+        if info.get("nodes") and len(info["nodes"]) > 1:
+            print(f"NOTE: cap {cap} pairs came from more than one machine "
+                  f"({', '.join(info['nodes'])}) -- valid only if paired within each.")
     print(f"H1 VERDICT: {verdict.upper()}  "
           f"(caps supported: {supported or 'none'} of {list(CAPS)})")
     if verdict == "partially supported":

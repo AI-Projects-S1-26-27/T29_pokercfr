@@ -321,6 +321,17 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--estimate", action="store_true",
                     help="measure s/iter on each rung and print projected CPU-hours")
+    ap.add_argument("--only", choices=("timed", "iteration"), default=None,
+                    help="restrict to wall-clock-budgeted or iteration-budgeted cells. "
+                         "A timed comparison is only valid between runs on the SAME "
+                         "hardware, so those cells must not be spread across machines; "
+                         "iteration-budgeted cells are hardware-independent and can go "
+                         "anywhere")
+    ap.add_argument("--budget", default=None,
+                    help="comma-separated time budgets in seconds to keep "
+                         "(e.g. 600 for H1, or 3600,21600 for the H3 Leduc cells)")
+    ap.add_argument("--games", default=None,
+                    help="comma-separated rung-name prefixes to keep")
     ap.add_argument("--force", action="store_true",
                     help="re-run cells whose result is already complete")
     ap.add_argument("--time-budget", type=float, default=None,
@@ -343,6 +354,20 @@ def main() -> None:
             f"--shard must be an int or a comma-separated list, got {args.shard!r}") from exc
     if any(k >= args.of for k in wanted):
         raise SystemExit(f"--shard index must be < --of ({args.of})")
+    if args.only == "timed":
+        specs = [s for s in specs if time_budget_of(s)]
+    elif args.only == "iteration":
+        specs = [s for s in specs if not time_budget_of(s)]
+    if args.budget:
+        keep = {float(b) for b in args.budget.split(",")}
+        specs = [s for s in specs if time_budget_of(s) in keep]
+    if args.games:
+        prefixes = tuple(args.games.split(","))
+        specs = [s for s in specs if s.game.startswith(prefixes)]
+    if not specs:
+        print("no cells match those filters")
+        return
+
     mine = [s for i, s in enumerate(specs) if i % args.of in wanted]
     print(f"shard {sorted(wanted)} of {args.of}: {len(mine)} of {len(specs)} runs "
           f"from matrix {args.matrix!r}")
