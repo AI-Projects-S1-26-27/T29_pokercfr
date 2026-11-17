@@ -31,11 +31,25 @@ CKPT_DIR = ROOT / "results" / ".ckpt"
 
 
 def build_game(name: str):
-    """Resolve a rung name to a Game. Leduc rungs look like `leduc-3p-cap2`."""
+    """Resolve a rung name to a Game.
+
+    Leduc rungs are `leduc-<N>p-cap<M>` on the standard 6-card deck, or
+    `leduc-r<R>s<S>-<N>p-cap<M>` to pin a different deck -- which H3 needs,
+    because the deck has to be held fixed across player counts AND be large
+    enough for the largest one. This mirrors leduc._config_name exactly, so a
+    game's own name round-trips back to the same game.
+    """
     if name.startswith("leduc-"):
         from pokercfr.games import leduc
-        _, players, cap = name.split("-")
-        return leduc.game(players=int(players.rstrip("p")), raise_cap=int(cap[3:]))
+        fields = name.split("-")[1:]
+        deck = {}
+        if fields[0].startswith("r") and "s" in fields[0]:
+            ranks, suits = fields[0][1:].split("s")
+            deck = {"ranks": int(ranks), "suits": int(suits)}
+            fields = fields[1:]
+        players, cap = fields
+        return leduc.game(players=int(players.rstrip("p")),
+                          raise_cap=int(cap.removeprefix("cap")), **deck)
     from pokercfr.games import kuhn_family
     return kuhn_family.game(name)
 
