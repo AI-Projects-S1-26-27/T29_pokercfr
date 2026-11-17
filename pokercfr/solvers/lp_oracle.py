@@ -45,3 +45,31 @@ from pokercfr.core.protocols import Game, Policy
 def solve_exact(game: Game) -> tuple[float, Policy]:
     """Exact equilibrium value (for seat 0) and an equilibrium policy."""
     raise NotImplementedError("OWNER: Siddhant -- see module docstring")
+
+
+class LPOracleSolver:
+    """Solver-shaped wrapper so the LP oracle runs through the normal harness.
+
+    It is not iterative -- one `step()` solves the game exactly and every later
+    step is a no-op. Wrapping it this way means the runner, the result format and
+    the figures treat the exact answer as just another row, so "LP vs CFR+" is a
+    comparison the existing plotting code can already make.
+    """
+
+    def __init__(self, game):
+        self.game = game
+        self.iterations = 0
+        self._policy = None
+
+    def step(self) -> None:
+        if self._policy is None:
+            _, self._policy = solve_exact(self.game)
+        self.iterations += 1
+
+    def average_strategy(self):
+        if self._policy is None:
+            self.step()
+        return self._policy
+
+    def current_strategy(self):
+        return self.average_strategy()

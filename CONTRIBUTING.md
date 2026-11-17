@@ -3,14 +3,15 @@
 This repo backs a course project, so commit history is graded for accountability —
 follow these conventions so contributions are traceable to issues and reviewable.
 
-## Branch naming
+## Branches (optional)
+
+Branches are optional now that everyone pushes to `main` directly — use one only
+if you want to park work in progress. If you do:
 
 `<type>/<issue-number>-<short-description>`, all lowercase, words hyphenated.
 
 - `type` is one of: `feat`, `fix`, `test`, `docs`, `infra`, `research`
-- Examples: `feat/19-kuhn-poker-env`, `docs/18-contributing-guide`, `fix/24-leduc-showdown-ties`
-
-Branch off `main`. One issue per branch.
+- Examples: `feat/19-kuhn-poker-env`, `fix/24-leduc-showdown-ties`
 
 ## Commit messages
 
@@ -26,33 +27,46 @@ Branch off `main`. One issue per branch.
 - Reference the issue in the body or footer (`Refs #19`) when the commit addresses one
 - Summary in imperative mood ("add", not "added"), under 72 chars
 
-## Pull requests
+## Pushing
 
-- One issue per PR. Title mirrors the branch's intent.
-- Description must state: what changed, why, and how it was verified (test output,
-  example run, plot, etc.)
-- Link the issue it closes (`Closes #19`)
-- Every PR gets at least a self-review comment before merge — call out any known
-  gaps or follow-up issues filed
-- **Request review from `@Samanyu-dev` or `@mrlegendary25` and get an approval
-  before merging.** This is enforced by branch protection on `main` — a PR
-  can't be merged without at least one approving review from a code owner.
-- Squash-merge into `main` once approved, keeping the PR title as the merge commit
-  summary
+`main` is unprotected and there are no pull requests — push straight to it. With a
+deadline this close, waiting on review costs more than it catches.
 
-## Full workflow
+```bash
+git pull --rebase origin main     # before you push, every time
+pytest -q                          # 35 tests; takes ~20s
+git push origin main
+```
 
-1. Pick up (or get assigned) an issue. If the work doesn't map to an existing
-   issue, open one first — no unowned or untracked work.
-2. Branch off `main` using the naming convention above.
-3. Implement, with a test per non-trivial piece of logic (see existing
-   `tests/` for the pattern — plain `unittest`/`pytest`, no framework beyond
-   that unless a task genuinely needs one).
-4. Open a PR against `main`: description states what/why/how-verified, links
-   `Closes #N`, includes a short self-review comment.
-5. Request review from `@Samanyu-dev` or `@mrlegendary25`. Address feedback.
-6. Once approved, squash-merge. Don't delete the branch (kept for the
-   course's commit-history accountability record).
+Two things follow from having no PR gate, and they matter more than the gate did:
+
+- **Run `pytest -q` before you push.** CI now runs *after* the fact, so a broken
+  push breaks `main` for seven other people. Twenty seconds beats an hour of
+  someone else debugging your commit.
+- **`git pull --rebase` before pushing**, so history stays linear and your commits
+  stay attributable to you.
+
+If you want a second pair of eyes on something, just ask in the group chat and
+push anyway — nothing is blocked on an approval.
+
+## Commits
+
+Commit history is a graded accountability record, and every member is asked about
+their own work in the individual viva. So:
+
+- Commit as you go, not in one batch at the end. Many small commits under your own
+  name are the evidence that you did the work.
+- Say *why* in the body, not just *what* — the diff already shows what.
+- Reference an issue (`Refs #19`) where one exists.
+
+## Workflow
+
+1. Read your module's docstring. It is the brief: what to build, why the study
+   needs it, and the acceptance criteria that count as done.
+2. Write the tests from those acceptance criteria, then make them pass.
+3. `git pull --rebase`, `pytest -q`, push.
+4. Launch your long experiment matrix as soon as your module works — the runs take
+   12–17 hours, so they gate everything downstream of them.
 
 ## Team and ownership
 
@@ -100,9 +114,13 @@ reviewed by **both** leads. Everything else is designed so it should not need on
 
 ### Review
 
-`@Samanyu-dev` and `@mrlegendary25` are the two required reviewers (see
-[Pull requests](#pull-requests)). Review load follows the architecture: each
-mainly reviews PRs adjacent to their own layer, but either can review any PR.
+There is no required review — `main` is unprotected and anyone can push. The
+ownership table above is about *avoiding collisions*, not about permission: if you
+need a change inside someone else's file, message them rather than editing it, so
+two people are never fixing the same thing twice.
+
+`.github/CODEOWNERS` is kept as documentation of who to ask about what. With PRs
+switched off GitHub no longer enforces it.
 
 ### Reproducibility rule
 
