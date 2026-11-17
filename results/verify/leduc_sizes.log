@@ -1,0 +1,20 @@
+players cap deck  info sets   deals terminals  per iter  timing
+      2   1    6        384      30        17    0.019s  measured over 533 iter
+      2   2    6        936      30        49    0.049s  measured over 203 iter
+      2   3    6      1,728      30        97    0.096s  measured over 105 iter
+      3   1    6      2,232     120        85    0.566s  measured over 18 iter
+      3   2    6     13,878     120       631    3.490s  measured over 3 iter
+      3   3    6     64,908     120     3,133   16.844s  PROJECTED from leduc-3p-cap2 node rate
+      4   1    6     10,752     360       385    6.881s  measured over 2 iter
+      4   2    6    153,576     360     6,441    1.7min  PROJECTED from leduc-4p-cap1 node rate
+      4   3    6  1,596,336     360    70,081   18.5min  PROJECTED from leduc-4p-cap1 node rate
+      5   1    6     47,280     720     1,641   37.719s  PROJECTED from leduc-4p-cap1 node rate
+      5   2    6  1,422,930     720    56,431   19.7min  PROJECTED from leduc-4p-cap1 node rate
+      5   3    6 29,136,780     720 1,198,441      6.8h  PROJECTED from leduc-4p-cap1 node rate
+      6   1    6          -       -         -         -  infeasible: deck too small
+      6   2    6          -       -         -         -  infeasible: deck too small
+      6   3    6          -       -         -         -  infeasible: deck too small
+
+deck size constant at 6 across all player counts
+infeasible on the fixed deck: N = [6] (N private + 1 public > deck)
+wrote results/verify/leduc_sizes.json
