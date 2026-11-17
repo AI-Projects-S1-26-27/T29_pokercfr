@@ -17,6 +17,11 @@ verify = ["open_spiel>=1.5"]
 deep = ["torch>=2.4"]
 dev = ["ruff", "pytest"]
 
+# Without this, setuptools' flat-layout auto-discovery sees results/ (committed
+# run outputs) as a second top-level package and refuses to build.
+[tool.setuptools.packages.find]
+include = ["pokercfr*"]
+
 [tool.ruff]
 line-length = 110
 
