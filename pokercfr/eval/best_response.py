@@ -63,6 +63,16 @@ class NashConvResult:
         return max(self.gains)
 
     @property
+    def max_seat(self) -> int:
+        """The seat with the largest deviation gain (lowest index on an exact tie).
+
+        First-class rather than recomputed by callers, because "does position
+        determine who has the most incentive to deviate" is a reported finding.
+        """
+        gains = self.gains
+        return gains.index(max(gains))
+
+    @property
     def exploitability(self) -> float:
         """Two-player zero-sum only: half the total deviation gain, chips/hand."""
         if len(self.gains) != 2:
