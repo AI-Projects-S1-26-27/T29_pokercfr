@@ -21,8 +21,8 @@
   "curve": [
     {
       "iterations": 10,
-      "train_seconds": 0.006689374917186797,
-      "eval_seconds": 0.0017640410223975778,
+      "train_seconds": 0.006827167002484202,
+      "eval_seconds": 0.001764124957844615,
       "nashconv_total": 0.0523191576652965,
       "nashconv_mean": 0.02615957883264825,
       "nashconv_max": 0.03800077098579735,
@@ -34,8 +34,8 @@
     },
     {
       "iterations": 20,
-      "train_seconds": 0.013836707919836044,
-      "eval_seconds": 0.00167291599791497,
+      "train_seconds": 0.014131125062704086,
+      "eval_seconds": 0.0017075840150937438,
       "nashconv_total": 0.014542798177414516,
       "nashconv_mean": 0.007271399088707258,
       "nashconv_max": 0.00920987274699505,
@@ -47,8 +47,8 @@
     },
     {
       "iterations": 50,
-      "train_seconds": 1.0203365420456976,
-      "eval_seconds": 0.0016601670067757368,
+      "train_seconds": 1.020723707973957,
+      "eval_seconds": 0.001719249994494021,
       "nashconv_total": 0.003014113663905277,
       "nashconv_mean": 0.0015070568319526384,
       "nashconv_max": 0.0021941211066545535,

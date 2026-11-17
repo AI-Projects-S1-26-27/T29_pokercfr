@@ -73,6 +73,12 @@ CFR_PLUS = CFRConfig(regret_matching_plus=True, averaging="linear", alternating=
 LINEAR_CFR = CFRConfig(averaging="linear")
 DCFR = CFRConfig(averaging="linear", dcfr=(1.5, 0.0, 2.0))
 
+# The paper's stated limits of the discount family. DCFR cannot express
+# alternating updates, so its CFR+ limit is the rm+/linear/sim corner of the
+# cube rather than cfr+ itself.
+DCFR_AS_CFR = CFRConfig(averaging="uniform", dcfr=(math.inf, math.inf, 0.0))
+DCFR_AS_CFR_PLUS = CFRConfig(averaging="linear", dcfr=(math.inf, -math.inf, 0.0))
+
 NAMED_VARIANTS = {"cfr": VANILLA_CFR, "cfr+": CFR_PLUS, "linear-cfr": LINEAR_CFR}
 
 
@@ -91,6 +97,24 @@ def ablation_cube() -> dict[str, CFRConfig]:
                 )
                 cube[cfg.label] = cfg
     return cube
+
+
+def _discount(t: int, exponent: float) -> float:
+    """Brown & Sandholm's t^x/(t^x+1) discount, with the paper's limits exact.
+
+    alpha=beta=+inf means no discounting and beta=-inf clamps negative regret to
+    zero, so both are returned exactly rather than approximated by a large
+    finite exponent -- which overflows.
+    """
+    if exponent == math.inf:
+        return 1.0
+    if exponent == -math.inf:
+        return 0.0
+    try:
+        p = float(t) ** exponent
+    except OverflowError:
+        return 1.0
+    return 1.0 if math.isinf(p) else p / (p + 1.0)
 
 
 def _float_dict() -> defaultdict:
@@ -196,8 +220,8 @@ class CFRSolver:
         t = self.iterations
         if t <= 1:
             return
-        pos_factor = (t ** alpha) / (t ** alpha + 1.0)
-        neg_factor = (t ** beta) / (t ** beta + 1.0)
+        pos_factor = _discount(t, alpha)
+        neg_factor = _discount(t, beta)
         strat_factor = ((t - 1) / t) ** gamma
         for regrets in self.regret_sum.values():
             for a, r in regrets.items():
@@ -301,5 +325,6 @@ def policy_expected_values(game: Game, policy: Policy) -> list[float]:
 
 __all__ = [
     "CFRConfig", "CFRSolver", "VANILLA_CFR", "CFR_PLUS", "LINEAR_CFR", "DCFR",
-    "NAMED_VARIANTS", "ablation_cube", "regret_matching", "policy_expected_values",
+    "DCFR_AS_CFR", "DCFR_AS_CFR_PLUS", "NAMED_VARIANTS", "ablation_cube",
+    "regret_matching", "policy_expected_values",
 ]
