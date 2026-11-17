@@ -1,0 +1,34 @@
+=== tree checks: zero-sum payoffs and chance probabilities ===
+  leduc-2p-cap2        states=  9,451 chance_nodes=   151 zero_sum_err=0.00e+00 chance_err=0.00e+00 OK
+  leduc-2p-cap1        states=  3,511 chance_nodes=    91 zero_sum_err=0.00e+00 chance_err=0.00e+00 OK
+  leduc-3p-cap2        states= 60,000 chance_nodes=   564 zero_sum_err=0.00e+00 chance_err=0.00e+00 OK
+
+=== every ablation corner runs on Leduc with no solver changes ===
+  cfr                  0.927019 -> 0.097968 info_sets=936/936  0.0335s/it OK
+  rm/uniform/alt       0.888579 -> 0.053838 info_sets=936/936  0.0632s/it OK
+  linear-cfr           0.771287 -> 0.303872 info_sets=936/936  0.0339s/it OK
+  rm/linear/alt        0.740961 -> 0.169367 info_sets=936/936  0.0627s/it OK
+  rm+/uniform/sim      0.959616 -> 0.064743 info_sets=936/936  0.0338s/it OK
+  rm+/uniform/alt      0.827132 -> 0.034624 info_sets=936/936  0.0623s/it OK
+  rm+/linear/sim       0.775432 -> 0.022846 info_sets=936/936  0.0338s/it OK
+  cfr+                 0.610439 -> 0.004976 info_sets=936/936  0.0625s/it OK
+
+=== multiplayer path: seat-wise NashConv on 3-player Leduc ===
+  gains=[0.470896, 0.473782, 0.400921] mean=0.448533 max_seat=1 OK
+
+=== feasibility frontier for H3 ===
+  rung                    deck    info sets    s/iter  status
+  leduc-2p-cap2              6          936    0.0809  measured
+  leduc-3p-cap2              6       13,878    4.0647  measured
+  leduc-4p-cap2              6      153,576  124.5557  measured
+  leduc-5p-cap2              6    1,422,930         -  too large (> 200,000 info sets)
+  leduc-6p-cap2                                        CANNOT BUILD: a 6-card deck cannot deal 6 private cards pl
+  leduc-r4s2-2p-cap2         8        1,728    0.1676  measured
+  leduc-r4s2-3p-cap2         8       25,800   18.6941  measured
+  leduc-r4s2-4p-cap2         8      286,176         -  too large (> 200,000 info sets)
+  leduc-r4s2-5p-cap2         8    2,654,040         -  too large (> 200,000 info sets)
+  leduc-r4s3-6p-cap2        12   51,345,720         -  too large (> 200,000 info sets)
+
+====================================================================
+all checks passed: Leduc runs through the harness with no solver changes
+wrote results/verify/leduc_smoke.json  (470.1s)

@@ -1,0 +1,183 @@
+{
+  "iterations": 200,
+  "walks": {
+    "leduc-2p-cap2": {
+      "states_walked": 9451,
+      "chance_nodes": 151,
+      "terminals": 5520,
+      "exhaustive": true,
+      "worst_zero_sum_error": 0.0,
+      "worst_chance_prob_error": 0.0
+    },
+    "leduc-2p-cap1": {
+      "states_walked": 3511,
+      "chance_nodes": 91,
+      "terminals": 1860,
+      "exhaustive": true,
+      "worst_zero_sum_error": 0.0,
+      "worst_chance_prob_error": 0.0
+    },
+    "leduc-3p-cap2": {
+      "states_walked": 60000,
+      "chance_nodes": 564,
+      "terminals": 33967,
+      "exhaustive": false,
+      "worst_zero_sum_error": 0.0,
+      "worst_chance_prob_error": 0.0
+    }
+  },
+  "corners": {
+    "cfr": {
+      "exploitability_at_10": 0.9270185719676691,
+      "exploitability_at_end": 0.09796770011645006,
+      "decreased": true,
+      "info_sets_discovered": 936,
+      "info_sets_expected": 936,
+      "all_info_sets_visited": true,
+      "seconds_per_iteration": 0.03346500812505838
+    },
+    "rm/uniform/alt": {
+      "exploitability_at_10": 0.888578983168769,
+      "exploitability_at_end": 0.053838323902807225,
+      "decreased": true,
+      "info_sets_discovered": 936,
+      "info_sets_expected": 936,
+      "all_info_sets_visited": true,
+      "seconds_per_iteration": 0.06315024021023419
+    },
+    "linear-cfr": {
+      "exploitability_at_10": 0.7712870112826672,
+      "exploitability_at_end": 0.3038723365906236,
+      "decreased": true,
+      "info_sets_discovered": 936,
+      "info_sets_expected": 936,
+      "all_info_sets_visited": true,
+      "seconds_per_iteration": 0.03394767416524701
+    },
+    "rm/linear/alt": {
+      "exploitability_at_10": 0.7409611475118364,
+      "exploitability_at_end": 0.16936699312552203,
+      "decreased": true,
+      "info_sets_discovered": 936,
+      "info_sets_expected": 936,
+      "all_info_sets_visited": true,
+      "seconds_per_iteration": 0.06267863624962047
+    },
+    "rm+/uniform/sim": {
+      "exploitability_at_10": 0.9596163558280231,
+      "exploitability_at_end": 0.06474301359215079,
+      "decreased": true,
+      "info_sets_discovered": 936,
+      "info_sets_expected": 936,
+      "all_info_sets_visited": true,
+      "seconds_per_iteration": 0.033797645415179434
+    },
+    "rm+/uniform/alt": {
+      "exploitability_at_10": 0.827132388620984,
+      "exploitability_at_end": 0.0346235110914233,
+      "decreased": true,
+      "info_sets_discovered": 936,
+      "info_sets_expected": 936,
+      "all_info_sets_visited": true,
+      "seconds_per_iteration": 0.062324456669739445
+    },
+    "rm+/linear/sim": {
+      "exploitability_at_10": 0.7754324097781432,
+      "exploitability_at_end": 0.022846061335413406,
+      "decreased": true,
+      "info_sets_discovered": 936,
+      "info_sets_expected": 936,
+      "all_info_sets_visited": true,
+      "seconds_per_iteration": 0.033795471664634535
+    },
+    "cfr+": {
+      "exploitability_at_10": 0.6104389015904066,
+      "exploitability_at_end": 0.00497561447202393,
+      "decreased": true,
+      "info_sets_discovered": 936,
+      "info_sets_expected": 936,
+      "all_info_sets_visited": true,
+      "seconds_per_iteration": 0.06252058062469587
+    }
+  },
+  "multiplayer": {
+    "rung": "leduc-3p-cap2",
+    "iterations": 20,
+    "nashconv_total": 1.3455984679168698,
+    "nashconv_mean": 0.4485328226389566,
+    "nashconv_max": 0.47378154300757713,
+    "max_seat": 1,
+    "gains": [
+      0.4708961836423835,
+      0.47378154300757713,
+      0.4009207412669092
+    ]
+  },
+  "frontier": {
+    "leduc-2p-cap2": {
+      "buildable": true,
+      "deck_size": 6,
+      "info_sets": 936,
+      "seconds_per_iteration": 0.080934937519487,
+      "status": "measured"
+    },
+    "leduc-3p-cap2": {
+      "buildable": true,
+      "deck_size": 6,
+      "info_sets": 13878,
+      "seconds_per_iteration": 4.064736458531115,
+      "status": "measured"
+    },
+    "leduc-4p-cap2": {
+      "buildable": true,
+      "deck_size": 6,
+      "info_sets": 153576,
+      "seconds_per_iteration": 124.55565018748166,
+      "status": "measured"
+    },
+    "leduc-5p-cap2": {
+      "buildable": true,
+      "deck_size": 6,
+      "info_sets": 1422930,
+      "status": "too large to attempt"
+    },
+    "leduc-6p-cap2": {
+      "buildable": false,
+      "error": "a 6-card deck cannot deal 6 private cards plus a public card; the deck is held fixed across player counts by design, so use fewer players or a larger deck explicitly (ranks/suits)"
+    },
+    "leduc-r4s2-2p-cap2": {
+      "buildable": true,
+      "deck_size": 8,
+      "info_sets": 1728,
+      "seconds_per_iteration": 0.16757385403616354,
+      "status": "measured"
+    },
+    "leduc-r4s2-3p-cap2": {
+      "buildable": true,
+      "deck_size": 8,
+      "info_sets": 25800,
+      "seconds_per_iteration": 18.69406568747945,
+      "status": "measured"
+    },
+    "leduc-r4s2-4p-cap2": {
+      "buildable": true,
+      "deck_size": 8,
+      "info_sets": 286176,
+      "status": "too large to attempt"
+    },
+    "leduc-r4s2-5p-cap2": {
+      "buildable": true,
+      "deck_size": 8,
+      "info_sets": 2654040,
+      "status": "too large to attempt"
+    },
+    "leduc-r4s3-6p-cap2": {
+      "buildable": true,
+      "deck_size": 12,
+      "info_sets": 51345720,
+      "status": "too large to attempt"
+    }
+  },
+  "failures": [],
+  "seconds": 470.0921545419842
+}
