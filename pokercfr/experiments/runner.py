@@ -127,7 +127,7 @@ def _run_timed(spec: RunSpec, game, solver, curve: list[dict], elapsed: float,
     rungs, so counting it would penalise whichever variant we happened to
     measure more often.
     """
-    from pokercfr.eval.best_response import nash_conv
+    from pokercfr.eval.exploitability import curve_point, evaluate
 
     budget = time_budget_of(spec)
     fractions = tuple(spec.extra.get("time_checkpoints", TIME_CHECKPOINTS))
@@ -150,18 +150,11 @@ def _run_timed(spec: RunSpec, game, solver, curve: list[dict], elapsed: float,
             per_iter = taken / batch
 
         eval_started = time.perf_counter()
-        result = nash_conv(game, solver.average_strategy())
-        curve.append({
-            "iterations": solver.iterations,
-            "train_seconds": elapsed,
-            "eval_seconds": time.perf_counter() - eval_started,
-            "time_fraction": fraction,
-            "nashconv_total": result.total,
-            "nashconv_mean": result.mean,
-            "nashconv_max": result.max,
-            "exploitability": result.exploitability if game.num_players == 2 else None,
-            "gains": result.gains,
-        })
+        result = evaluate(game, solver.average_strategy())
+        curve.append(curve_point(result, iterations=solver.iterations,
+                                 train_seconds=elapsed,
+                                 eval_seconds=time.perf_counter() - eval_started,
+                                 time_fraction=fraction))
         _save_checkpoint(spec, solver, curve, elapsed)
         _write_result(spec, _record(spec, game, curve, complete=False))
         progress(f"  {spec.variant:<22} {fraction:>5.0%} of budget  "
@@ -178,7 +171,7 @@ def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
     convergence curve. That matters when the analysis has to start before the
     longest runs finish.
     """
-    from pokercfr.eval.best_response import nash_conv
+    from pokercfr.eval.exploitability import curve_point, evaluate
 
     game, solver = build_solver(spec)
     checkpoints = spec.checkpoints or (spec.iterations,)
@@ -208,17 +201,10 @@ def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
         # Evaluation time is excluded from train_seconds on purpose: a wall-clock
         # comparison must not be polluted by how often we chose to measure.
         eval_started = time.perf_counter()
-        result = nash_conv(game, solver.average_strategy())
-        curve.append({
-            "iterations": solver.iterations,
-            "train_seconds": train_seconds,
-            "eval_seconds": time.perf_counter() - eval_started,
-            "nashconv_total": result.total,
-            "nashconv_mean": result.mean,
-            "nashconv_max": result.max,
-            "exploitability": result.exploitability if game.num_players == 2 else None,
-            "gains": result.gains,
-        })
+        result = evaluate(game, solver.average_strategy())
+        curve.append(curve_point(result, iterations=solver.iterations,
+                                 train_seconds=train_seconds,
+                                 eval_seconds=time.perf_counter() - eval_started))
         started = time.perf_counter() - train_seconds  # resume the training clock
         _save_checkpoint(spec, solver, curve, train_seconds)
         _write_result(spec, _record(spec, game, curve, complete=False))
@@ -231,7 +217,10 @@ def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
 
 
 def _record(spec: RunSpec, game, curve: list[dict], complete: bool) -> dict:
+    from pokercfr.eval.exploitability import RECORD_SCHEMA_VERSION
+
     return {
+        "schema_version": RECORD_SCHEMA_VERSION,
         "spec": {**spec.__dict__, "spec_hash": spec.spec_hash()},
         "game": {"name": game.name, "players": game.num_players,
                  "info_sets": game.num_info_sets()},
