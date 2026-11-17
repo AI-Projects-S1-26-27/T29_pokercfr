@@ -1,8 +1,8 @@
 import itertools
 import unittest
 
-from kuhn_poker.env import Card, KuhnPokerState
-from poker import LADDER, GameConfig, PokerState, deal_outcomes
+from pokercfr.games.kuhn_family import LADDER, GameConfig, PokerState, deal_outcomes
+from pokercfr.games.kuhn_reference import Card, KuhnPokerState
 
 
 class TestPokerGame(unittest.TestCase):

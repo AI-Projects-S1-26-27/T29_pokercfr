@@ -1,1 +1,21 @@
-*  @Samanyu-dev @mrlegendary25
+# One owner per path. Nobody edits someone else's file -- that is what lets
+# eight people work in parallel without merge conflicts. Cross-cutting changes
+# go through an issue first.
+
+# The frozen contract: changes here affect everyone, so both leads review.
+/pokercfr/core/protocols.py      @mrlegendary25 @Samanyu-dev
+
+/pokercfr/solvers/cfr.py         @mrlegendary25
+/pokercfr/solvers/mccfr.py       @mrlegendary25
+/pokercfr/solvers/deep_cfr.py    @mrlegendary25
+/pokercfr/solvers/lp_oracle.py   @mrlegendary25
+/pokercfr/solvers/vectorized.py  @mrlegendary25
+/pokercfr/games/leduc.py         @Samanyu-dev
+/pokercfr/games/kuhn_family.py   @Samanyu-dev
+/pokercfr/core/config.py         @Samanyu-dev
+/pokercfr/eval/                  @mrlegendary25
+/pokercfr/agents/                @Samanyu-dev
+/pokercfr/analysis/              @Samanyu-dev
+/pokercfr/experiments/           @mrlegendary25
+/pokercfr/demo/                  @mrlegendary25
+/web/                            @mrlegendary25

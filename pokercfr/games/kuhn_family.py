@@ -93,6 +93,12 @@ class PokerState:
     def _bet_index(self) -> int:
         return self.history.find("b")
 
+    def is_chance_node(self) -> bool:
+        return False  # all chance lives at the root (see ChanceRoot below)
+
+    def chance_outcomes(self) -> list[tuple[PokerState, float]]:
+        raise ValueError("PokerState is never a chance node; chance is at the root")
+
     def current_player(self) -> int:
         return len(self.history) % self.config.players  # seats act in strict rotation
 
@@ -168,3 +174,82 @@ if __name__ == "__main__":
     print(f"{'rung':26} {'players':>7} {'info sets':>12} {'deals':>16}")
     for name, cfg in LADDER.items():
         print(f"{name:26} {cfg.players:>7} {cfg.num_info_sets():>12,} {cfg.num_deals():>16,}")
+
+
+@dataclass(frozen=True)
+class ChanceRoot:
+    """The root of a Kuhn-family game: a single chance node whose outcomes are
+    every possible deal. Betting states that follow are plain PokerStates.
+
+    This exists so one solver traversal serves both engines. Leduc has a second
+    chance node mid-tree (the public card); here there is exactly one, at depth
+    zero. Either way a solver just asks `is_chance_node()`.
+    """
+
+    config: GameConfig
+
+    def is_terminal(self) -> bool:
+        return False
+
+    def is_chance_node(self) -> bool:
+        return True
+
+    def chance_outcomes(self) -> list[tuple[PokerState, float]]:
+        return [(state, float(p)) for state, p in deal_outcomes(self.config)]
+
+    def current_player(self) -> int:
+        raise ValueError("ChanceRoot is a chance node, not a decision node")
+
+    def legal_actions(self) -> list[str]:
+        raise ValueError("ChanceRoot is a chance node, not a decision node")
+
+    def apply_action(self, action: str):
+        raise ValueError("ChanceRoot is a chance node; use chance_outcomes()")
+
+    def utilities(self) -> list[float]:
+        raise ValueError("ChanceRoot is not terminal")
+
+    def information_set_key(self, player: int) -> str:
+        raise ValueError("ChanceRoot has no information set")
+
+
+class KuhnFamilyGame:
+    """One rung of the ladder. A rung is a GameConfig, not a new codebase."""
+
+    def __init__(self, config: GameConfig = KUHN, name: str | None = None):
+        self.config = config
+        self._name = name or _config_name(config)
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def num_players(self) -> int:
+        return self.config.players
+
+    def new_initial_state(self) -> ChanceRoot:
+        return ChanceRoot(self.config)
+
+    def num_info_sets(self) -> int:
+        return self.config.num_info_sets()
+
+    def num_deals(self) -> int:
+        return self.config.num_deals()
+
+    def __repr__(self) -> str:
+        return f"KuhnFamilyGame({self._name!r}, info_sets={self.num_info_sets():,})"
+
+
+def _config_name(config: GameConfig) -> str:
+    for name, cfg in LADDER.items():
+        if cfg == config:
+            return name
+    return f"r{config.ranks}s{config.suits}d{config.cards_dealt}p{config.players}"
+
+
+def game(rung: str) -> KuhnFamilyGame:
+    """Look up a ladder rung by name: game("kuhn"), game("4rank-2suit-3p")."""
+    if rung not in LADDER:
+        raise KeyError(f"unknown rung {rung!r}; known rungs: {', '.join(LADDER)}")
+    return KuhnFamilyGame(LADDER[rung], name=rung)
