@@ -1,0 +1,101 @@
+{
+  "rung": "4rank-2suit",
+  "budget_seconds": 10.0,
+  "by_wallclock": {
+    "cfr": {
+      "iterations": 6339,
+      "train_seconds": 10.000707417959347,
+      "exploitability": 0.0016066818428492856
+    },
+    "rm/uniform/alt": {
+      "iterations": 3092,
+      "train_seconds": 10.00154624984134,
+      "exploitability": 0.00025330697184915846
+    },
+    "linear-cfr": {
+      "iterations": 6096,
+      "train_seconds": 10.00133887596894,
+      "exploitability": 0.0037507485007053087
+    },
+    "rm/linear/alt": {
+      "iterations": 3229,
+      "train_seconds": 10.002172792097554,
+      "exploitability": 0.00011833385431885002
+    },
+    "rm+/uniform/sim": {
+      "iterations": 6262,
+      "train_seconds": 10.001090082107112,
+      "exploitability": 0.0008256950956990264
+    },
+    "rm+/uniform/alt": {
+      "iterations": 3251,
+      "train_seconds": 10.002021082909778,
+      "exploitability": 0.00015445033573313616
+    },
+    "rm+/linear/sim": {
+      "iterations": 6204,
+      "train_seconds": 10.000880958279595,
+      "exploitability": 0.0005298145770569439
+    },
+    "cfr+": {
+      "iterations": 3261,
+      "train_seconds": 10.002103291102685,
+      "exploitability": 8.152702611428225e-06
+    }
+  },
+  "by_iterations": {
+    "matched_iterations": 3092,
+    "exploitability": {
+      "cfr": 0.0023266736085097058,
+      "rm/uniform/alt": 0.00025330697184915846,
+      "linear-cfr": 0.0038332382288465,
+      "rm/linear/alt": 0.00013437762226340896,
+      "rm+/uniform/sim": 0.0012060096064031335,
+      "rm+/uniform/alt": 0.00015565424070565492,
+      "rm+/linear/sim": 0.000710960512882157,
+      "cfr+": 1.2268887690410069e-05
+    }
+  },
+  "fairness": {
+    "spread": 0.0001465270482341463,
+    "tolerance": 0.02,
+    "pass": true
+  },
+  "isolation": {
+    "sparse": {
+      "iterations": 3255,
+      "train_seconds": 10.002807707991451,
+      "exploitability": 1.3750324670176034e-05
+    },
+    "dense": {
+      "iterations": 3149,
+      "train_seconds": 10.002167169936001,
+      "exploitability": 1.9667801322887507e-05
+    },
+    "drift": 0.0325652841781874,
+    "tolerance": 0.1,
+    "pass": true
+  },
+  "ranking_by_wallclock": [
+    "cfr+",
+    "rm/linear/alt",
+    "rm+/uniform/alt",
+    "rm/uniform/alt",
+    "rm+/linear/sim",
+    "rm+/uniform/sim",
+    "cfr",
+    "linear-cfr"
+  ],
+  "ranking_by_iterations": [
+    "cfr+",
+    "rm/linear/alt",
+    "rm+/uniform/alt",
+    "rm/uniform/alt",
+    "rm+/linear/sim",
+    "rm+/uniform/sim",
+    "cfr",
+    "linear-cfr"
+  ],
+  "rankings_agree": true,
+  "seconds": 158.3291774590034
+}

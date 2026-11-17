@@ -46,7 +46,12 @@ class RunSpec:
 
     @property
     def result_path(self) -> str:
-        return f"results/{self.game}__{self.variant}__s{self.seed}__{self.spec_hash()}.json"
+        # Variant labels contain slashes ("rm+/uniform/alt"), which would nest
+        # the result into directories and hide it from a results/*.json glob.
+        # Only the filename is sanitised -- the variant string itself feeds the
+        # hash, so existing result hashes stay valid.
+        variant = self.variant.replace("/", "-")
+        return f"results/{self.game}__{variant}__s{self.seed}__{self.spec_hash()}.json"
 
 
 def derive_seed(base: int, *parts: object) -> int:

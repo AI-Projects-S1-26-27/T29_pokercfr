@@ -1,0 +1,35 @@
+=== fairness: 8 variants, 10.0s each on 4rank-2suit ===
+  cfr                   10.00s  T=    6,339  expl=0.00160668
+  rm/uniform/alt        10.00s  T=    3,092  expl=0.00025331
+  linear-cfr            10.00s  T=    6,096  expl=0.00375075
+  rm/linear/alt         10.00s  T=    3,229  expl=0.00011833
+  rm+/uniform/sim       10.00s  T=    6,262  expl=0.00082570
+  rm+/uniform/alt       10.00s  T=    3,251  expl=0.00015445
+  rm+/linear/sim        10.00s  T=    6,204  expl=0.00052981
+  cfr+                  10.00s  T=    3,261  expl=0.00000815
+  spread in train_seconds: 0.01%  (FAIR, tolerance 2%)
+
+=== isolation: sparse vs dense evaluation at the same budget ===
+  1 evaluation : T=3,255
+  10 evaluations: T=3,149
+  iteration drift: 3.26%  (ISOLATED, tolerance 10%)
+
+=== verdict: does equal-iterations rank the same as equal-wall-clock? ===
+  matching every variant at T=3,092 iterations
+
+  variant               rank @ equal time  rank @ equal iters   moved
+  cfr+                                  1                   1      +0
+  rm/linear/alt                         2                   2      +0
+  rm+/uniform/alt                       3                   3      +0
+  rm/uniform/alt                        4                   4      +0
+  rm+/linear/sim                        5                   5      +0
+  rm+/uniform/sim                       6                   6      +0
+  cfr                                   7                   7      +0
+  linear-cfr                            8                   8      +0
+
+  rankings AGREE — iteration-matched comparisons give the same H1 answer
+
+==============================================================
+fairness   PASS
+isolation  PASS
+wrote results/verify/wallclock_check.json  (158.3s)
