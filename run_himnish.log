@@ -1,0 +1,11 @@
+shard [0, 1, 2, 3, 4] of 29: 30 of 168 runs from matrix 'leduc-sweep'
+DONE  leduc-2p-cap1          rm+/linear/sim     T=22993       0.17h expl=0.0005051671842334071
+DONE  leduc-2p-cap1          cfr                T=23354       0.17h expl=0.0036935361022902083
+DONE  leduc-2p-cap1          cfr                T=23496       0.17h expl=0.0034288349850687336
+DONE  leduc-2p-cap1          rm+/linear/sim     T=23119       0.17h expl=0.0005310017873375039
+DONE  leduc-2p-cap1          cfr                T=23154       0.17h expl=0.00344664540058693
+DONE  leduc-2p-cap1          cfr                T=23421       0.17h expl=0.0035585109627746456
+DONE  leduc-2p-cap1          cfr                T=23102       0.17h expl=0.0033676432329754064
+DONE  leduc-2p-cap1          rm+/linear/sim     T=23187       0.17h expl=0.0005189522480674169
+DONE  leduc-2p-cap1          rm+/uniform/alt    T=12189       0.17h expl=0.0002490980306135218
+DONE  leduc-2p-cap1          rm+/linear/sim     T=23897       0.17h expl=0.0005434071532430876

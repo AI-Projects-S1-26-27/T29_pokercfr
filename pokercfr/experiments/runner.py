@@ -222,6 +222,12 @@ def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
         started = time.perf_counter() - train_seconds  # resume the training clock
         _save_checkpoint(spec, solver, curve, train_seconds)
         _write_result(spec, _record(spec, game, curve, complete=False))
+        expl = curve[-1]["exploitability"]
+        progress(f"    {spec.game}/{spec.variant} s{spec.seed}  "
+                 f"T={solver.iterations:,}/{spec.iterations:,}  "
+                 f"{train_seconds / 60:.1f}m  "
+                 + (f"expl={expl:.3e}" if expl is not None
+                    else f"nashconv={curve[-1]['nashconv_mean']:.3e}"))
         if spec.max_seconds is not None and train_seconds >= spec.max_seconds:
             progress(f"BUDGET {spec.game}/{spec.variant} s{spec.seed} stopped at "
                      f"{solver.iterations:,} iters ({train_seconds/3600:.1f} h)")
@@ -272,19 +278,35 @@ def _already_complete(spec: RunSpec) -> bool:
         return False
 
 
+PROGRESS_EVERY_SECONDS = 60.0
+
+
 def _worker(spec: RunSpec) -> str:
+    # Checkpoints are log-spaced, so the first dozen land within milliseconds on
+    # a cheap rung. Throttle to roughly one line a minute per cell: enough to
+    # see a run is alive over seven hours, without burying the DONE lines.
+    last = [0.0]
+
+    def progress(line: str) -> None:
+        now = time.perf_counter()
+        if now - last[0] >= PROGRESS_EVERY_SECONDS or last[0] == 0.0:
+            last[0] = now
+            print(line, flush=True)
+
     try:
-        record = run_one(spec)
+        record = run_one(spec, progress=progress)
     except NotImplementedError as exc:
         return f"SKIP  {spec.game:<22} {spec.variant:<18} (not implemented: {exc})"
-    except Exception as exc:  # one bad cell must not kill a 15-hour shard
+    except Exception as exc:  # one bad cell must not kill a 7-hour shard
         return f"ERROR {spec.game:<22} {spec.variant:<18} {type(exc).__name__}: {exc}"
     _write_result(spec, record)
     last = record["curve"][-1] if record["curve"] else {}
     hours = last.get("train_seconds", 0) / 3600
+    expl = last.get("exploitability")
+    metric = f"expl={expl:.4e}" if isinstance(expl, float) else \
+        f"nashconv={last.get('nashconv_mean', 0):.4e}"
     return (f"DONE  {spec.game:<22} {spec.variant:<18} "
-            f"T={last.get('iterations','-'):<9} {hours:>6.2f}h "
-            f"expl={last.get('exploitability')}")
+            f"T={last.get('iterations', '-'):<9} {hours:>5.2f}h {metric}")
 
 
 def main() -> None:
@@ -339,10 +361,27 @@ def main() -> None:
     if args.estimate:
         registry.print_estimate(mine)
         return
+    if not mine:
+        print("nothing to do: every cell in this shard is already complete")
+        return
+
     jobs = args.jobs or os.cpu_count() or 1
+    total = len(mine)
+    started = time.perf_counter()
+    done = 0
+    print(f"running {total} cells on {jobs} cores\n", flush=True)
     with mp.Pool(jobs) as pool:
         for line in pool.imap_unordered(_worker, mine):
-            print(line, flush=True)
+            done += 1
+            elapsed = time.perf_counter() - started
+            # Rough: remaining cells assumed to average what finished ones did.
+            # Costs vary a lot per cell, so treat it as an order of magnitude.
+            eta = (elapsed / done) * (total - done)
+            print(f"[{done}/{total}] {line}   "
+                  f"| elapsed {elapsed / 3600:.2f}h, eta ~{eta / 3600:.2f}h",
+                  flush=True)
+    print(f"\nshard complete: {total} cells in "
+          f"{(time.perf_counter() - started) / 3600:.2f}h", flush=True)
 
 
 if __name__ == "__main__":
