@@ -39,6 +39,11 @@ RUNGS = ("kuhn", "4rank-2suit")
 CHECKPOINTS = (10, 20, 50, 100, 200, 500, 1000, 2000)
 GRID = [(a, b, g) for a in (1.0, 1.5, 2.0, 3.0) for b in (0.0, 0.5, 1.0) for g in (1.0, 2.0, 3.0)]
 
+# Does pairing the discount schedule with alternating updates close the gap to
+# CFR+? The simultaneous grid never does, and alternating updates is the one
+# CFR+ component the discount family cannot express.
+ALT_SETTINGS = ((1.5, 0.0, 2.0), (2.0, 0.0, 1.0), (3.0, 0.0, 1.0))
+
 
 def curve(rung: str, config: CFRConfig, iterations: int) -> dict[int, float]:
     g = game(rung)
@@ -112,6 +117,15 @@ def main() -> int:
             }
         print(f"  grid: {len(grid)} settings", flush=True)
 
+        alt = {}
+        for alpha, beta, gamma in ALT_SETTINGS:
+            label = f"dcfr-alt-a{alpha:g}-b{beta:g}-g{gamma:g}"
+            c = curve(rung, CFRConfig(averaging="linear", alternating=True,
+                                      dcfr=(alpha, beta, gamma)), args.iterations)
+            alt[label] = {"curve": c, "final": c[max(c)],
+                          "distance_to_cfr_plus": curve_distance(c, refs["cfr+"])}
+            print(f"  alternating {label:<26} final={alt[label]['final']:.10f}", flush=True)
+
         best = min(grid, key=lambda k: grid[k]["final"])
         closest_cfr = min(grid, key=lambda k: grid[k]["distance_to_cfr"])
         closest_plus = min(grid, key=lambda k: grid[k]["distance_to_cfr_plus"])
@@ -119,10 +133,19 @@ def main() -> int:
         print(f"  closest to cfr            : {closest_cfr}")
         print(f"  closest to cfr+           : {closest_plus}")
 
+        best_alt = min(alt, key=lambda k: alt[k]["final"])
+        cfr_plus_final = refs["cfr+"][max(refs["cfr+"])]
+        print(f"  best simultaneous DCFR    : {grid[best]['final']:.10f} "
+              f"({grid[best]['final'] / cfr_plus_final:.1f}x cfr+)")
+        print(f"  best alternating DCFR     : {alt[best_alt]['final']:.10f} "
+              f"({alt[best_alt]['final'] / cfr_plus_final:.1f}x cfr+)")
+
         record["rungs"][rung] = {
             "references": {k: v for k, v in refs.items()},
             "limits": limits,
             "grid": grid,
+            "alternating": alt,
+            "best_alternating": best_alt,
             "best_final": best,
             "closest_to_cfr": closest_cfr,
             "closest_to_cfr_plus": closest_plus,

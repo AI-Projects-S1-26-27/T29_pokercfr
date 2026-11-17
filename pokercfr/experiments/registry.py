@@ -93,6 +93,17 @@ def cube_deep() -> list[RunSpec]:
                 label = f"dcfr-a{alpha:g}-b{beta:g}-g{gamma:g}"
                 for rung in ("4rank", "4rank-2suit", "4rank-2suit-2dealt"):
                     specs.append(_spec(rung, label, iterations=1_000_000))
+
+    # Every DCFR setting above uses simultaneous updates, because that is what
+    # the discount family can express. No DCFR setting reached CFR+ in the
+    # step-2 check, and the suspected reason is that CFR+'s advantage comes
+    # mostly from alternating updates, which sits outside the family. Pairing
+    # the discount schedule WITH alternating updates separates those two
+    # explanations: if the gap closes, alternating updates was the cause.
+    for alpha, beta, gamma in ((1.5, 0.0, 2.0), (2.0, 0.0, 1.0), (3.0, 0.0, 1.0)):
+        label = f"dcfr-alt-a{alpha:g}-b{beta:g}-g{gamma:g}"
+        for rung in ("4rank", "4rank-2suit", "4rank-2suit-2dealt"):
+            specs.append(_spec(rung, label, iterations=1_000_000))
     return specs
 
 

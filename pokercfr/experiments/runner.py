@@ -21,6 +21,7 @@ import os
 import pickle
 import platform
 import time
+from dataclasses import replace
 from pathlib import Path
 
 from pokercfr.core.config import RunSpec
@@ -53,10 +54,15 @@ def build_solver(spec: RunSpec):
     if spec.variant in cube:
         return game, CFRSolver(game, cube[spec.variant])
     if spec.variant.startswith("dcfr-"):
-        # dcfr-a1.5-b0-g2 -> DCFR with (alpha, beta, gamma) = (1.5, 0, 2)
-        parts = dict(p[0] and (p[0], float(p[1:])) for p in spec.variant.split("-")[1:])
+        # dcfr-a1.5-b0-g2, or dcfr-alt-a1.5-b0-g2 for alternating updates
+        fields = spec.variant.split("-")[1:]
+        alternating = fields and fields[0] == "alt"
+        if alternating:
+            fields = fields[1:]
+        parts = {f[0]: float(f[1:]) for f in fields}
         return game, CFRSolver(game, CFRConfig(
-            averaging="linear", dcfr=(parts["a"], parts["b"], parts["g"])))
+            averaging="linear", alternating=alternating,
+            dcfr=(parts["a"], parts["b"], parts["g"])))
     if spec.variant.startswith("mccfr-"):
         from pokercfr.solvers.mccfr import MCCFRSolver
         return game, MCCFRSolver(game, scheme=spec.variant.split("-", 1)[1], seed=spec.seed)
@@ -64,6 +70,20 @@ def build_solver(spec: RunSpec):
         from pokercfr.solvers.lp_oracle import LPOracleSolver
         return game, LPOracleSolver(game)
     raise KeyError(f"unknown variant {spec.variant!r}")
+
+
+TIME_CHECKPOINTS = (0.05, 0.1, 0.2, 0.5, 1.0)
+MAX_BATCH = 50_000
+
+
+def time_budget_of(spec: RunSpec) -> float | None:
+    """Seconds of training this spec is allotted, or None for an iteration run.
+
+    Carried in `extra` rather than as a RunSpec field so that adding it does not
+    change the hash of every spec already on disk.
+    """
+    budget = spec.extra.get("time_budget")
+    return float(budget) if budget else None
 
 
 def _ckpt_path(spec: RunSpec) -> Path:
@@ -97,6 +117,59 @@ def _load_checkpoint(spec: RunSpec):
         return None  # corrupt or stale pickle: start over rather than crash the shard
 
 
+def _run_timed(spec: RunSpec, game, solver, curve: list[dict], elapsed: float,
+               progress) -> tuple[list[dict], float]:
+    """Train against a wall-clock budget, measuring at fractions of it.
+
+    H1 is stated in wall-clock terms, so iterations are an output here, not an
+    input. Evaluation is timed separately and never added to `elapsed`: exact
+    best response costs more than several training iterations on the bigger
+    rungs, so counting it would penalise whichever variant we happened to
+    measure more often.
+    """
+    from pokercfr.eval.best_response import nash_conv
+
+    budget = time_budget_of(spec)
+    fractions = tuple(spec.extra.get("time_checkpoints", TIME_CHECKPOINTS))
+    per_iter: float | None = None
+
+    for fraction in sorted(fractions):
+        target = fraction * budget
+        if curve and elapsed >= target:
+            continue
+        while elapsed < target:
+            remaining = target - elapsed
+            if per_iter is None:
+                batch = 1
+            else:
+                batch = min(MAX_BATCH, max(1, int(0.9 * remaining / per_iter)))
+            started = time.perf_counter()
+            solver.train(batch)
+            taken = time.perf_counter() - started
+            elapsed += taken
+            per_iter = taken / batch
+
+        eval_started = time.perf_counter()
+        result = nash_conv(game, solver.average_strategy())
+        curve.append({
+            "iterations": solver.iterations,
+            "train_seconds": elapsed,
+            "eval_seconds": time.perf_counter() - eval_started,
+            "time_fraction": fraction,
+            "nashconv_total": result.total,
+            "nashconv_mean": result.mean,
+            "nashconv_max": result.max,
+            "exploitability": result.exploitability if game.num_players == 2 else None,
+            "gains": result.gains,
+        })
+        _save_checkpoint(spec, solver, curve, elapsed)
+        _write_result(spec, _record(spec, game, curve, complete=False))
+        progress(f"  {spec.variant:<22} {fraction:>5.0%} of budget  "
+                 f"T={solver.iterations:<10,} {elapsed:>7.2f}s")
+
+    return curve, elapsed
+
+
 def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
     """Train, measuring exploitability at each checkpoint. Returns a result record.
 
@@ -117,6 +190,11 @@ def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
             solver, curve, elapsed = state["solver"], state["curve"], state["elapsed"]
             progress(f"RESUME {spec.game}/{spec.variant} s{spec.seed} "
                      f"from iteration {solver.iterations:,}")
+
+    if time_budget_of(spec) is not None:
+        curve, elapsed = _run_timed(spec, game, solver, curve, elapsed, progress)
+        _ckpt_path(spec).unlink(missing_ok=True)
+        return _record(spec, game, curve, complete=True)
 
     started = time.perf_counter() - elapsed
     for target in checkpoints:
@@ -158,6 +236,8 @@ def _record(spec: RunSpec, game, curve: list[dict], complete: bool) -> dict:
         "game": {"name": game.name, "players": game.num_players,
                  "info_sets": game.num_info_sets()},
         "curve": curve,
+        "time_budget": time_budget_of(spec),
+        "iterations_reached": curve[-1]["iterations"] if curve else 0,
         # `complete` lets the analysis include an in-flight run's partial curve
         # while marking clearly that it has not reached its budget.
         "complete": complete,
@@ -199,6 +279,9 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--estimate", action="store_true",
                     help="measure s/iter on each rung and print projected CPU-hours")
+    ap.add_argument("--time-budget", type=float, default=None,
+                    help="train each cell for this many wall-clock seconds instead of "
+                         "a fixed iteration count (H1 is a wall-clock hypothesis)")
     args = ap.parse_args()
 
     from pokercfr.experiments import registry
@@ -206,6 +289,9 @@ def main() -> None:
         raise SystemExit(f"unknown matrix {args.matrix!r}; choose from: "
                          f"{', '.join(registry.MATRICES)}")
     specs = registry.MATRICES[args.matrix]()
+    if args.time_budget is not None:
+        specs = [replace(s, extra={**s.extra, "time_budget": args.time_budget})
+                 for s in specs]
     mine = [s for i, s in enumerate(specs) if i % args.of == args.shard]
     print(f"shard {args.shard}/{args.of}: {len(mine)} of {len(specs)} runs "
           f"from matrix {args.matrix!r}")
