@@ -1,0 +1,57 @@
+leduc-2p-cap1: deck=6 info_sets=384
+    T=     1 train=    0.0s mean=1.241667 max=1.446875 (seat 1)
+    T=     2 train=    0.0s mean=1.083333 max=1.149421 (seat 1)
+    T=     4 train=    0.1s mean=0.842052 max=0.898404 (seat 1)
+    T=     8 train=    0.2s mean=0.265212 max=0.273994 (seat 1)
+    T=    16 train=    0.3s mean=0.082671 max=0.083143 (seat 0)
+    T=    32 train=    0.6s mean=0.028187 max=0.031673 (seat 1)
+    T=    64 train=    1.2s mean=0.009198 max=0.009896 (seat 1)
+    T=   128 train=    2.4s mean=0.002767 max=0.002951 (seat 0)
+    T=   256 train=    4.9s mean=0.001061 max=0.001491 (seat 0)
+    T=   512 train=    9.7s mean=0.000736 max=0.001327 (seat 0)
+    T=  1024 train=   19.3s mean=0.000348 max=0.000630 (seat 0)
+    T=  2048 train=   38.4s mean=0.000140 max=0.000256 (seat 0)
+    T=  4096 train=   76.6s mean=0.000038 max=0.000066 (seat 0)
+    T=  8192 train=  152.9s mean=0.000012 max=0.000021 (seat 0)
+    T= 16384 train=  308.9s mean=0.000006 max=0.000011 (seat 0)
+    T= 31618 train=  600.0s mean=0.000004 max=0.000008 (seat 0)
+leduc-3p-cap1: deck=6 info_sets=2,232
+    T=     1 train=    0.5s mean=2.067318 max=2.364583 (seat 2)
+    T=     2 train=    1.0s mean=1.734052 max=1.820846 (seat 2)
+    T=     4 train=    2.0s mean=0.975577 max=1.246448 (seat 2)
+    T=     8 train=    4.0s mean=0.438929 max=0.537213 (seat 0)
+    T=    16 train=    8.1s mean=0.182407 max=0.209773 (seat 0)
+    T=    32 train=   16.2s mean=0.070099 max=0.082227 (seat 0)
+    T=    64 train=   32.7s mean=0.029564 max=0.033885 (seat 1)
+    T=   128 train=   67.2s mean=0.010367 max=0.015293 (seat 1)
+    T=   256 train=  132.8s mean=0.006905 max=0.013158 (seat 1)
+    T=   512 train=  261.4s mean=0.003301 max=0.005007 (seat 1)
+    T=  1024 train=  527.1s mean=0.050239 max=0.092008 (seat 1)
+    T=  1163 train=  600.2s mean=0.044875 max=0.082531 (seat 1)
+leduc-4p-cap1: deck=6 info_sets=10,752
+    T=     1 train=    6.9s mean=2.710235 max=3.024727 (seat 3)
+    T=     2 train=   14.8s mean=2.070477 max=2.943309 (seat 0)
+    T=     4 train=   30.9s mean=1.328162 max=1.604479 (seat 3)
+    T=     8 train=   58.4s mean=0.623274 max=0.736313 (seat 0)
+    T=    16 train=  112.3s mean=0.245257 max=0.285167 (seat 0)
+    T=    32 train=  219.7s mean=0.083255 max=0.111392 (seat 0)
+    T=    64 train=  446.4s mean=0.064991 max=0.099172 (seat 0)
+    T=    86 train=  602.2s mean=0.046513 max=0.064414 (seat 0)
+leduc-5p-cap1: deck=6 info_sets=47,280
+    T=     1 train=   49.7s mean=3.231002 max=3.535967 (seat 4)
+    T=     2 train=  100.9s mean=2.405525 max=3.449299 (seat 0)
+    T=     4 train=  191.5s mean=1.661487 max=1.979461 (seat 4)
+    T=     8 train=  417.6s mean=0.846286 max=0.915944 (seat 4)
+    T=    12 train=  619.5s mean=0.487706 max=0.593261 (seat 0)
+6p: infeasible on the fixed deck -- a 6-card deck cannot deal 6 private cards plus a public card; the deck is held fixed across player counts by design, so use fewer players or a larger deck explicitly (ranks/suits)
+
+ N   iters       mean      total max seat settled > eps  per-seat gains
+ 2   31618   0.000004   0.000008        0   False False  [0.0, 0.0]
+ 3    1163   0.044875   0.134625        1   False False  [0.0169, 0.0825, 0.0352]
+ 4      86   0.046513   0.186053        0   False False  [0.0644, 0.0549, 0.0343, 0.0324]
+ 5      12   0.487706   2.438532        0   False  True  [0.5933, 0.552, 0.4163, 0.4359, 0.4411]
+
+mean NashConv at common T=8: 2p=0.265212, 3p=0.438929, 4p=0.623274, 5p=0.846286
+rises monotonically with N at common T: True
+deck held fixed at 6 cards; cap 1; 600s CFR+ training per N
+wrote results/verify/fixed_deck_h3.json
