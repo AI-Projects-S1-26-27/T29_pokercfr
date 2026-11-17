@@ -257,6 +257,21 @@ def _write_result(spec: RunSpec, record: dict) -> None:
     tmp.replace(path)
 
 
+def _already_complete(spec: RunSpec) -> bool:
+    """True if this cell has a finished result on disk.
+
+    Lets a killed or timed-out worker be relaunched without redoing work -- which
+    matters for 12-hour Kaggle sessions and for anyone closing a laptop.
+    """
+    path = ROOT / spec.result_path
+    if not path.exists():
+        return False
+    try:
+        return bool(json.loads(path.read_text()).get("complete"))
+    except Exception:
+        return False
+
+
 def _worker(spec: RunSpec) -> str:
     try:
         record = run_one(spec)
@@ -274,14 +289,18 @@ def _worker(spec: RunSpec) -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--shard", type=int, default=0, help="this machine's index")
-    ap.add_argument("--of", type=int, default=1, help="total number of machines")
+    ap.add_argument("--shard", default="0",
+                    help="this worker's shard index, or a comma-separated list "
+                         "(e.g. 0,1,2,3) so a fast machine can take several")
+    ap.add_argument("--of", type=int, default=1, help="total number of shards")
     ap.add_argument("--jobs", type=int, default=0, help="processes (0 = all cores)")
     ap.add_argument("--matrix", default="full",
                     help="which matrix to run; see registry.MATRICES")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--estimate", action="store_true",
                     help="measure s/iter on each rung and print projected CPU-hours")
+    ap.add_argument("--force", action="store_true",
+                    help="re-run cells whose result is already complete")
     ap.add_argument("--time-budget", type=float, default=None,
                     help="train each cell for this many wall-clock seconds instead of "
                          "a fixed iteration count (H1 is a wall-clock hypothesis)")
@@ -295,9 +314,23 @@ def main() -> None:
     if args.time_budget is not None:
         specs = [replace(s, extra={**s.extra, "time_budget": args.time_budget})
                  for s in specs]
-    mine = [s for i, s in enumerate(specs) if i % args.of == args.shard]
-    print(f"shard {args.shard}/{args.of}: {len(mine)} of {len(specs)} runs "
+    try:
+        wanted = {int(k) for k in str(args.shard).split(",") if k != ""}
+    except ValueError as exc:
+        raise SystemExit(
+            f"--shard must be an int or a comma-separated list, got {args.shard!r}") from exc
+    if any(k >= args.of for k in wanted):
+        raise SystemExit(f"--shard index must be < --of ({args.of})")
+    mine = [s for i, s in enumerate(specs) if i % args.of in wanted]
+    print(f"shard {sorted(wanted)} of {args.of}: {len(mine)} of {len(specs)} runs "
           f"from matrix {args.matrix!r}")
+
+    if not args.force:
+        before = len(mine)
+        mine = [s for s in mine if not _already_complete(s)]
+        if before != len(mine):
+            print(f"skipping {before - len(mine)} already-complete runs "
+                  f"(--force to redo them)")
     if args.dry_run:
         for s in mine:
             done = "[done]" if (ROOT / s.result_path).exists() else ""

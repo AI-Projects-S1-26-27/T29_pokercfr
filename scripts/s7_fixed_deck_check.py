@@ -118,7 +118,7 @@ def main() -> int:
     at_common = {r["players"]: next(p for p in r["curve"] if p["iterations"] == common)["nashconv_mean"]
                  for r in feasible}
     ns = sorted(at_common)
-    rises = all(at_common[a] < at_common[b] for a, b in zip(ns, ns[1:]))
+    rises = all(at_common[a] < at_common[b] for a, b in zip(ns, ns[1:], strict=True))
 
     print(f"\n{'N':>2} {'iters':>7} {'mean':>10} {'total':>10} {'max seat':>8} {'settled':>7} "
           f"{'> eps':>5}  per-seat gains")
