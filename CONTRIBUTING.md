@@ -24,8 +24,14 @@ if you want to park work in progress. If you do:
 ```
 
 - Types: `feat`, `fix`, `test`, `docs`, `refactor`, `chore`
-- Reference the issue in the body or footer (`Refs #19`) when the commit addresses one
 - Summary in imperative mood ("add", not "added"), under 72 chars
+- Say *why* in the body, not *what* — the diff already shows what
+- Reference the issue in the body or footer (`Refs #19`) when the commit addresses one
+
+Commit history is a graded accountability record, and every member is asked about
+their own work in the individual viva. So commit as you go rather than in one
+batch at the end: many small commits under your own name are the evidence that
+you did the work.
 
 ## Pushing
 
@@ -48,16 +54,6 @@ Two things follow from having no PR gate, and they matter more than the gate did
 
 If you want a second pair of eyes on something, just ask in the group chat and
 push anyway — nothing is blocked on an approval.
-
-## Commits
-
-Commit history is a graded accountability record, and every member is asked about
-their own work in the individual viva. So:
-
-- Commit as you go, not in one batch at the end. Many small commits under your own
-  name are the evidence that you did the work.
-- Say *why* in the body, not just *what* — the diff already shows what.
-- Reference an issue (`Refs #19`) where one exists.
 
 ## Workflow
 
