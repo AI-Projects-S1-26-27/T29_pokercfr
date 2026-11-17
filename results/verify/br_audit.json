@@ -1,0 +1,329 @@
+{
+  "passed": true,
+  "n_checks": 46,
+  "n_failed": 0,
+  "checks": [
+    {
+      "check": "nonneg kuhn cfr T=1",
+      "passed": true,
+      "margin": 0.3750000000009999,
+      "tolerance": 1e-12,
+      "detail": "min gain 3.750e-01"
+    },
+    {
+      "check": "nonneg kuhn cfr T=10",
+      "passed": true,
+      "margin": 0.09219309492415911,
+      "tolerance": 1e-12,
+      "detail": "min gain 9.219e-02"
+    },
+    {
+      "check": "nonneg kuhn cfr T=100",
+      "passed": true,
+      "margin": 0.023982559659536683,
+      "tolerance": 1e-12,
+      "detail": "min gain 2.398e-02"
+    },
+    {
+      "check": "nonneg kuhn cfr+ T=1",
+      "passed": true,
+      "margin": 0.3750000000009999,
+      "tolerance": 1e-12,
+      "detail": "min gain 3.750e-01"
+    },
+    {
+      "check": "nonneg kuhn cfr+ T=10",
+      "passed": true,
+      "margin": 0.024323122998947073,
+      "tolerance": 1e-12,
+      "detail": "min gain 2.432e-02"
+    },
+    {
+      "check": "nonneg kuhn cfr+ T=100",
+      "passed": true,
+      "margin": 0.0007712215844188851,
+      "tolerance": 1e-12,
+      "detail": "min gain 7.712e-04"
+    },
+    {
+      "check": "nonneg 4rank cfr T=1",
+      "passed": true,
+      "margin": 0.37500000000099987,
+      "tolerance": 1e-12,
+      "detail": "min gain 3.750e-01"
+    },
+    {
+      "check": "nonneg 4rank cfr T=10",
+      "passed": true,
+      "margin": 0.09177764496616597,
+      "tolerance": 1e-12,
+      "detail": "min gain 9.178e-02"
+    },
+    {
+      "check": "nonneg 4rank cfr T=100",
+      "passed": true,
+      "margin": 0.007225637728146066,
+      "tolerance": 1e-12,
+      "detail": "min gain 7.226e-03"
+    },
+    {
+      "check": "nonneg 4rank cfr+ T=1",
+      "passed": true,
+      "margin": 0.37500000000099987,
+      "tolerance": 1e-12,
+      "detail": "min gain 3.750e-01"
+    },
+    {
+      "check": "nonneg 4rank cfr+ T=10",
+      "passed": true,
+      "margin": 0.014318386680499154,
+      "tolerance": 1e-12,
+      "detail": "min gain 1.432e-02"
+    },
+    {
+      "check": "nonneg 4rank cfr+ T=100",
+      "passed": true,
+      "margin": 0.0004062913676473267,
+      "tolerance": 1e-12,
+      "detail": "min gain 4.063e-04"
+    },
+    {
+      "check": "nonneg 4rank-2suit cfr T=1",
+      "passed": true,
+      "margin": 0.3750000000010002,
+      "tolerance": 1e-12,
+      "detail": "min gain 3.750e-01"
+    },
+    {
+      "check": "nonneg 4rank-2suit cfr T=10",
+      "passed": true,
+      "margin": 0.06669835613836803,
+      "tolerance": 1e-12,
+      "detail": "min gain 6.670e-02"
+    },
+    {
+      "check": "nonneg 4rank-2suit cfr T=100",
+      "passed": true,
+      "margin": 0.015000074887755859,
+      "tolerance": 1e-12,
+      "detail": "min gain 1.500e-02"
+    },
+    {
+      "check": "nonneg 4rank-2suit cfr+ T=1",
+      "passed": true,
+      "margin": 0.3750000000010002,
+      "tolerance": 1e-12,
+      "detail": "min gain 3.750e-01"
+    },
+    {
+      "check": "nonneg 4rank-2suit cfr+ T=10",
+      "passed": true,
+      "margin": 0.0209459706296131,
+      "tolerance": 1e-12,
+      "detail": "min gain 2.095e-02"
+    },
+    {
+      "check": "nonneg 4rank-2suit cfr+ T=100",
+      "passed": true,
+      "margin": 0.0006916525005384948,
+      "tolerance": 1e-12,
+      "detail": "min gain 6.917e-04"
+    },
+    {
+      "check": "nonneg kuhn-3p cfr T=1",
+      "passed": true,
+      "margin": 0.546875000001,
+      "tolerance": 1e-12,
+      "detail": "min gain 5.469e-01"
+    },
+    {
+      "check": "nonneg kuhn-3p cfr T=10",
+      "passed": true,
+      "margin": 0.09762569505012816,
+      "tolerance": 1e-12,
+      "detail": "min gain 9.763e-02"
+    },
+    {
+      "check": "nonneg kuhn-3p cfr T=100",
+      "passed": true,
+      "margin": 0.01629723055134997,
+      "tolerance": 1e-12,
+      "detail": "min gain 1.630e-02"
+    },
+    {
+      "check": "nonneg kuhn-3p cfr+ T=1",
+      "passed": true,
+      "margin": 0.546875000001,
+      "tolerance": 1e-12,
+      "detail": "min gain 5.469e-01"
+    },
+    {
+      "check": "nonneg kuhn-3p cfr+ T=10",
+      "passed": true,
+      "margin": 0.036294710831357734,
+      "tolerance": 1e-12,
+      "detail": "min gain 3.629e-02"
+    },
+    {
+      "check": "nonneg kuhn-3p cfr+ T=100",
+      "passed": true,
+      "margin": 0.0006372575770561563,
+      "tolerance": 1e-12,
+      "detail": "min gain 6.373e-04"
+    },
+    {
+      "check": "nonneg 4rank-2suit-3p cfr T=1",
+      "passed": true,
+      "margin": 0.5156250000009998,
+      "tolerance": 1e-12,
+      "detail": "min gain 5.156e-01"
+    },
+    {
+      "check": "nonneg 4rank-2suit-3p cfr T=10",
+      "passed": true,
+      "margin": 0.11587769252388135,
+      "tolerance": 1e-12,
+      "detail": "min gain 1.159e-01"
+    },
+    {
+      "check": "nonneg 4rank-2suit-3p cfr T=100",
+      "passed": true,
+      "margin": 0.027172553766335955,
+      "tolerance": 1e-12,
+      "detail": "min gain 2.717e-02"
+    },
+    {
+      "check": "nonneg 4rank-2suit-3p cfr+ T=1",
+      "passed": true,
+      "margin": 0.5156250000009998,
+      "tolerance": 1e-12,
+      "detail": "min gain 5.156e-01"
+    },
+    {
+      "check": "nonneg 4rank-2suit-3p cfr+ T=10",
+      "passed": true,
+      "margin": 0.03598463707436614,
+      "tolerance": 1e-12,
+      "detail": "min gain 3.598e-02"
+    },
+    {
+      "check": "nonneg 4rank-2suit-3p cfr+ T=100",
+      "passed": true,
+      "margin": 0.000638010260512295,
+      "tolerance": 1e-12,
+      "detail": "min gain 6.380e-04"
+    },
+    {
+      "check": "uniform kuhn exploitability = 11/24",
+      "passed": true,
+      "margin": 9.999444888487687e-13,
+      "tolerance": 1e-12,
+      "detail": "0.45833333333333326"
+    },
+    {
+      "check": "realised kuhn (all seats)",
+      "passed": true,
+      "margin": 9.999999722444244e-10,
+      "tolerance": 1e-09,
+      "detail": "max |claimed-realised| 2.776e-17"
+    },
+    {
+      "check": "realised 4rank (all seats)",
+      "passed": true,
+      "margin": 9.999999583666366e-10,
+      "tolerance": 1e-09,
+      "detail": "max |claimed-realised| 4.163e-17"
+    },
+    {
+      "check": "realised 4rank-2suit (all seats)",
+      "passed": true,
+      "margin": 9.999996044830475e-10,
+      "tolerance": 1e-09,
+      "detail": "max |claimed-realised| 3.955e-16"
+    },
+    {
+      "check": "realised kuhn-3p (all seats)",
+      "passed": true,
+      "margin": 9.99999861222122e-10,
+      "tolerance": 1e-09,
+      "detail": "max |claimed-realised| 1.388e-16"
+    },
+    {
+      "check": "realised 4rank-2suit-3p (all seats)",
+      "passed": true,
+      "margin": 9.99999285293928e-10,
+      "tolerance": 1e-09,
+      "detail": "max |claimed-realised| 7.147e-16"
+    },
+    {
+      "check": "CFR+ kuhn game value = -1/18",
+      "passed": true,
+      "margin": 9.99994114309454e-05,
+      "tolerance": 0.0001,
+      "detail": "value -0.055555556, err 5.886e-10"
+    },
+    {
+      "check": "CFR+ kuhn exploitability < 1e-4 at T=20000",
+      "passed": true,
+      "margin": 9.331973452408596e-05,
+      "tolerance": 0.0001,
+      "detail": "expl 6.680e-06"
+    },
+    {
+      "check": "openspiel uniform exploitability delta",
+      "passed": true,
+      "margin": 9.999444888487687e-13,
+      "tolerance": 1e-12,
+      "detail": "delta 5.551e-17"
+    },
+    {
+      "check": "openspiel uniform NashConv delta",
+      "passed": true,
+      "margin": 9.998889776975375e-13,
+      "tolerance": 1e-12,
+      "detail": "delta 1.110e-16"
+    },
+    {
+      "check": "openspiel CFR+ T=10 exploitability delta",
+      "passed": true,
+      "margin": 9.999375499548648e-13,
+      "tolerance": 1e-12,
+      "detail": "delta 6.245e-17"
+    },
+    {
+      "check": "openspiel CFR+ T=10 NashConv delta",
+      "passed": true,
+      "margin": 9.998750999097296e-13,
+      "tolerance": 1e-12,
+      "detail": "delta 1.249e-16"
+    },
+    {
+      "check": "openspiel CFR+ T=100 exploitability delta",
+      "passed": true,
+      "margin": 9.999097943792492e-13,
+      "tolerance": 1e-12,
+      "detail": "delta 9.021e-17"
+    },
+    {
+      "check": "openspiel CFR+ T=100 NashConv delta",
+      "passed": true,
+      "margin": 9.998195887584984e-13,
+      "tolerance": 1e-12,
+      "detail": "delta 1.804e-16"
+    },
+    {
+      "check": "openspiel CFR+ T=1000 exploitability delta",
+      "passed": true,
+      "margin": 9.997987720767867e-13,
+      "tolerance": 1e-12,
+      "detail": "delta 2.012e-16"
+    },
+    {
+      "check": "openspiel CFR+ T=1000 NashConv delta",
+      "passed": true,
+      "margin": 9.995975441535734e-13,
+      "tolerance": 1e-12,
+      "detail": "delta 4.025e-16"
+    }
+  ]
+}

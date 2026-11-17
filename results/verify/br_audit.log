@@ -1,0 +1,53 @@
+nonneg: every per-seat gain >= 0
+  [PASS] nonneg kuhn cfr T=1                                        margin 3.750e-01 min gain 3.750e-01
+  [PASS] nonneg kuhn cfr T=10                                       margin 9.219e-02 min gain 9.219e-02
+  [PASS] nonneg kuhn cfr T=100                                      margin 2.398e-02 min gain 2.398e-02
+  [PASS] nonneg kuhn cfr+ T=1                                       margin 3.750e-01 min gain 3.750e-01
+  [PASS] nonneg kuhn cfr+ T=10                                      margin 2.432e-02 min gain 2.432e-02
+  [PASS] nonneg kuhn cfr+ T=100                                     margin 7.712e-04 min gain 7.712e-04
+  [PASS] nonneg 4rank cfr T=1                                       margin 3.750e-01 min gain 3.750e-01
+  [PASS] nonneg 4rank cfr T=10                                      margin 9.178e-02 min gain 9.178e-02
+  [PASS] nonneg 4rank cfr T=100                                     margin 7.226e-03 min gain 7.226e-03
+  [PASS] nonneg 4rank cfr+ T=1                                      margin 3.750e-01 min gain 3.750e-01
+  [PASS] nonneg 4rank cfr+ T=10                                     margin 1.432e-02 min gain 1.432e-02
+  [PASS] nonneg 4rank cfr+ T=100                                    margin 4.063e-04 min gain 4.063e-04
+  [PASS] nonneg 4rank-2suit cfr T=1                                 margin 3.750e-01 min gain 3.750e-01
+  [PASS] nonneg 4rank-2suit cfr T=10                                margin 6.670e-02 min gain 6.670e-02
+  [PASS] nonneg 4rank-2suit cfr T=100                               margin 1.500e-02 min gain 1.500e-02
+  [PASS] nonneg 4rank-2suit cfr+ T=1                                margin 3.750e-01 min gain 3.750e-01
+  [PASS] nonneg 4rank-2suit cfr+ T=10                               margin 2.095e-02 min gain 2.095e-02
+  [PASS] nonneg 4rank-2suit cfr+ T=100                              margin 6.917e-04 min gain 6.917e-04
+  [PASS] nonneg kuhn-3p cfr T=1                                     margin 5.469e-01 min gain 5.469e-01
+  [PASS] nonneg kuhn-3p cfr T=10                                    margin 9.763e-02 min gain 9.763e-02
+  [PASS] nonneg kuhn-3p cfr T=100                                   margin 1.630e-02 min gain 1.630e-02
+  [PASS] nonneg kuhn-3p cfr+ T=1                                    margin 5.469e-01 min gain 5.469e-01
+  [PASS] nonneg kuhn-3p cfr+ T=10                                   margin 3.629e-02 min gain 3.629e-02
+  [PASS] nonneg kuhn-3p cfr+ T=100                                  margin 6.373e-04 min gain 6.373e-04
+  [PASS] nonneg 4rank-2suit-3p cfr T=1                              margin 5.156e-01 min gain 5.156e-01
+  [PASS] nonneg 4rank-2suit-3p cfr T=10                             margin 1.159e-01 min gain 1.159e-01
+  [PASS] nonneg 4rank-2suit-3p cfr T=100                            margin 2.717e-02 min gain 2.717e-02
+  [PASS] nonneg 4rank-2suit-3p cfr+ T=1                             margin 5.156e-01 min gain 5.156e-01
+  [PASS] nonneg 4rank-2suit-3p cfr+ T=10                            margin 3.598e-02 min gain 3.598e-02
+  [PASS] nonneg 4rank-2suit-3p cfr+ T=100                           margin 6.380e-04 min gain 6.380e-04
+uniform: Kuhn uniform-random exploitability == 11/24
+  [PASS] uniform kuhn exploitability = 11/24                        margin 9.999e-13 0.45833333333333326
+realised: BR policy played against the policy realises the BR value
+  [PASS] realised kuhn (all seats)                                  margin 1.000e-09 max |claimed-realised| 2.776e-17
+  [PASS] realised 4rank (all seats)                                 margin 1.000e-09 max |claimed-realised| 4.163e-17
+  [PASS] realised 4rank-2suit (all seats)                           margin 1.000e-09 max |claimed-realised| 3.955e-16
+  [PASS] realised kuhn-3p (all seats)                               margin 1.000e-09 max |claimed-realised| 1.388e-16
+  [PASS] realised 4rank-2suit-3p (all seats)                        margin 1.000e-09 max |claimed-realised| 7.147e-16
+closed form: CFR+ on Kuhn -> -1/18
+  [PASS] CFR+ kuhn game value = -1/18                               margin 1.000e-04 value -0.055555556, err 5.886e-10
+  [PASS] CFR+ kuhn exploitability < 1e-4 at T=20000                 margin 9.332e-05 expl 6.680e-06
+openspiel: exploitability / NashConv vs OpenSpiel (Kuhn)
+  [PASS] openspiel uniform exploitability delta                     margin 9.999e-13 delta 5.551e-17
+  [PASS] openspiel uniform NashConv delta                           margin 9.999e-13 delta 1.110e-16
+  [PASS] openspiel CFR+ T=10 exploitability delta                   margin 9.999e-13 delta 6.245e-17
+  [PASS] openspiel CFR+ T=10 NashConv delta                         margin 9.999e-13 delta 1.249e-16
+  [PASS] openspiel CFR+ T=100 exploitability delta                  margin 9.999e-13 delta 9.021e-17
+  [PASS] openspiel CFR+ T=100 NashConv delta                        margin 9.998e-13 delta 1.804e-16
+  [PASS] openspiel CFR+ T=1000 exploitability delta                 margin 9.998e-13 delta 2.012e-16
+  [PASS] openspiel CFR+ T=1000 NashConv delta                       margin 9.996e-13 delta 4.025e-16
+
+46/46 checks passed -> /Users/aarushkanipakam/Desktop/Projects/pokercfr/results/verify/br_audit.json
