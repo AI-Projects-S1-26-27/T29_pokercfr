@@ -93,6 +93,17 @@ def ablation_cube() -> dict[str, CFRConfig]:
     return cube
 
 
+def _float_dict() -> defaultdict:
+    """Module-level factory so the regret/strategy tables stay PICKLABLE.
+
+    `defaultdict(lambda: defaultdict(float))` is the obvious spelling and it
+    cannot be pickled -- the lambda is a local object. That matters because runs
+    on the upper rungs are 10+ hours and checkpoint by pickling the solver, so
+    an unpicklable table silently costs a whole night's work.
+    """
+    return defaultdict(float)
+
+
 def regret_matching(regrets: dict[str, float], actions: list[str]) -> dict[str, float]:
     """Strategy proportional to positive regret; uniform if nothing is positive."""
     positive = {a: max(regrets.get(a, 0.0), 0.0) for a in actions}
@@ -110,8 +121,8 @@ class CFRSolver:
         self.config = config
         self.num_players = game.num_players
         self.iterations = 0
-        self.regret_sum: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
-        self.strategy_sum: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
+        self.regret_sum: dict[str, dict[str, float]] = defaultdict(_float_dict)
+        self.strategy_sum: dict[str, dict[str, float]] = defaultdict(_float_dict)
         self._nodes_touched = 0
 
     # ---- the public Solver interface -------------------------------------
@@ -132,7 +143,7 @@ class CFRSolver:
         root = self.game.new_initial_state()
         players = range(self.num_players) if self.config.alternating else [None]
         for update_player in players:
-            deltas: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
+            deltas: dict[str, dict[str, float]] = defaultdict(_float_dict)
             self._traverse(root, [1.0] * self.num_players, 1.0, update_player, deltas)
             self._commit(deltas)
 
