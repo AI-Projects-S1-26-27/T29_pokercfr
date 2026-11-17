@@ -36,7 +36,43 @@ from __future__ import annotations
 from pokercfr.core.config import RunSpec
 
 # Pre-registered epsilon targets, chips/hand. Fixed before the final runs.
+# For N >= 3 the target applies to the per-seat MEAN NashConv, never the total:
+# the total grows with N by construction (see eval/exploitability.py).
 EPSILON = {"default": 1e-2, "kuhn": 1e-4, "leduc-2p": 1e-2, "multiplayer": 5e-2}
+
+
+def epsilon_for(game: str) -> float:
+    """The pre-registered epsilon target for a rung name."""
+    if game == "kuhn":
+        return EPSILON["kuhn"]
+    if game.startswith("leduc-"):
+        players = int(game.split("-")[1].rstrip("p"))
+        return EPSILON["leduc-2p"] if players == 2 else EPSILON["multiplayer"]
+    if game.endswith(("-3p", "-4p")):
+        return EPSILON["multiplayer"]
+    return EPSILON["default"]
+
+
+# H1 -- the primary hypothesis, stated in WALL-CLOCK terms. Deterministic solvers
+# ignore their seed, but a wall-clock run's iteration count depends on machine
+# timing, so seeds here are independent timing REPLICATES, and the CFR vs CFR+
+# comparison is paired by seed.
+H1_CAPS = (1, 2, 3)
+H1_SEEDS = tuple(range(5))
+H1_TIME_BUDGET = 600.0          # training seconds per cell, evaluation excluded
+
+# H3 on Leduc, deck held fixed at 6 cards. Sized from the measured census in
+# results/verify/leduc_sizes.json: 4p cap2 is ~105 s/iter and 5p cap2 ~20 min/iter
+# (both projected), and 6p is infeasible -- so cap 2 stops at 3 players and the
+# deep end uses cap 1. 5p cap1 (~38 s/iter, projected) is a registered STRETCH
+# cell expected to finish only a few hundred iterations; it is reported as partial.
+H3_LEDUC_CELLS = ((2, 1), (3, 1), (4, 1), (2, 2), (3, 2))      # (players, raise cap)
+H3_LEDUC_STRETCH = ((5, 1),)
+H3_VARIANTS = ("cfr", "cfr+", "linear-cfr")
+H3_SEEDS = (0, 1, 2)
+H3_TIME_BUDGET = 3600.0
+H3_STRETCH_TIME_BUDGET = 21_600.0
+LEDUC_MCCFR_TIME_BUDGET = 600.0
 
 # Log-spaced so a log-log convergence plot has evenly spaced points -- which
 # matters because the SLOPE is what we report, and uneven spacing biases the eye.
@@ -66,10 +102,15 @@ BUDGET = {
 MAX_HOURS_PER_RUN = 7.0
 
 
-def _spec(game: str, variant: str, seed: int = 0, iterations: int | None = None) -> RunSpec:
+def _spec(game: str, variant: str, seed: int = 0, iterations: int | None = None,
+          time_budget: float | None = None) -> RunSpec:
+    """One cell. With `time_budget` the run is wall-clock-budgeted and `iterations`
+    is only a ceiling; the budget lives in `extra`, where the runner reads it."""
     n = iterations or BUDGET.get(game, 10_000)
+    extra = {"time_budget": time_budget} if time_budget else {}
     return RunSpec(game=game, variant=variant, seed=seed, iterations=n,
-                   max_seconds=MAX_HOURS_PER_RUN * 3600, checkpoints=checkpoints(n))
+                   max_seconds=MAX_HOURS_PER_RUN * 3600, checkpoints=checkpoints(n),
+                   extra=extra)
 
 
 def cube_deep() -> list[RunSpec]:
@@ -111,23 +152,39 @@ def leduc_sweep() -> list[RunSpec]:
     """OWNER: Samanyu. H1 (raise caps) and H3 (player count, deck held fixed).
 
     H1 is the project's primary pre-registered hypothesis and it is stated in
-    WALL-CLOCK terms, so these runs carry a time budget as well as an iteration
-    budget. The raise-cap axis exists because a claim that holds only at the
-    standard cap of 2 is a claim about one game, not about the algorithm.
+    WALL-CLOCK terms, so these cells carry a time budget, not an iteration budget.
+    Comparing at equal iterations would flatter the alternating corners, which do
+    one traversal per player and cost more per iteration. The raise-cap axis
+    exists because a claim that holds only at the standard cap of 2 is a claim
+    about one game, not about the algorithm.
 
-    The player-count axis holds the deck FIXED, which is the whole novelty
-    claim -- OpenSpiel grows Leduc's deck as 2(N+1) with player count, so its
-    multiplayer results cannot separate "more players" from "different cards".
+        H1: 3 caps x 8 corners x 5 timing replicates, 600 s each  (~20 CPU-h)
+
+    The player-count axis holds the deck FIXED, which is the whole novelty claim --
+    OpenSpiel grows Leduc's deck as 2(N+1) with player count, so its multiplayer
+    results cannot separate "more players" from "different cards". Sized from the
+    measured census (see H3_LEDUC_CELLS), not from what we would like to run.
+
+        H3: 5 game cells x 3 variants x 3 replicates, 3600 s each (~45 CPU-h)
+            + the 5-player cap-1 stretch cell, 1 replicate x 3 variants, 6 h
     """
     from pokercfr.solvers.cfr import ablation_cube
 
     specs = []
-    for cap in (1, 2, 3):
+    for cap in H1_CAPS:
         for label in ablation_cube():
-            specs.append(_spec(f"leduc-2p-cap{cap}", label, iterations=100_000))
-    for players in (2, 3, 4, 5, 6):
-        for label in ("cfr", "cfr+", "linear-cfr"):
-            specs.append(_spec(f"leduc-{players}p-cap2", label, iterations=10_000))
+            for seed in H1_SEEDS:
+                specs.append(_spec(f"leduc-2p-cap{cap}", label, seed=seed,
+                                   iterations=1_000_000, time_budget=H1_TIME_BUDGET))
+    for players, cap in H3_LEDUC_CELLS:
+        for label in H3_VARIANTS:
+            for seed in H3_SEEDS:
+                specs.append(_spec(f"leduc-{players}p-cap{cap}", label, seed=seed,
+                                   iterations=1_000_000, time_budget=H3_TIME_BUDGET))
+    for players, cap in H3_LEDUC_STRETCH:
+        for label in H3_VARIANTS:
+            specs.append(_spec(f"leduc-{players}p-cap{cap}", label, seed=0,
+                               iterations=1_000_000, time_budget=H3_STRETCH_TIME_BUDGET))
     return specs
 
 
@@ -175,6 +232,12 @@ def mccfr_variance() -> list[RunSpec]:
         for rung in ("kuhn", "4rank", "4rank-2suit", "4rank-2suit-2dealt", "kuhn-3p"):
             for seed in SAMPLED_SEEDS:
                 specs.append(_spec(rung, f"mccfr-{scheme}", seed=seed, iterations=10_000_000))
+    # The sampled algorithms also run on Leduc (2-player, cap 2), wall-clock
+    # budgeted like H1 so they are directly comparable with its CFR/CFR+ cells.
+    for scheme in ("outcome", "external", "chance"):
+        for seed in SAMPLED_SEEDS:
+            specs.append(_spec("leduc-2p-cap2", f"mccfr-{scheme}", seed=seed,
+                               iterations=100_000_000, time_budget=LEDUC_MCCFR_TIME_BUDGET))
     return specs
 
 
@@ -338,7 +401,10 @@ def print_estimate(specs: list[RunSpec]) -> None:
             not_built[spec.game] = not_built.get(spec.game, 0) + 1
             unknown += 1
             continue
-        hours = min(spec.iterations * cost, MAX_HOURS_PER_RUN * 3600) / 3600
+        # A wall-clock-budgeted cell costs its budget by definition; an iteration
+        # cell costs iterations x measured s/iter, capped at the per-run limit.
+        budget = spec.extra.get("time_budget")
+        hours = (budget if budget else min(spec.iterations * cost, MAX_HOURS_PER_RUN * 3600)) / 3600
         by_rung[spec.game] = by_rung.get(spec.game, 0.0) + hours
         total += hours
 
