@@ -54,7 +54,8 @@ pokercfr/
 │   └── env.py
 ├── tests/                # unit tests
 │   └── test_kuhn_poker.py
-├── CONTRIBUTING.md        # branch/commit/PR conventions
+├── .github/workflows/ci.yml  # lint (ruff) + test (pytest) on every push/PR
+├── CONTRIBUTING.md        # branch/commit/PR conventions, team ownership
 └── README.md
 ```
 
@@ -103,6 +104,13 @@ outstanding) or fold (facing a bet); `'b'` means bet or call. See
 python3 -m unittest discover -s tests -v
 ```
 
+## Team
+
+Six people, split into three owned tracks (environment / algorithms /
+evaluation) — see the ownership table in
+[`CONTRIBUTING.md`](CONTRIBUTING.md#team-and-ownership) for who owns what and
+how PR review is split.
+
 ## Roadmap
 
 Tracked as GitHub issues, grouped by epic. Rough dependency order. See
@@ -110,6 +118,12 @@ Tracked as GitHub issues, grouped by epic. Rough dependency order. See
 study ([#46](https://github.com/Samanyu-dev/pokercfr/issues/46),
 [#47](https://github.com/Samanyu-dev/pokercfr/issues/47)) and gated/backlog
 stretch work beyond the milestones below.
+
+**M0 — Proposal revision** (addressing course feedback: novelty vs. prior
+work, ethics of a stronger poker AI, explicit Kuhn/Leduc-only scope, Research
+track declaration, and a written definition of "solved")
+- [ ] Novelty, ethics, and scope/track declaration ([#43](https://github.com/Samanyu-dev/pokercfr/issues/43))
+- [ ] Evaluation methodology and success criteria ([#44](https://github.com/Samanyu-dev/pokercfr/issues/44))
 
 **M1 — Tabular CFR pipeline for Kuhn Poker** ([#1](https://github.com/Samanyu-dev/pokercfr/issues/1))
 - [x] Kuhn Poker game tree + information sets ([#19](https://github.com/Samanyu-dev/pokercfr/issues/19), [#3](https://github.com/Samanyu-dev/pokercfr/issues/3))
@@ -132,8 +146,7 @@ stretch work beyond the milestones below.
 - [ ] Ablations, fresh-clone reproducibility check ([#35](https://github.com/Samanyu-dev/pokercfr/issues/35), [#36](https://github.com/Samanyu-dev/pokercfr/issues/36))
 
 **Also tracked, not yet scheduled to a milestone above:** abstract Game/State
-interface ([#15](https://github.com/Samanyu-dev/pokercfr/issues/15)), CI
-pipeline ([#16](https://github.com/Samanyu-dev/pokercfr/issues/16)), config /
+interface ([#15](https://github.com/Samanyu-dev/pokercfr/issues/15)), config /
 seeding system ([#17](https://github.com/Samanyu-dev/pokercfr/issues/17)),
 3-player Kuhn extension ([#27](https://github.com/Samanyu-dev/pokercfr/issues/27)),
 exploiting a fixed suboptimal opponent ([#32](https://github.com/Samanyu-dev/pokercfr/issues/32)),
