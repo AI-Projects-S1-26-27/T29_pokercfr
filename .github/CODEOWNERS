@@ -1,6 +1,13 @@
 # One owner per path. Nobody edits someone else's file -- that is what lets
 # eight people work in parallel without merge conflicts. Cross-cutting changes
-# go through an issue first.
+# go through an issue first. See the ownership table in CONTRIBUTING.md.
+#
+# NOTE: Siddhant, Shashwat and Akhil have not supplied GitHub handles yet, and
+# Vikranth's invite (Vik217) is still pending, so their paths currently route to
+# the two leads rather than to them. That keeps review unblocked but means
+# GitHub is not yet enforcing their file ownership -- they each own their paths
+# per CONTRIBUTING.md regardless. Replace the lead handles below with theirs in
+# a one-line PR once the handles are known.
 
 # The frozen contract: changes here affect everyone, so both leads review.
 /pokercfr/core/protocols.py      @mrlegendary25 @Samanyu-dev
