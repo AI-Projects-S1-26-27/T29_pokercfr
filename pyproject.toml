@@ -1,0 +1,27 @@
+[project]
+name = "pokercfr"
+version = "0.1.0"
+description = "A controlled scaling study of the CFR algorithm family on a parameterized family of poker games."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy>=2.0",
+    "scipy>=1.14",
+    "matplotlib>=3.9",
+    "pandas>=2.2",
+]
+
+[project.optional-dependencies]
+# Cross-validation oracle. Dev-only: our results never import pyspiel.
+verify = ["open_spiel>=1.5"]
+# Deep CFR (gated stretch). Leduc-scale nets train in seconds on CPU.
+deep = ["torch>=2.4"]
+dev = ["ruff", "pytest"]
+
+[tool.ruff]
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

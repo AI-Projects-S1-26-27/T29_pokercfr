@@ -1,7 +1,7 @@
 import unittest
 from fractions import Fraction
 
-from kuhn_poker.env import Card, KuhnPokerState, deal, deal_outcomes
+from pokercfr.games.kuhn_reference import Card, KuhnPokerState, deal, deal_outcomes
 
 
 def play_out(state: KuhnPokerState, actions: str) -> KuhnPokerState:

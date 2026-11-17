@@ -28,14 +28,14 @@ class Card(IntEnum):
     KING = 2
 
 
-def deal(seed: int | None = None) -> "KuhnPokerState":
+def deal(seed: int | None = None) -> KuhnPokerState:
     """Deal 2 of the 3 cards to the 2 players. Deterministic given a seed."""
     rng = random.Random(seed)
     p0_card, p1_card = rng.sample(list(Card), 2)
     return KuhnPokerState(cards=(p0_card, p1_card))
 
 
-def deal_outcomes() -> list[tuple["KuhnPokerState", Fraction]]:
+def deal_outcomes() -> list[tuple[KuhnPokerState, Fraction]]:
     """Every chance outcome (ordered deal) with its probability, for exact
     full-tree traversal (e.g. vanilla CFR) instead of sampling one deal."""
     ordered_deals = list(itertools.permutations(Card, 2))
@@ -56,7 +56,7 @@ class KuhnPokerState:
             return []
         return ["p", "b"]
 
-    def apply_action(self, action: str) -> "KuhnPokerState":
+    def apply_action(self, action: str) -> KuhnPokerState:
         if self.is_terminal():
             raise ValueError(f"cannot apply action {action!r} to terminal history {self.history!r}")
         if action not in ("p", "b"):
