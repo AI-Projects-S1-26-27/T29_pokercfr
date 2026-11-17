@@ -50,6 +50,28 @@ class TestBestResponseCorrectness(unittest.TestCase):
         value, br = best_response(g, policy, responder=0)
         self.assertAlmostEqual(value, policy_expected_values(g, {**policy, **br})[0], places=9)
 
+    def test_br_value_is_realised_for_every_seat_including_multiplayer(self):
+        """The BR value a solver claims must be achievable by actually playing the
+        BR policy against the original one -- for every seat, not just seat 0."""
+        from pokercfr.eval.best_response import _full_policy
+        for rung in ("kuhn", "4rank", "kuhn-3p"):
+            g = game(rung)
+            policy = CFRSolver(g, CFR_PLUS).train(20).average_strategy()
+            full = _full_policy(g, policy)
+            for seat in range(g.num_players):
+                claimed, br = best_response(g, policy, seat)
+                realised = policy_expected_values(g, {**full, **br})[seat]
+                self.assertAlmostEqual(claimed, realised, places=9, msg=f"{rung} seat {seat}")
+
+    def test_best_response_beats_or_ties_the_policy_per_seat_at_many_budgets(self):
+        for rung in ("kuhn-3p", "4rank-2suit-3p"):
+            g = game(rung)
+            solver = CFRSolver(g, VANILLA_CFR)
+            for t in (1, 5, 25):
+                solver.train(t - solver.iterations)
+                for gain in nash_conv(g, solver.average_strategy()).gains:
+                    self.assertGreaterEqual(gain, -1e-12, f"{rung} T={t}")
+
     def test_exploitability_rejects_three_players(self):
         g = game("kuhn-3p")
         result = nash_conv(g, CFRSolver(g, VANILLA_CFR).train(5).average_strategy())
