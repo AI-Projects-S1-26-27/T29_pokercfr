@@ -25,7 +25,7 @@ import json
 import subprocess
 import sys
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,7 +64,8 @@ HYPOTHESES = {
         "fails_if": ("that CI includes 0, or slope_cfr+ is the larger. With only four rungs "
                      "the CI will be wide: an inconclusive result is reported as "
                      "inconclusive, not as support."),
-        "overall_rule": "A rung that never reaches epsilon within budget is censored and reported as such, not dropped.",
+        "overall_rule": ("A rung that never reaches epsilon within budget is censored and "
+                         "reported as such, not dropped."),
     },
     "H3": {
         "role": "primary",
@@ -150,7 +151,7 @@ def build(by_matrix, distinct) -> dict:
     cells = [cell_record(distinct[h]["spec"], distinct[h]["matrices"]) for h in full_order]
     digest = hashlib.sha256("".join(sorted(full_order)).encode()).hexdigest()
     return {
-        "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "generated_utc": datetime.now(UTC).isoformat(timespec="seconds"),
         "git_head_at_freeze": git_head(),
         "design_digest": digest,
         "n_cells": len(cells),
@@ -206,8 +207,8 @@ def render_md(prereg: dict, by_matrix: dict[str, list]) -> str:
     w(f"| multiplayer | {R.EPSILON['multiplayer']:g} | per-seat MEAN NashConv, any N >= 3 |\n")
 
     w("## Seeds\n")
-    w(f"- Deterministic full-traversal solvers ignore their seed, so they run once (seed 0) "
-      f"except where wall-clock noise matters.")
+    w("- Deterministic full-traversal solvers ignore their seed, so they run once (seed 0) "
+      "except where wall-clock noise matters.")
     w(f"- H1: seeds {list(c['h1_seeds'])} are independent timing replicates "
       f"({len(c['h1_seeds'])} per cell); the CFR vs CFR+ comparison is paired by seed.")
     w(f"- H3 Leduc cells: seeds {list(c['h3_seeds'])}; the 5-player stretch cell has 1.")
