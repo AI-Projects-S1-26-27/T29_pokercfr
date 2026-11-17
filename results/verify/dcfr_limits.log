@@ -1,0 +1,28 @@
+
+=== kuhn ===
+  reference cfr              final=0.0052878314
+  reference cfr+             final=0.0000436486
+  reference rm+/linear/sim   final=0.0018959228
+  limit dcfr(a=inf,b=inf,g=0)    vs cfr              MATCH
+  limit dcfr(a=inf,b=-inf,g=0)   vs rm+/linear/sim   MATCH
+  grid: 36 settings
+  best final exploitability : dcfr-a3-b0-g1 (0.0015709349)
+  closest to cfr            : dcfr-a1.5-b0.5-g1
+  closest to cfr+           : dcfr-a3-b0-g1
+
+=== 4rank-2suit ===
+  reference cfr              final=0.0029887227
+  reference cfr+             final=0.0000276907
+  reference rm+/linear/sim   final=0.0010887327
+  limit dcfr(a=inf,b=inf,g=0)    vs cfr              MATCH
+  limit dcfr(a=inf,b=-inf,g=0)   vs rm+/linear/sim   MATCH
+  grid: 36 settings
+  best final exploitability : dcfr-a2-b0-g1 (0.0011841080)
+  closest to cfr            : dcfr-a1-b0.5-g1
+  closest to cfr+           : dcfr-a2-b0-g1
+
+==============================================================
+VERDICT: DCFR's stated limits DO reproduce their reference algorithms
+Note: DCFR cannot express alternating updates, so its CFR+ limit is the
+rm+/linear/sim corner rather than cfr+ itself.
+wrote results/verify/dcfr_limits.json  (155.8s)
