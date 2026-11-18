@@ -1,0 +1,1215 @@
+{
+  "rel_tol": 1e-11,
+  "rows": [
+    {
+      "rung": "kuhn",
+      "config": "cfr",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 1.7763568394002505e-15,
+          "max_abs_entry": 7.602053249080789,
+          "rel_diff": 2.336680343057372e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 1.4210854715202004e-14,
+          "max_abs_entry": 59.0,
+          "rel_diff": 2.408619443254577e-16
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 1.1102230246251565e-16,
+          "max_abs_entry": 0.9893688171294757,
+          "rel_diff": 1.1102230246251565e-16
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 1.6653345369377348e-15,
+          "max_abs_entry": 1.0,
+          "rel_diff": 1.6653345369377348e-15
+        }
+      },
+      "speedup": 2.382980657090887,
+      "scalar": {
+        "build_seconds": 2.94300000405201e-05,
+        "warmup_seconds": 0.000527858999930686,
+        "iteration_seconds": {
+          "count": 74875,
+          "mean": 0.00040066972044044334,
+          "median": 0.00038812200000393204,
+          "min": 0.0002927610000824643,
+          "max": 0.010088123000059568
+        },
+        "iterations_total": 74876,
+        "baseline_rss_mb": 28.375,
+        "peak_rss_mb": 31.375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.00040066972044044334
+      },
+      "vectorized": {
+        "build_seconds": 0.0072235400000408845,
+        "warmup_seconds": 0.00025174899997182365,
+        "iteration_seconds": {
+          "count": 59475,
+          "mean": 0.00016813804981932835,
+          "median": 0.0001562760000979324,
+          "min": 0.00011748999986593844,
+          "max": 0.006616060999931506
+        },
+        "iterations_total": 59476,
+        "baseline_rss_mb": 28.61328125,
+        "peak_rss_mb": 37.71484375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.00016813804981932835
+      }
+    },
+    {
+      "rung": "kuhn",
+      "config": "cfr+",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 3.608224830031759e-16,
+          "max_abs_entry": 0.5,
+          "rel_diff": 3.608224830031759e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 3.410605131648481e-13,
+          "max_abs_entry": 929.0,
+          "rel_diff": 3.6712649425710237e-16
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 2.220446049250313e-16,
+          "max_abs_entry": 0.9993500815977495,
+          "rel_diff": 2.220446049250313e-16
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 6.661338147750939e-16,
+          "max_abs_entry": 1.0,
+          "rel_diff": 6.661338147750939e-16
+        }
+      },
+      "speedup": 3.2732954729222663,
+      "scalar": {
+        "build_seconds": 3.2420000025012996e-05,
+        "warmup_seconds": 0.0008560080000279413,
+        "iteration_seconds": {
+          "count": 40846,
+          "mean": 0.0007344805797391567,
+          "median": 0.0007163400000536058,
+          "min": 0.0005813279999529186,
+          "max": 0.009150233000127628
+        },
+        "iterations_total": 40847,
+        "baseline_rss_mb": 28.515625,
+        "peak_rss_mb": 30.265625,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0007344805797391567
+      },
+      "vectorized": {
+        "build_seconds": 0.008365067999875464,
+        "warmup_seconds": 0.0003548889999365201,
+        "iteration_seconds": {
+          "count": 44567,
+          "mean": 0.0002243856644824801,
+          "median": 0.00021109499994054204,
+          "min": 0.00016695099998287333,
+          "max": 0.005505408999852079
+        },
+        "iterations_total": 44568,
+        "baseline_rss_mb": 28.5078125,
+        "peak_rss_mb": 37.0078125,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0002243856644824801
+      }
+    },
+    {
+      "rung": "4rank",
+      "config": "cfr",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 3.552713678800501e-15,
+          "max_abs_entry": 7.455320375065941,
+          "rel_diff": 4.765340052564915e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 5.684341886080802e-14,
+          "max_abs_entry": 88.5,
+          "rel_diff": 6.422985182012205e-16
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 3.3306690738754696e-16,
+          "max_abs_entry": 0.9903884084255425,
+          "rel_diff": 3.3306690738754696e-16
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 1.27675647831893e-15,
+          "max_abs_entry": 1.0,
+          "rel_diff": 1.27675647831893e-15
+        }
+      },
+      "speedup": 4.136098894828702,
+      "scalar": {
+        "build_seconds": 3.478400003587012e-05,
+        "warmup_seconds": 0.0009567919998971774,
+        "iteration_seconds": {
+          "count": 42005,
+          "mean": 0.0007142095654569522,
+          "median": 0.0006969199998820841,
+          "min": 0.0005730440000206727,
+          "max": 0.008806708999827606
+        },
+        "iterations_total": 42006,
+        "baseline_rss_mb": 28.4921875,
+        "peak_rss_mb": 30.2421875,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0007142095654569522
+      },
+      "vectorized": {
+        "build_seconds": 0.008363113000086742,
+        "warmup_seconds": 0.00032504000000699307,
+        "iteration_seconds": {
+          "count": 57912,
+          "mean": 0.00017267710072162853,
+          "median": 0.0001596600000084436,
+          "min": 0.00012198900003568269,
+          "max": 0.003265116999955353
+        },
+        "iterations_total": 57913,
+        "baseline_rss_mb": 28.53515625,
+        "peak_rss_mb": 37.5078125,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.00017267710072162853
+      }
+    },
+    {
+      "rung": "4rank",
+      "config": "cfr+",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 3.885780586188048e-16,
+          "max_abs_entry": 0.375,
+          "rel_diff": 3.885780586188048e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 4.547473508864641e-13,
+          "max_abs_entry": 1393.5,
+          "rel_diff": 3.263346615618688e-16
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 3.3306690738754696e-16,
+          "max_abs_entry": 0.9992873499187522,
+          "rel_diff": 3.3306690738754696e-16
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 9.992007221626409e-16,
+          "max_abs_entry": 1.0,
+          "rel_diff": 9.992007221626409e-16
+        }
+      },
+      "speedup": 5.981381091358938,
+      "scalar": {
+        "build_seconds": 3.201499998795043e-05,
+        "warmup_seconds": 0.0015648109999801818,
+        "iteration_seconds": {
+          "count": 22239,
+          "mean": 0.0013490249811147338,
+          "median": 0.001326656000173898,
+          "min": 0.0011246589999700518,
+          "max": 0.011595881999937774
+        },
+        "iterations_total": 22240,
+        "baseline_rss_mb": 28.34765625,
+        "peak_rss_mb": 29.34765625,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0013490249811147338
+      },
+      "vectorized": {
+        "build_seconds": 0.007721823000110817,
+        "warmup_seconds": 0.00036272400006964745,
+        "iteration_seconds": {
+          "count": 44340,
+          "mean": 0.00022553737347777694,
+          "median": 0.00021271199989314482,
+          "min": 0.000174925000010262,
+          "max": 0.006992391000039788
+        },
+        "iterations_total": 44341,
+        "baseline_rss_mb": 28.9609375,
+        "peak_rss_mb": 36.9921875,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.00022553737347777694
+      }
+    },
+    {
+      "rung": "4rank-2suit",
+      "config": "cfr",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 1.7763568394002505e-15,
+          "max_abs_entry": 4.63049420682462,
+          "rel_diff": 3.836214365158215e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 2.5579538487363607e-13,
+          "max_abs_entry": 206.5,
+          "rel_diff": 1.2387185708166395e-15
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 5.551115123125783e-16,
+          "max_abs_entry": 0.9888262068104037,
+          "rel_diff": 5.551115123125783e-16
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 1.6653345369377348e-15,
+          "max_abs_entry": 1.0,
+          "rel_diff": 1.6653345369377348e-15
+        }
+      },
+      "speedup": 19.77860099293812,
+      "scalar": {
+        "build_seconds": 3.961199990953901e-05,
+        "warmup_seconds": 0.0034918239998660283,
+        "iteration_seconds": {
+          "count": 9403,
+          "mean": 0.003190676232266422,
+          "median": 0.0030723200000011275,
+          "min": 0.0027397950000249693,
+          "max": 0.022992344999920533
+        },
+        "iterations_total": 9404,
+        "baseline_rss_mb": 30.5859375,
+        "peak_rss_mb": 30.5859375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.003190676232266422
+      },
+      "vectorized": {
+        "build_seconds": 0.020997459000000163,
+        "warmup_seconds": 0.0006189360001371824,
+        "iteration_seconds": {
+          "count": 61989,
+          "mean": 0.00016131961170588567,
+          "median": 0.00015231800011861196,
+          "min": 0.00012223699991409376,
+          "max": 0.007047440999940591
+        },
+        "iterations_total": 61990,
+        "baseline_rss_mb": 30.8359375,
+        "peak_rss_mb": 37.61328125,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.00016131961170588567
+      }
+    },
+    {
+      "rung": "4rank-2suit",
+      "config": "cfr+",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 1.249000902703301e-16,
+          "max_abs_entry": 0.16964285714285712,
+          "rel_diff": 1.249000902703301e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 5.4569682106375694e-12,
+          "max_abs_entry": 3251.5,
+          "rel_diff": 1.678292545175325e-15
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 5.551115123125783e-16,
+          "max_abs_entry": 0.999294110318035,
+          "rel_diff": 5.551115123125783e-16
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 7.077671781985373e-16,
+          "max_abs_entry": 1.0,
+          "rel_diff": 7.077671781985373e-16
+        }
+      },
+      "speedup": 27.442120448743438,
+      "scalar": {
+        "build_seconds": 3.400499986128125e-05,
+        "warmup_seconds": 0.006320117000086611,
+        "iteration_seconds": {
+          "count": 4963,
+          "mean": 0.006045723287123347,
+          "median": 0.005863370000042778,
+          "min": 0.005376806999947803,
+          "max": 0.019475129000056768
+        },
+        "iterations_total": 4964,
+        "baseline_rss_mb": 34.0859375,
+        "peak_rss_mb": 34.0859375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.006045723287123347
+      },
+      "vectorized": {
+        "build_seconds": 0.013492285999973319,
+        "warmup_seconds": 0.00041843300004984485,
+        "iteration_seconds": {
+          "count": 45391,
+          "mean": 0.00022030816818312515,
+          "median": 0.00021176399991418293,
+          "min": 0.00016886799994608737,
+          "max": 0.003790693999917494
+        },
+        "iterations_total": 45392,
+        "baseline_rss_mb": 34.2109375,
+        "peak_rss_mb": 37.0859375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.00022030816818312515
+      }
+    },
+    {
+      "rung": "4rank-2suit-2dealt",
+      "config": "cfr",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 1.1102230246251565e-15,
+          "max_abs_entry": 1.871487391078303,
+          "rel_diff": 5.932302990219317e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 1.2221335055073723e-12,
+          "max_abs_entry": 442.5,
+          "rel_diff": 2.7618836282652483e-15
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 2.55351295663786e-15,
+          "max_abs_entry": 0.9907087006381881,
+          "rel_diff": 2.55351295663786e-15
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 6.661338147750939e-16,
+          "max_abs_entry": 1.0,
+          "rel_diff": 6.661338147750939e-16
+        }
+      },
+      "speedup": 140.4388778577204,
+      "scalar": {
+        "build_seconds": 3.119400003015471e-05,
+        "warmup_seconds": 0.023417259000098056,
+        "iteration_seconds": {
+          "count": 1217,
+          "mean": 0.024668880700077153,
+          "median": 0.02416854099988086,
+          "min": 0.02241526300008445,
+          "max": 0.04094439200002853
+        },
+        "iterations_total": 1218,
+        "baseline_rss_mb": 36.0859375,
+        "peak_rss_mb": 36.0859375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.024668880700077153
+      },
+      "vectorized": {
+        "build_seconds": 0.05842844099993272,
+        "warmup_seconds": 0.0004019309999421239,
+        "iteration_seconds": {
+          "count": 56931,
+          "mean": 0.0001756556380710288,
+          "median": 0.00016350300006706675,
+          "min": 0.0001301110000895278,
+          "max": 0.004095667999990837
+        },
+        "iterations_total": 56932,
+        "baseline_rss_mb": 36.2109375,
+        "peak_rss_mb": 37.88671875,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0001756556380710288
+      }
+    },
+    {
+      "rung": "4rank-2suit-2dealt",
+      "config": "cfr+",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 4.163336342344337e-17,
+          "max_abs_entry": 0.05357142857142858,
+          "rel_diff": 4.163336342344337e-17
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 2.000888343900442e-11,
+          "max_abs_entry": 6967.5,
+          "rel_diff": 2.871745021744445e-15
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 1.6653345369377348e-15,
+          "max_abs_entry": 0.9994471063473941,
+          "rel_diff": 1.6653345369377348e-15
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 2.6645352591003757e-15,
+          "max_abs_entry": 1.0,
+          "rel_diff": 2.6645352591003757e-15
+        }
+      },
+      "speedup": 210.33517256669697,
+      "scalar": {
+        "build_seconds": 3.232699987165688e-05,
+        "warmup_seconds": 0.046344315999931496,
+        "iteration_seconds": {
+          "count": 628,
+          "mean": 0.04778547695859685,
+          "median": 0.04649091499982205,
+          "min": 0.043431651999981113,
+          "max": 0.09196295800006737
+        },
+        "iterations_total": 629,
+        "baseline_rss_mb": 38.4609375,
+        "peak_rss_mb": 38.4609375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.04778547695859685
+      },
+      "vectorized": {
+        "build_seconds": 0.05547349900007248,
+        "warmup_seconds": 0.00041748900002858136,
+        "iteration_seconds": {
+          "count": 44017,
+          "mean": 0.0002271872857757261,
+          "median": 0.00022071499984122056,
+          "min": 0.0001738230000682961,
+          "max": 0.006764644999975644
+        },
+        "iterations_total": 44018,
+        "baseline_rss_mb": 38.5859375,
+        "peak_rss_mb": 38.5859375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0002271872857757261
+      }
+    },
+    {
+      "rung": "kuhn-3p",
+      "config": "cfr",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 3.1086244689504383e-15,
+          "max_abs_entry": 6.224058197278145,
+          "rel_diff": 4.994529887766597e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 4.263256414560601e-13,
+          "max_abs_entry": 177.0,
+          "rel_diff": 2.4086194432545768e-15
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 4.440892098500626e-16,
+          "max_abs_entry": 0.9911699779249448,
+          "rel_diff": 4.440892098500626e-16
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 3.3306690738754696e-15,
+          "max_abs_entry": 1.0,
+          "rel_diff": 3.3306690738754696e-15
+        }
+      },
+      "speedup": 6.169166550691095,
+      "scalar": {
+        "build_seconds": 7.225399986054981e-05,
+        "warmup_seconds": 0.004431501999988541,
+        "iteration_seconds": {
+          "count": 7181,
+          "mean": 0.004177855600195952,
+          "median": 0.0040380140001161635,
+          "min": 0.0036947060000329657,
+          "max": 0.013118593999934092
+        },
+        "iterations_total": 7182,
+        "baseline_rss_mb": 39.9609375,
+        "peak_rss_mb": 39.9609375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.004177855600195952
+      },
+      "vectorized": {
+        "build_seconds": 0.021871078000003763,
+        "warmup_seconds": 0.0008831669999835867,
+        "iteration_seconds": {
+          "count": 14767,
+          "mean": 0.0006772155632154122,
+          "median": 0.0006505320000087522,
+          "min": 0.0005259409999780473,
+          "max": 0.008193815000140603
+        },
+        "iterations_total": 14768,
+        "baseline_rss_mb": 40.2109375,
+        "peak_rss_mb": 40.2109375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0006772155632154122
+      }
+    },
+    {
+      "rung": "kuhn-3p",
+      "config": "cfr+",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 5.551115123125783e-16,
+          "max_abs_entry": 0.5625,
+          "rel_diff": 5.551115123125783e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 4.092726157978177e-12,
+          "max_abs_entry": 2787.0,
+          "rel_diff": 1.4685059770284095e-15
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 6.661338147750939e-16,
+          "max_abs_entry": 0.9994528705295597,
+          "rel_diff": 6.661338147750939e-16
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 1.3877787807814457e-15,
+          "max_abs_entry": 1.0,
+          "rel_diff": 1.3877787807814457e-15
+        }
+      },
+      "speedup": 12.404990488162827,
+      "scalar": {
+        "build_seconds": 3.043100014110678e-05,
+        "warmup_seconds": 0.013666418999946472,
+        "iteration_seconds": {
+          "count": 2610,
+          "mean": 0.011497493765518741,
+          "median": 0.011153473999911512,
+          "min": 0.01036314900011348,
+          "max": 0.03276672700008021
+        },
+        "iterations_total": 2611,
+        "baseline_rss_mb": 40.5859375,
+        "peak_rss_mb": 40.5859375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.011497493765518741
+      },
+      "vectorized": {
+        "build_seconds": 0.015340109999897322,
+        "warmup_seconds": 0.0010969170000407757,
+        "iteration_seconds": {
+          "count": 10790,
+          "mean": 0.0009268442226126619,
+          "median": 0.0008880460000000312,
+          "min": 0.000779676999854928,
+          "max": 0.009678549000000203
+        },
+        "iterations_total": 10791,
+        "baseline_rss_mb": 40.5859375,
+        "peak_rss_mb": 40.5859375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0009268442226126619
+      }
+    },
+    {
+      "rung": "4rank-2suit-3p",
+      "config": "cfr",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 5.773159728050814e-15,
+          "max_abs_entry": 3.20663068794868,
+          "rel_diff": 1.800381861792751e-15
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 5.4569682106375694e-12,
+          "max_abs_entry": 1239.0,
+          "rel_diff": 4.404332696236941e-15
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 2.3869795029440866e-15,
+          "max_abs_entry": 0.9911525396950785,
+          "rel_diff": 2.3869795029440866e-15
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 9.103828801926284e-15,
+          "max_abs_entry": 1.0,
+          "rel_diff": 9.103828801926284e-15
+        }
+      },
+      "speedup": 85.99691926550442,
+      "scalar": {
+        "build_seconds": 2.676300005077792e-05,
+        "warmup_seconds": 0.05673037800011116,
+        "iteration_seconds": {
+          "count": 532,
+          "mean": 0.05648145722181082,
+          "median": 0.05576103999987936,
+          "min": 0.053154028000108156,
+          "max": 0.12662137799998163
+        },
+        "iterations_total": 533,
+        "baseline_rss_mb": 40.9609375,
+        "peak_rss_mb": 40.9609375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.05648145722181082
+      },
+      "vectorized": {
+        "build_seconds": 0.10718136800005595,
+        "warmup_seconds": 0.000873894000051223,
+        "iteration_seconds": {
+          "count": 15226,
+          "mean": 0.0006567846581507367,
+          "median": 0.0006434089998492709,
+          "min": 0.0005597229999239062,
+          "max": 0.002070529999855353
+        },
+        "iterations_total": 15227,
+        "baseline_rss_mb": 40.9609375,
+        "peak_rss_mb": 40.9609375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0006567846581507367
+      }
+    },
+    {
+      "rung": "4rank-2suit-3p",
+      "config": "cfr+",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 4.0419056990259605e-16,
+          "max_abs_entry": 0.24330357142857148,
+          "rel_diff": 4.0419056990259605e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 2.0554580260068178e-10,
+          "max_abs_entry": 19509.0,
+          "rel_diff": 1.0535947644711763e-14
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 2.6645352591003757e-15,
+          "max_abs_entry": 0.9994556678154816,
+          "rel_diff": 2.6645352591003757e-15
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 6.106226635438361e-15,
+          "max_abs_entry": 1.0,
+          "rel_diff": 6.106226635438361e-15
+        }
+      },
+      "speedup": 164.92049080808331,
+      "scalar": {
+        "build_seconds": 2.9261999998198007e-05,
+        "warmup_seconds": 0.1558105029998842,
+        "iteration_seconds": {
+          "count": 192,
+          "mean": 0.1564983856562563,
+          "median": 0.15575602600006277,
+          "min": 0.14862467299985838,
+          "max": 0.21105476799993994
+        },
+        "iterations_total": 193,
+        "baseline_rss_mb": 41.4609375,
+        "peak_rss_mb": 41.4609375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.1564983856562563
+      },
+      "vectorized": {
+        "build_seconds": 0.11911257900010241,
+        "warmup_seconds": 0.0016429669999524776,
+        "iteration_seconds": {
+          "count": 10539,
+          "mean": 0.0009489323302971019,
+          "median": 0.0008971360000487039,
+          "min": 0.0007891129998824908,
+          "max": 0.026029429000118398
+        },
+        "iterations_total": 10540,
+        "baseline_rss_mb": 41.4609375,
+        "peak_rss_mb": 41.4609375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0009489323302971019
+      }
+    },
+    {
+      "rung": "4rank-2suit-2dealt-3p",
+      "config": "cfr",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 7.771561172376096e-16,
+          "max_abs_entry": 1.3421544710807083,
+          "rel_diff": 5.790362689116107e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 2.1373125491663814e-11,
+          "max_abs_entry": 2655.0,
+          "rel_diff": 8.050141428121964e-15
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 4.496403249731884e-15,
+          "max_abs_entry": 0.9911553344389166,
+          "rel_diff": 4.496403249731884e-15
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 1.4026974026748462e-14,
+          "max_abs_entry": 1.0,
+          "rel_diff": 1.4026974026748462e-14
+        }
+      },
+      "speedup": 370.40546920868445,
+      "scalar": {
+        "build_seconds": 2.9640000093422714e-05,
+        "warmup_seconds": 0.44408345600004395,
+        "iteration_seconds": {
+          "count": 68,
+          "mean": 0.44619121720588467,
+          "median": 0.4416270110000369,
+          "min": 0.42760807200011186,
+          "max": 0.5002918820000559
+        },
+        "iterations_total": 69,
+        "baseline_rss_mb": 41.9609375,
+        "peak_rss_mb": 41.9609375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.44619121720588467
+      },
+      "vectorized": {
+        "build_seconds": 0.6888621040000089,
+        "warmup_seconds": 0.002483501000142496,
+        "iteration_seconds": {
+          "count": 8302,
+          "mean": 0.0012046021300903171,
+          "median": 0.001159839000138163,
+          "min": 0.0009287410000524687,
+          "max": 0.00562653300016791
+        },
+        "iterations_total": 8303,
+        "baseline_rss_mb": 42.2109375,
+        "peak_rss_mb": 43.3046875,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0012046021300903171
+      }
+    },
+    {
+      "rung": "4rank-2suit-2dealt-3p",
+      "config": "cfr+",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 5.793976409762536e-16,
+          "max_abs_entry": 0.0803571428571427,
+          "rel_diff": 5.793976409762536e-16
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 5.675246939063072e-10,
+          "max_abs_entry": 41805.0,
+          "rel_diff": 1.357552192097374e-14
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 1.554312234475219e-14,
+          "max_abs_entry": 0.9994587356223814,
+          "rel_diff": 1.554312234475219e-14
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 2.4591439995447217e-14,
+          "max_abs_entry": 1.0,
+          "rel_diff": 2.4591439995447217e-14
+        }
+      },
+      "speedup": 916.9399525025328,
+      "scalar": {
+        "build_seconds": 2.7524999950401252e-05,
+        "warmup_seconds": 1.2382583339999655,
+        "iteration_seconds": {
+          "count": 29,
+          "mean": 1.2766817798621073,
+          "median": 1.2833988090001185,
+          "min": 1.1929577109999627,
+          "max": 1.338116472000138
+        },
+        "iterations_total": 30,
+        "baseline_rss_mb": 42.7109375,
+        "peak_rss_mb": 42.7109375,
+        "tables_at": 30,
+        "seconds_per_iteration": 1.2766817798621073
+      },
+      "vectorized": {
+        "build_seconds": 0.6872005300001547,
+        "warmup_seconds": 0.002848997999990388,
+        "iteration_seconds": {
+          "count": 7183,
+          "mean": 0.0013923286649008576,
+          "median": 0.0013767979999101954,
+          "min": 0.0012327919998824655,
+          "max": 0.0037263150002218026
+        },
+        "iterations_total": 7184,
+        "baseline_rss_mb": 42.9609375,
+        "peak_rss_mb": 43.1796875,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0013923286649008576
+      }
+    },
+    {
+      "rung": "4rank-2suit-4p",
+      "config": "cfr",
+      "compared_at_iteration": 30,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 6.661338147750939e-15,
+          "max_abs_entry": 3.243523138645204,
+          "rel_diff": 2.0537353559726207e-15
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 6.912159733474255e-11,
+          "max_abs_entry": 6195.0,
+          "rel_diff": 1.1157642830466916e-14
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 1.0658141036401503e-14,
+          "max_abs_entry": 0.99120084848961,
+          "rel_diff": 1.0658141036401503e-14
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 2.5923707624997405e-14,
+          "max_abs_entry": 1.0,
+          "rel_diff": 2.5923707624997405e-14
+        }
+      },
+      "speedup": 253.2504567479016,
+      "scalar": {
+        "build_seconds": 2.7709999812941533e-05,
+        "warmup_seconds": 0.7717049379998571,
+        "iteration_seconds": {
+          "count": 38,
+          "mean": 0.8076449565526218,
+          "median": 0.7981581600001846,
+          "min": 0.7605718840000009,
+          "max": 0.8915509829998882
+        },
+        "iterations_total": 39,
+        "baseline_rss_mb": 43.2109375,
+        "peak_rss_mb": 43.2109375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.8076449565526218
+      },
+      "vectorized": {
+        "build_seconds": 1.570389704000263,
+        "warmup_seconds": 0.003661587999886251,
+        "iteration_seconds": {
+          "count": 3137,
+          "mean": 0.0031891154982460414,
+          "median": 0.0030788839999331685,
+          "min": 0.0027233939999860013,
+          "max": 0.019066989000293688
+        },
+        "iterations_total": 3138,
+        "baseline_rss_mb": 43.2109375,
+        "peak_rss_mb": 43.2109375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.0031891154982460414
+      }
+    },
+    {
+      "rung": "4rank-2suit-4p",
+      "config": "cfr+",
+      "compared_at_iteration": 30,
+      "equivalent": false,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 0.00785561806766212,
+          "max_abs_entry": 0.3102678571428568,
+          "rel_diff": 0.00785561806766212
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 2412.4084490529276,
+          "max_abs_entry": 97545.0,
+          "rel_diff": 0.024731236342743632
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 0.024704643615492045,
+          "max_abs_entry": 0.999430909931461,
+          "rel_diff": 0.024704643615492045
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 0.11465054786735851,
+          "max_abs_entry": 1.0,
+          "rel_diff": 0.11465054786735851
+        }
+      },
+      "speedup": 732.8821799540672,
+      "scalar": {
+        "build_seconds": 2.9446000098687364e-05,
+        "warmup_seconds": 3.0777432599998065,
+        "iteration_seconds": {
+          "count": 29,
+          "mean": 3.0753876099310187,
+          "median": 3.058055086999957,
+          "min": 2.9713538719997814,
+          "max": 3.205499897000209
+        },
+        "iterations_total": 30,
+        "baseline_rss_mb": 43.3359375,
+        "peak_rss_mb": 43.3359375,
+        "tables_at": 30,
+        "seconds_per_iteration": 3.0753876099310187
+      },
+      "vectorized": {
+        "build_seconds": 1.5225146179996045,
+        "warmup_seconds": 0.005033287000060227,
+        "iteration_seconds": {
+          "count": 2384,
+          "mean": 0.004196291974412267,
+          "median": 0.004000056000222685,
+          "min": 0.003534507000040321,
+          "max": 0.009578514999702747
+        },
+        "iterations_total": 2385,
+        "baseline_rss_mb": 43.3359375,
+        "peak_rss_mb": 43.3359375,
+        "tables_at": 30,
+        "seconds_per_iteration": 0.004196291974412267
+      }
+    },
+    {
+      "rung": "13rank-4suit-2dealt-2p",
+      "config": "cfr",
+      "compared_at_iteration": 3,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 7.19910242530375e-17,
+          "max_abs_entry": 0.0050877273986518114,
+          "rel_diff": 7.19910242530375e-17
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 0.0,
+          "max_abs_entry": 3062.5,
+          "rel_diff": 0.0
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 0.0,
+          "max_abs_entry": 0.8333333333333334,
+          "rel_diff": 0.0
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 5.728750807065808e-14,
+          "max_abs_entry": 1.0,
+          "rel_diff": 5.728750807065808e-14
+        }
+      },
+      "speedup": 14549.99365840794,
+      "scalar": {
+        "build_seconds": 3.2095000278786756e-05,
+        "warmup_seconds": 96.43126633700012,
+        "iteration_seconds": {
+          "count": 2,
+          "mean": 96.15795164299993,
+          "median": 96.69720271300002,
+          "min": 95.61870057299984,
+          "max": 96.69720271300002
+        },
+        "iterations_total": 3,
+        "baseline_rss_mb": 43.3359375,
+        "peak_rss_mb": 658.59765625,
+        "tables_at": 3,
+        "seconds_per_iteration": 96.15795164299993
+      },
+      "vectorized": {
+        "build_seconds": 8.820502769000086,
+        "warmup_seconds": 0.009601756999927602,
+        "iteration_seconds": {
+          "count": 1514,
+          "mean": 0.00660879680778648,
+          "median": 0.006508394999855227,
+          "min": 0.005960878999758279,
+          "max": 0.011748850000003586
+        },
+        "iterations_total": 1515,
+        "baseline_rss_mb": 49.8359375,
+        "peak_rss_mb": 903.23046875,
+        "tables_at": 3,
+        "seconds_per_iteration": 0.00660879680778648
+      }
+    },
+    {
+      "rung": "13rank-4suit-2dealt-2p",
+      "config": "cfr+",
+      "compared_at_iteration": 3,
+      "equivalent": true,
+      "diffs": {
+        "regret_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 1.6046192152785466e-17,
+          "max_abs_entry": 0.0011306060885892914,
+          "rel_diff": 1.6046192152785466e-17
+        },
+        "strategy_sum": {
+          "keys_equal": true,
+          "max_abs_diff": 3.5652192309498787e-10,
+          "max_abs_entry": 6737.5,
+          "rel_diff": 5.291605537587946e-14
+        },
+        "average": {
+          "keys_equal": true,
+          "max_abs_diff": 2.375877272697835e-14,
+          "max_abs_entry": 0.9166666666666666,
+          "rel_diff": 2.375877272697835e-14
+        },
+        "current": {
+          "keys_equal": true,
+          "max_abs_diff": 8.350264923961959e-14,
+          "max_abs_entry": 1.0,
+          "rel_diff": 8.350264923961959e-14
+        }
+      },
+      "speedup": 19091.015110817254,
+      "scalar": {
+        "build_seconds": 2.5834000098257093e-05,
+        "warmup_seconds": 185.57123747100013,
+        "iteration_seconds": {
+          "count": 2,
+          "mean": 187.79067912649998,
+          "median": 188.99616074999994,
+          "min": 186.58519750300002,
+          "max": 188.99616074999994
+        },
+        "iterations_total": 3,
+        "baseline_rss_mb": 55.7109375,
+        "peak_rss_mb": 658.34375,
+        "tables_at": 3,
+        "seconds_per_iteration": 187.79067912649998
+      },
+      "vectorized": {
+        "build_seconds": 8.975545841999974,
+        "warmup_seconds": 0.014859735999834811,
+        "iteration_seconds": {
+          "count": 1017,
+          "mean": 0.00983659999410377,
+          "median": 0.010240241000246897,
+          "min": 0.006788030000279832,
+          "max": 0.020287300999825675
+        },
+        "iterations_total": 1018,
+        "baseline_rss_mb": 61.2109375,
+        "peak_rss_mb": 903.16015625,
+        "tables_at": 3,
+        "seconds_per_iteration": 0.00983659999410377
+      }
+    }
+  ],
+  "top_rung_evaluation": {
+    "eval": {
+      "seconds": 467.7630774119998,
+      "gains": [
+        0.07757372375114369,
+        0.09550856724808272
+      ],
+      "policy_values": [
+        -0.03335367287358125,
+        0.03335367287358125
+      ],
+      "baseline_rss_mb": 61.87890625,
+      "peak_rss_mb": 3052.8359375
+    },
+    "vectorized": {
+      "seconds": 8.237052290000065,
+      "gains": [
+        0.07757372374626653,
+        0.09550856725295911
+      ],
+      "policy_values": [
+        -0.03335367286870666,
+        0.033353672868704526
+      ],
+      "baseline_rss_mb": 61.87890625,
+      "peak_rss_mb": 905.0859375
+    },
+    "max_abs_gain_diff": 4.8771542360270814e-12,
+    "speedup": 56.78767852182666
+  },
+  "failures": [
+    "4rank-2suit-4p/cfr+: {'regret_sum': {'keys_equal': True, 'max_abs_diff': 0.00785561806766212, 'max_abs_entry': 0.3102678571428568, 'rel_diff': 0.00785561806766212}, 'strategy_sum': {'keys_equal': True, 'max_abs_diff': 2412.4084490529276, 'max_abs_entry': 97545.0, 'rel_diff': 0.024731236342743632}, 'average': {'keys_equal': True, 'max_abs_diff': 0.024704643615492045, 'max_abs_entry': 0.999430909931461, 'rel_diff': 0.024704643615492045}, 'current': {'keys_equal': True, 'max_abs_diff': 0.11465054786735851, 'max_abs_entry': 1.0, 'rel_diff': 0.11465054786735851}}"
+  ],
+  "env": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "node": "vm",
+    "cpus": 2
+  }
+}

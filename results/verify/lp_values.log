@@ -1,0 +1,23 @@
+game                              value (seat 0)    seqs       nnz  expl (eval)  expl (vec)  solve s
+kuhn                          -0.055555555555556      13        30     2.08e-17   -1.39e-17     0.01
+4rank                         -0.041666666666667      17        60     6.94e-18    3.12e-17     0.00
+4rank-2dealt                  -0.000000000000000      25        30     0.00e+00    0.00e+00     0.00
+4rank-2suit                   -0.041925465838509      33       256     4.86e-17    7.63e-17     0.01
+4rank-2suit-2dealt            -0.041059079233353     113      2028     2.78e-17    4.86e-17     0.01
+leduc-2p-cap1                 -0.078106343344434     385      1644     6.52e-16           -     0.03
+leduc-2p-cap2                 -0.085606424078001    1093      4920     9.37e-16           -     0.15
+leduc-2p-cap3                 -0.077904056794081    2161      9924     9.85e-16           -     0.46
+
+Kuhn: LP value + 1/18 = 2.776e-17
+
+LP vs 200,000-iteration CFR+ (criterion |diff| < 0.0001)
+  kuhn                  vectorized  CFR+ -0.055555555546  LP -0.055555555556  |diff| 9.51e-12  expl 1.32e-06     36.9s  PASS
+  kuhn                  scalar      CFR+ -0.055555555546  LP -0.055555555556  |diff| 9.51e-12  expl 1.32e-06    135.2s  PASS
+  4rank                 vectorized  CFR+ -0.041666666793  LP -0.041666666667  |diff| 1.26e-10  expl 4.23e-07     39.1s  PASS
+  4rank                 scalar      CFR+ -0.041666666793  LP -0.041666666667  |diff| 1.26e-10  expl 4.23e-07    259.9s  PASS
+  4rank-2suit           vectorized  CFR+ -0.041925466424  LP -0.041925465839  |diff| 5.85e-10  expl 4.04e-07     39.5s  PASS
+  4rank-2suit           scalar      CFR+ -0.041925466424  LP -0.041925465839  |diff| 5.85e-10  expl 4.04e-07   1164.3s  PASS
+  4rank-2suit-2dealt    vectorized  CFR+ -0.041059079308  LP -0.041059079233  |diff| 7.51e-11  expl 6.02e-08     41.5s  PASS
+
+wrote results/verify/lp_values.json
+ALL CHECKS PASS

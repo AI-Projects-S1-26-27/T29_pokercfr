@@ -1,0 +1,14 @@
+shard [0] of 1: 12 of 12 runs from matrix 'top-rung'
+DONE  13rank-4suit-2dealt-2p rm/uniform/alt     T=1000        0.00h expl=0.00047252616050228943
+DONE  13rank-4suit-2dealt-2p cfr                T=1000        0.00h expl=0.0020828305402889637
+DONE  13rank-4suit-2dealt-2p rm/linear/alt      T=1000        0.00h expl=0.000136566928949141
+DONE  13rank-4suit-2dealt-2p linear-cfr         T=1000        0.00h expl=0.003283947751246394
+DONE  13rank-4suit-2dealt-2p rm+/uniform/sim    T=1000        0.00h expl=0.0013725114933180252
+DONE  13rank-4suit-2dealt-2p rm+/uniform/alt    T=1000        0.00h expl=0.0003972663121983126
+DONE  13rank-4suit-2dealt-2p rm+/linear/sim     T=1000        0.00h expl=0.00019317966026084765
+DONE  kuhn                   lp-oracle          T=1           0.00h expl=2.0816681711721685e-17
+DONE  4rank                  lp-oracle          T=1           0.00h expl=6.938893903907228e-18
+DONE  4rank-2suit            lp-oracle          T=1           0.00h expl=4.85722573273506e-17
+DONE  4rank-2suit-2dealt     lp-oracle          T=1           0.00h expl=2.7755575615628914e-17
+DONE  13rank-4suit-2dealt-2p cfr+               T=1000        0.00h expl=1.6968944632572702e-05
+wall seconds: 57

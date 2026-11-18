@@ -1,0 +1,5 @@
+game                              value (seat 0)    seqs       nnz  expl (eval)  expl (vec)  solve s
+13rank-4suit-2dealt-2p        -0.053817559308836    5305   8087820            -    5.93e-16    39.75
+
+wrote results/verify/lp_top_rung.json
+ALL CHECKS PASS

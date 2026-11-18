@@ -1,0 +1,759 @@
+{
+  "cases": [
+    {
+      "rung": "kuhn",
+      "config": "cfr",
+      "curve": [
+        {
+          "iterations": 10,
+          "rel_regret_gap_scalar_vs_reversed": 0.0,
+          "rel_regret_gap_scalar_vs_vectorized": 1.4159366111161418e-16,
+          "exploitability": {
+            "scalar": 0.09620850020140509,
+            "scalar-reversed": 0.09620850020140509,
+            "vectorized": 0.09620850020140506
+          }
+        },
+        {
+          "iterations": 30,
+          "rel_regret_gap_scalar_vs_reversed": 0.0,
+          "rel_regret_gap_scalar_vs_vectorized": 2.336680343057372e-16,
+          "exploitability": {
+            "scalar": 0.053696784324397,
+            "scalar-reversed": 0.053696784324397,
+            "vectorized": 0.053696784324396986
+          }
+        },
+        {
+          "iterations": 100,
+          "rel_regret_gap_scalar_vs_reversed": 0.0,
+          "rel_regret_gap_scalar_vs_vectorized": 1.1926181699290502e-15,
+          "exploitability": {
+            "scalar": 0.025674735846948005,
+            "scalar-reversed": 0.025674735846948005,
+            "vectorized": 0.025674735846948037
+          }
+        },
+        {
+          "iterations": 300,
+          "rel_regret_gap_scalar_vs_reversed": 0.0,
+          "rel_regret_gap_scalar_vs_vectorized": 1.3024661167438602e-15,
+          "exploitability": {
+            "scalar": 0.013539788143389256,
+            "scalar-reversed": 0.013539788143389256,
+            "vectorized": 0.01353978814338927
+          }
+        },
+        {
+          "iterations": 1000,
+          "rel_regret_gap_scalar_vs_reversed": 0.0,
+          "rel_regret_gap_scalar_vs_vectorized": 1.3604698408280119e-15,
+          "exploitability": {
+            "scalar": 0.007269106408564319,
+            "scalar-reversed": 0.007269106408564319,
+            "vectorized": 0.007269106408564381
+          }
+        },
+        {
+          "iterations": 2000,
+          "rel_regret_gap_scalar_vs_reversed": 0.0,
+          "rel_regret_gap_scalar_vs_vectorized": 8.992457142210572e-16,
+          "exploitability": {
+            "scalar": 0.005287831426631157,
+            "scalar-reversed": 0.005287831426631157,
+            "vectorized": 0.005287831426630914
+          }
+        },
+        {
+          "iterations": 3000,
+          "rel_regret_gap_scalar_vs_reversed": 0.0,
+          "rel_regret_gap_scalar_vs_vectorized": 2.368552472175304e-15,
+          "exploitability": {
+            "scalar": 0.0041945262858865615,
+            "scalar-reversed": 0.0041945262858865615,
+            "vectorized": 0.004194526285886298
+          }
+        },
+        {
+          "iterations": 5000,
+          "rel_regret_gap_scalar_vs_reversed": 0.0,
+          "rel_regret_gap_scalar_vs_vectorized": 5.787391663661257e-15,
+          "exploitability": {
+            "scalar": 0.003302448056612138,
+            "scalar-reversed": 0.003302448056612138,
+            "vectorized": 0.0033024480566121554
+          }
+        },
+        {
+          "iterations": 10000,
+          "rel_regret_gap_scalar_vs_reversed": 0.0,
+          "rel_regret_gap_scalar_vs_vectorized": 1.5234766832732163e-15,
+          "exploitability": {
+            "scalar": 0.0023177863149744793,
+            "scalar-reversed": 0.0023177863149744793,
+            "vectorized": 0.0023177863149745
+          }
+        }
+      ]
+    },
+    {
+      "rung": "4rank",
+      "config": "cfr",
+      "curve": [
+        {
+          "iterations": 10,
+          "rel_regret_gap_scalar_vs_reversed": 1.4885648997855866e-17,
+          "rel_regret_gap_scalar_vs_vectorized": 1.1908519198284693e-16,
+          "exploitability": {
+            "scalar": 0.09586519221521321,
+            "scalar-reversed": 0.09586519221521321,
+            "vectorized": 0.09586519221521314
+          }
+        },
+        {
+          "iterations": 30,
+          "rel_regret_gap_scalar_vs_reversed": 5.956675065706143e-17,
+          "rel_regret_gap_scalar_vs_vectorized": 4.765340052564915e-16,
+          "exploitability": {
+            "scalar": 0.041002599013364976,
+            "scalar-reversed": 0.041002599013364976,
+            "vectorized": 0.041002599013364976
+          }
+        },
+        {
+          "iterations": 100,
+          "rel_regret_gap_scalar_vs_reversed": 1.4173156900013382e-16,
+          "rel_regret_gap_scalar_vs_vectorized": 2.4803024575023415e-16,
+          "exploitability": {
+            "scalar": 0.017278577792411234,
+            "scalar-reversed": 0.01727857779241123,
+            "vectorized": 0.017278577792411223
+          }
+        },
+        {
+          "iterations": 300,
+          "rel_regret_gap_scalar_vs_reversed": 8.646952518576552e-16,
+          "rel_regret_gap_scalar_vs_vectorized": 2.3280256780783026e-15,
+          "exploitability": {
+            "scalar": 0.009085972090576374,
+            "scalar-reversed": 0.009085972090576343,
+            "vectorized": 0.009085972090576426
+          }
+        },
+        {
+          "iterations": 1000,
+          "rel_regret_gap_scalar_vs_reversed": 4.681429538881818e-14,
+          "rel_regret_gap_scalar_vs_vectorized": 1.1087730968778429e-13,
+          "exploitability": {
+            "scalar": 0.005665054268365527,
+            "scalar-reversed": 0.0056650542683654645,
+            "vectorized": 0.005665054268365648
+          }
+        },
+        {
+          "iterations": 2000,
+          "rel_regret_gap_scalar_vs_reversed": 4.751011618320554e-12,
+          "rel_regret_gap_scalar_vs_vectorized": 1.1174342708725534e-11,
+          "exploitability": {
+            "scalar": 0.0033404727147565254,
+            "scalar-reversed": 0.003340472714764956,
+            "vectorized": 0.0033404727147367634
+          }
+        },
+        {
+          "iterations": 3000,
+          "rel_regret_gap_scalar_vs_reversed": 4.597345923794324e-10,
+          "rel_regret_gap_scalar_vs_vectorized": 1.0798185687617033e-09,
+          "exploitability": {
+            "scalar": 0.002372630197781188,
+            "scalar-reversed": 0.002372630198903849,
+            "vectorized": 0.0023726301951449667
+          }
+        },
+        {
+          "iterations": 5000,
+          "rel_regret_gap_scalar_vs_reversed": 3.0156183773431657e-06,
+          "rel_regret_gap_scalar_vs_vectorized": 7.085969721050777e-06,
+          "exploitability": {
+            "scalar": 0.0016633969364511884,
+            "scalar-reversed": 0.001663413166979509,
+            "vectorized": 0.0016633588465544032
+          }
+        },
+        {
+          "iterations": 10000,
+          "rel_regret_gap_scalar_vs_reversed": 0.01556437484057632,
+          "rel_regret_gap_scalar_vs_vectorized": 0.009737900012476706,
+          "exploitability": {
+            "scalar": 0.0012383906523286935,
+            "scalar-reversed": 0.0013137154444766153,
+            "vectorized": 0.0012699332291893836
+          }
+        }
+      ]
+    },
+    {
+      "rung": "4rank",
+      "config": "cfr+",
+      "curve": [
+        {
+          "iterations": 10,
+          "rel_regret_gap_scalar_vs_reversed": 1.1102230246251565e-16,
+          "rel_regret_gap_scalar_vs_vectorized": 1.942890293094024e-16,
+          "exploitability": {
+            "scalar": 0.026159578832648266,
+            "scalar-reversed": 0.026159578832648328,
+            "vectorized": 0.026159578832648335
+          }
+        },
+        {
+          "iterations": 30,
+          "rel_regret_gap_scalar_vs_reversed": 2.7755575615628914e-16,
+          "rel_regret_gap_scalar_vs_vectorized": 3.885780586188048e-16,
+          "exploitability": {
+            "scalar": 0.0035524802056070767,
+            "scalar-reversed": 0.0035524802056071635,
+            "vectorized": 0.003552480205607198
+          }
+        },
+        {
+          "iterations": 100,
+          "rel_regret_gap_scalar_vs_reversed": 1.6930901125533637e-15,
+          "rel_regret_gap_scalar_vs_vectorized": 1.0685896612017132e-15,
+          "exploitability": {
+            "scalar": 0.0006853758296761006,
+            "scalar-reversed": 0.0006853758296760416,
+            "vectorized": 0.0006853758296760451
+          }
+        },
+        {
+          "iterations": 300,
+          "rel_regret_gap_scalar_vs_reversed": 1.1553258350005535e-14,
+          "rel_regret_gap_scalar_vs_vectorized": 4.524158825347513e-15,
+          "exploitability": {
+            "scalar": 0.0001784591894421171,
+            "scalar-reversed": 0.00017845918944185343,
+            "vectorized": 0.00017845918944187772
+          }
+        },
+        {
+          "iterations": 1000,
+          "rel_regret_gap_scalar_vs_reversed": 1.6441015215917787e-13,
+          "rel_regret_gap_scalar_vs_vectorized": 1.1565748359032568e-13,
+          "exploitability": {
+            "scalar": 5.646001247901558e-05,
+            "scalar-reversed": 5.646001247894272e-05,
+            "vectorized": 5.646001247896007e-05
+          }
+        },
+        {
+          "iterations": 2000,
+          "rel_regret_gap_scalar_vs_reversed": 4.3912096181486504e-13,
+          "rel_regret_gap_scalar_vs_vectorized": 4.813927034774679e-13,
+          "exploitability": {
+            "scalar": 2.7624196083795433e-05,
+            "scalar-reversed": 2.7624196083736452e-05,
+            "vectorized": 2.7624196083649716e-05
+          }
+        },
+        {
+          "iterations": 3000,
+          "rel_regret_gap_scalar_vs_reversed": 3.3353875217301265e-13,
+          "rel_regret_gap_scalar_vs_vectorized": 5.049294315995212e-13,
+          "exploitability": {
+            "scalar": 2.2275329496619645e-05,
+            "scalar-reversed": 2.2275329496449642e-05,
+            "vectorized": 2.2275329496605767e-05
+          }
+        },
+        {
+          "iterations": 5000,
+          "rel_regret_gap_scalar_vs_reversed": 2.394057174726072e-13,
+          "rel_regret_gap_scalar_vs_vectorized": 6.475375791126226e-13,
+          "exploitability": {
+            "scalar": 1.0990512957786275e-05,
+            "scalar-reversed": 1.0990512957217285e-05,
+            "vectorized": 1.0990512957331777e-05
+          }
+        },
+        {
+          "iterations": 10000,
+          "rel_regret_gap_scalar_vs_reversed": 9.13852327144582e-13,
+          "rel_regret_gap_scalar_vs_vectorized": 3.170047557787825e-12,
+          "exploitability": {
+            "scalar": 7.1784627102035314e-06,
+            "scalar-reversed": 7.178462710678846e-06,
+            "vectorized": 7.178462710605987e-06
+          }
+        }
+      ]
+    },
+    {
+      "rung": "4rank-2suit",
+      "config": "cfr",
+      "curve": [
+        {
+          "iterations": 10,
+          "rel_regret_gap_scalar_vs_reversed": 1.0863553556216948e-16,
+          "rel_regret_gap_scalar_vs_vectorized": 2.1727107112433895e-16,
+          "exploitability": {
+            "scalar": 0.0742395102520251,
+            "scalar-reversed": 0.07423951025202508,
+            "vectorized": 0.07423951025202506
+          }
+        },
+        {
+          "iterations": 30,
+          "rel_regret_gap_scalar_vs_reversed": 2.8771607738686614e-16,
+          "rel_regret_gap_scalar_vs_vectorized": 3.836214365158215e-16,
+          "exploitability": {
+            "scalar": 0.03509405562251505,
+            "scalar-reversed": 0.03509405562251513,
+            "vectorized": 0.035094055622515025
+          }
+        },
+        {
+          "iterations": 100,
+          "rel_regret_gap_scalar_vs_reversed": 1.8018944592092862e-16,
+          "rel_regret_gap_scalar_vs_vectorized": 2.102210202410834e-16,
+          "exploitability": {
+            "scalar": 0.016230828743769847,
+            "scalar-reversed": 0.01623082874376989,
+            "vectorized": 0.01623082874376991
+          }
+        },
+        {
+          "iterations": 300,
+          "rel_regret_gap_scalar_vs_reversed": 1.360338089628324e-15,
+          "rel_regret_gap_scalar_vs_vectorized": 1.0882704717026592e-15,
+          "exploitability": {
+            "scalar": 0.009172714273802451,
+            "scalar-reversed": 0.009172714273802347,
+            "vectorized": 0.009172714273802472
+          }
+        },
+        {
+          "iterations": 1000,
+          "rel_regret_gap_scalar_vs_reversed": 2.4988307617857685e-14,
+          "rel_regret_gap_scalar_vs_vectorized": 1.516205683556021e-14,
+          "exploitability": {
+            "scalar": 0.004911360783773879,
+            "scalar-reversed": 0.004911360783774226,
+            "vectorized": 0.004911360783774323
+          }
+        },
+        {
+          "iterations": 2000,
+          "rel_regret_gap_scalar_vs_reversed": 4.429289272678959e-14,
+          "rel_regret_gap_scalar_vs_vectorized": 2.971314887088802e-14,
+          "exploitability": {
+            "scalar": 0.002988722656090667,
+            "scalar-reversed": 0.0029887226560874405,
+            "vectorized": 0.0029887226560897477
+          }
+        },
+        {
+          "iterations": 3000,
+          "rel_regret_gap_scalar_vs_reversed": 1.8684359517065675e-12,
+          "rel_regret_gap_scalar_vs_vectorized": 1.0795051951839156e-13,
+          "exploitability": {
+            "scalar": 0.00229531311869011,
+            "scalar-reversed": 0.0022953131186640545,
+            "vectorized": 0.002295313118691803
+          }
+        },
+        {
+          "iterations": 5000,
+          "rel_regret_gap_scalar_vs_reversed": 2.56221183612725e-11,
+          "rel_regret_gap_scalar_vs_vectorized": 2.311094553812043e-12,
+          "exploitability": {
+            "scalar": 0.0017799473676514826,
+            "scalar-reversed": 0.0017799473683608596,
+            "vectorized": 0.0017799473675868885
+          }
+        },
+        {
+          "iterations": 10000,
+          "rel_regret_gap_scalar_vs_reversed": 3.858719968253606e-09,
+          "rel_regret_gap_scalar_vs_vectorized": 3.4695165456565956e-10,
+          "exploitability": {
+            "scalar": 0.0013363430180817273,
+            "scalar-reversed": 0.0013363430917028747,
+            "vectorized": 0.0013363430114352731
+          }
+        }
+      ]
+    },
+    {
+      "rung": "4rank-2suit",
+      "config": "cfr+",
+      "curve": [
+        {
+          "iterations": 10,
+          "rel_regret_gap_scalar_vs_reversed": 4.163336342344337e-17,
+          "rel_regret_gap_scalar_vs_vectorized": 6.938893903907228e-17,
+          "exploitability": {
+            "scalar": 0.028794797627263814,
+            "scalar-reversed": 0.02879479762726389,
+            "vectorized": 0.028794797627263863
+          }
+        },
+        {
+          "iterations": 30,
+          "rel_regret_gap_scalar_vs_reversed": 1.249000902703301e-16,
+          "rel_regret_gap_scalar_vs_vectorized": 1.249000902703301e-16,
+          "exploitability": {
+            "scalar": 0.0045579756849805295,
+            "scalar-reversed": 0.004557975684980453,
+            "vectorized": 0.004557975684980536
+          }
+        },
+        {
+          "iterations": 100,
+          "rel_regret_gap_scalar_vs_reversed": 5.342948306008566e-16,
+          "rel_regret_gap_scalar_vs_vectorized": 3.885780586188048e-16,
+          "exploitability": {
+            "scalar": 0.000954510433932982,
+            "scalar-reversed": 0.0009545104339328467,
+            "vectorized": 0.000954510433932982
+          }
+        },
+        {
+          "iterations": 300,
+          "rel_regret_gap_scalar_vs_reversed": 2.501471252358556e-15,
+          "rel_regret_gap_scalar_vs_vectorized": 1.3322676295501878e-15,
+          "exploitability": {
+            "scalar": 0.00025849860785086276,
+            "scalar-reversed": 0.0002584986078508558,
+            "vectorized": 0.0002584986078508142
+          }
+        },
+        {
+          "iterations": 1000,
+          "rel_regret_gap_scalar_vs_reversed": 1.0630385460785874e-14,
+          "rel_regret_gap_scalar_vs_vectorized": 1.1726730697603216e-14,
+          "exploitability": {
+            "scalar": 3.1713926615675736e-05,
+            "scalar-reversed": 3.1713926615620225e-05,
+            "vectorized": 3.1713926615370425e-05
+          }
+        },
+        {
+          "iterations": 2000,
+          "rel_regret_gap_scalar_vs_reversed": 3.404221349256886e-14,
+          "rel_regret_gap_scalar_vs_vectorized": 3.7761460625063137e-14,
+          "exploitability": {
+            "scalar": 2.7690699231756183e-05,
+            "scalar-reversed": 2.7690699232123944e-05,
+            "vectorized": 2.7690699231919247e-05
+          }
+        },
+        {
+          "iterations": 3000,
+          "rel_regret_gap_scalar_vs_reversed": 1.5126788710517758e-14,
+          "rel_regret_gap_scalar_vs_vectorized": 3.302913498259841e-14,
+          "exploitability": {
+            "scalar": 1.4324241151747463e-05,
+            "scalar-reversed": 1.4324241152084e-05,
+            "vectorized": 1.4324241152090939e-05
+          }
+        },
+        {
+          "iterations": 5000,
+          "rel_regret_gap_scalar_vs_reversed": 7.39200367583237e-14,
+          "rel_regret_gap_scalar_vs_vectorized": 1.132774429812855e-13,
+          "exploitability": {
+            "scalar": 9.147583572597512e-06,
+            "scalar-reversed": 9.147583572555879e-06,
+            "vectorized": 9.147583572281792e-06
+          }
+        },
+        {
+          "iterations": 10000,
+          "rel_regret_gap_scalar_vs_reversed": 3.2097935420694057e-13,
+          "rel_regret_gap_scalar_vs_vectorized": 9.230949338245864e-13,
+          "exploitability": {
+            "scalar": 3.940357531605904e-06,
+            "scalar-reversed": 3.940357531363042e-06,
+            "vectorized": 3.9403575315191675e-06
+          }
+        }
+      ]
+    }
+  ],
+  "tie_control": {
+    "tie_key": "Qhbpp",
+    "after_one_iteration": {
+      "scalar-shuffled-0": {
+        "regret": {
+          "p": -6.505213034913027e-19,
+          "b": 6.505213034913027e-19
+        },
+        "strategy": {
+          "p": 0.0,
+          "b": 1.0
+        }
+      },
+      "scalar-shuffled-1": {
+        "regret": {
+          "p": 0.0,
+          "b": 0.0
+        },
+        "strategy": {
+          "p": 0.5,
+          "b": 0.5
+        }
+      },
+      "scalar-shuffled-2": {
+        "regret": {
+          "p": -1.0842021724855044e-18,
+          "b": 1.0842021724855044e-18
+        },
+        "strategy": {
+          "p": 0.0,
+          "b": 1.0
+        }
+      },
+      "scalar-shuffled-3": {
+        "regret": {
+          "p": -2.168404344971009e-19,
+          "b": 2.168404344971009e-19
+        },
+        "strategy": {
+          "p": 0.0,
+          "b": 1.0
+        }
+      },
+      "scalar-shuffled-4": {
+        "regret": {
+          "p": -2.168404344971009e-19,
+          "b": 2.168404344971009e-19
+        },
+        "strategy": {
+          "p": 0.0,
+          "b": 1.0
+        }
+      },
+      "scalar-shuffled-5": {
+        "regret": {
+          "p": -2.168404344971009e-19,
+          "b": 2.168404344971009e-19
+        },
+        "strategy": {
+          "p": 0.0,
+          "b": 1.0
+        }
+      },
+      "scalar": {
+        "regret": {
+          "p": -3.686287386450715e-18,
+          "b": 3.686287386450715e-18
+        },
+        "strategy": {
+          "p": 0.0,
+          "b": 1.0
+        }
+      },
+      "vectorized": {
+        "regret": {
+          "p": 0.0,
+          "b": 0.0
+        },
+        "strategy": {
+          "p": 0.5,
+          "b": 0.5
+        }
+      }
+    },
+    "cases": [
+      {
+        "rung": "4rank-2suit-4p",
+        "config": "rm/uniform/alt",
+        "curve": [
+          {
+            "iterations": 1,
+            "rel_gap_shuffled1": 1.1102230246251565e-16,
+            "rel_gap_vectorized": 3.3306690738754696e-16,
+            "rel_gap_shuffled1_vs_vectorized": 3.608224830031759e-16,
+            "nashconv_mean": {
+              "scalar": 0.8072172619047621,
+              "scalar-shuffled-1": 0.8072172619047621,
+              "vectorized": 0.8072172619047621
+            }
+          },
+          {
+            "iterations": 2,
+            "rel_gap_shuffled1": 0.005952380952380959,
+            "rel_gap_vectorized": 0.005952380952380695,
+            "rel_gap_shuffled1_vs_vectorized": 3.608224830031759e-16,
+            "nashconv_mean": {
+              "scalar": 0.5418991815476192,
+              "scalar-shuffled-1": 0.5418991815476192,
+              "vectorized": 0.5418991815476192
+            }
+          },
+          {
+            "iterations": 5,
+            "rel_gap_shuffled1": 0.0054303238565162615,
+            "rel_gap_vectorized": 0.005430323856516012,
+            "rel_gap_shuffled1_vs_vectorized": 8.326672684688674e-16,
+            "nashconv_mean": {
+              "scalar": 0.24183195626502021,
+              "scalar-shuffled-1": 0.24167852939879012,
+              "vectorized": 0.24167852939879014
+            }
+          },
+          {
+            "iterations": 10,
+            "rel_gap_shuffled1": 0.008082614163183786,
+            "rel_gap_vectorized": 0.00808261416318413,
+            "rel_gap_shuffled1_vs_vectorized": 1.7129451667086664e-15,
+            "nashconv_mean": {
+              "scalar": 0.12179430939654474,
+              "scalar-shuffled-1": 0.12156034655556464,
+              "vectorized": 0.12156034655556454
+            }
+          },
+          {
+            "iterations": 20,
+            "rel_gap_shuffled1": 0.009136302537581794,
+            "rel_gap_vectorized": 0.009136302537582809,
+            "rel_gap_shuffled1_vs_vectorized": 1.8230212694188812e-15,
+            "nashconv_mean": {
+              "scalar": 0.060087149359039416,
+              "scalar-shuffled-1": 0.059757866818973535,
+              "vectorized": 0.05975786681897344
+            }
+          },
+          {
+            "iterations": 30,
+            "rel_gap_shuffled1": 0.011644559533610144,
+            "rel_gap_vectorized": 0.011644559533611154,
+            "rel_gap_shuffled1_vs_vectorized": 1.864042027807924e-15,
+            "nashconv_mean": {
+              "scalar": 0.03908374860148817,
+              "scalar-shuffled-1": 0.039411806864758654,
+              "vectorized": 0.03941180686475877
+            }
+          },
+          {
+            "iterations": 40,
+            "rel_gap_shuffled1": 0.008035129798672732,
+            "rel_gap_vectorized": 0.008035129798672217,
+            "rel_gap_shuffled1_vs_vectorized": 2.2533843028260456e-15,
+            "nashconv_mean": {
+              "scalar": 0.03014516175808086,
+              "scalar-shuffled-1": 0.03026232090877073,
+              "vectorized": 0.030262320908770686
+            }
+          },
+          {
+            "iterations": 60,
+            "rel_gap_shuffled1": 0.015558988423628538,
+            "rel_gap_vectorized": 0.015558988423635893,
+            "rel_gap_shuffled1_vs_vectorized": 1.2934474494270024e-14,
+            "nashconv_mean": {
+              "scalar": 0.021623224462710623,
+              "scalar-shuffled-1": 0.021650340999411738,
+              "vectorized": 0.02165034099941128
+            }
+          }
+        ]
+      },
+      {
+        "rung": "4rank-2suit-4p",
+        "config": "cfr+",
+        "curve": [
+          {
+            "iterations": 1,
+            "rel_gap_shuffled1": 1.1102230246251565e-16,
+            "rel_gap_vectorized": 3.3306690738754696e-16,
+            "rel_gap_shuffled1_vs_vectorized": 3.608224830031759e-16,
+            "nashconv_mean": {
+              "scalar": 0.8072172619047621,
+              "scalar-shuffled-1": 0.8072172619047621,
+              "vectorized": 0.8072172619047621
+            }
+          },
+          {
+            "iterations": 2,
+            "rel_gap_shuffled1": 0.005952380952380959,
+            "rel_gap_vectorized": 0.005952380952380681,
+            "rel_gap_shuffled1_vs_vectorized": 3.608224830031759e-16,
+            "nashconv_mean": {
+              "scalar": 0.4569637345679013,
+              "scalar-shuffled-1": 0.4569637345679013,
+              "vectorized": 0.4569637345679013
+            }
+          },
+          {
+            "iterations": 5,
+            "rel_gap_shuffled1": 0.005504200171864426,
+            "rel_gap_vectorized": 0.005504200171864176,
+            "rel_gap_shuffled1_vs_vectorized": 3.608224830031759e-16,
+            "nashconv_mean": {
+              "scalar": 0.1422146254377113,
+              "scalar-shuffled-1": 0.1421867724254447,
+              "vectorized": 0.14218677242544414
+            }
+          },
+          {
+            "iterations": 10,
+            "rel_gap_shuffled1": 0.005504200171864426,
+            "rel_gap_vectorized": 0.005504200171864176,
+            "rel_gap_shuffled1_vs_vectorized": 4.440892098500626e-16,
+            "nashconv_mean": {
+              "scalar": 0.05591353710568926,
+              "scalar-shuffled-1": 0.056220474135020036,
+              "vectorized": 0.05622047413501998
+            }
+          },
+          {
+            "iterations": 20,
+            "rel_gap_shuffled1": 0.009121411382565501,
+            "rel_gap_vectorized": 0.009121411382566625,
+            "rel_gap_shuffled1_vs_vectorized": 1.1431827706687159e-15,
+            "nashconv_mean": {
+              "scalar": 0.020279527026753924,
+              "scalar-shuffled-1": 0.02037200335097798,
+              "vectorized": 0.02037200335097842
+            }
+          },
+          {
+            "iterations": 30,
+            "rel_gap_shuffled1": 0.00785561806766115,
+            "rel_gap_vectorized": 0.00785561806766212,
+            "rel_gap_shuffled1_vs_vectorized": 1.1379786002407855e-15,
+            "nashconv_mean": {
+              "scalar": 0.010453770613391929,
+              "scalar-shuffled-1": 0.010744635158177735,
+              "vectorized": 0.010744635158177663
+            }
+          },
+          {
+            "iterations": 40,
+            "rel_gap_shuffled1": 0.008734262921694925,
+            "rel_gap_vectorized": 0.008734262921694517,
+            "rel_gap_shuffled1_vs_vectorized": 2.312386393477084e-15,
+            "nashconv_mean": {
+              "scalar": 0.006043188024379257,
+              "scalar-shuffled-1": 0.0063130952817026685,
+              "vectorized": 0.006313095281702804
+            }
+          },
+          {
+            "iterations": 60,
+            "rel_gap_shuffled1": 0.008096626640631578,
+            "rel_gap_vectorized": 0.008096626640635048,
+            "rel_gap_shuffled1_vs_vectorized": 1.298413416714328e-13,
+            "nashconv_mean": {
+              "scalar": 0.0029642970223218977,
+              "scalar-shuffled-1": 0.0030349554520953874,
+              "vectorized": 0.0030349554520978377
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

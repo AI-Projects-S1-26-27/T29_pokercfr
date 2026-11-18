@@ -1,0 +1,11 @@
+variant                   T   train s  exploitability    value - LP
+cfr+                100,000      1095       2.955e-08     -7.67e-10
+rm+/linear/sim      100,000      1136       2.022e-06     -2.29e-06
+rm+/uniform/alt     100,000      1024       3.984e-06     +4.21e-07
+rm/uniform/alt      100,000      1579       7.184e-06     +2.17e-07
+rm+/uniform/sim     100,000      1010       1.608e-05     -2.74e-06
+rm/linear/alt       100,000      1074       1.663e-05     +8.42e-08
+cfr                 100,000      1558       8.305e-05     -1.66e-05
+linear-cfr          100,000       998       1.969e-04     -3.71e-06
+
+wrote results/verify/top_rung_long.json

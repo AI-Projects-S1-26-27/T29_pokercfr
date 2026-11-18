@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "spec": {
+    "game": "kuhn",
+    "variant": "lp-oracle",
+    "seed": 0,
+    "iterations": 1,
+    "max_seconds": 25200.0,
+    "checkpoints": [
+      1
+    ],
+    "extra": {},
+    "spec_hash": "872a39a16478070f"
+  },
+  "game": {
+    "name": "kuhn",
+    "players": 2,
+    "info_sets": 12
+  },
+  "curve": [
+    {
+      "iterations": 1,
+      "train_seconds": 0.009301017000325373,
+      "eval_seconds": 0.002105913000377768,
+      "nashconv_total": 4.163336342344337e-17,
+      "nashconv_mean": 2.0816681711721685e-17,
+      "nashconv_max": 2.7755575615628914e-17,
+      "nashconv_max_seat": 1,
+      "exploitability": 2.0816681711721685e-17,
+      "gains": [
+        1.3877787807814457e-17,
+        2.7755575615628914e-17
+      ]
+    }
+  ],
+  "time_budget": null,
+  "iterations_reached": 1,
+  "complete": true,
+  "traversal": null,
+  "env": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "node": "vm"
+  }
+}
