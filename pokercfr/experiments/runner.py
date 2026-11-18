@@ -65,8 +65,18 @@ def build_solver(spec: RunSpec):
 
     game = build_game(spec.game)
     cube = ablation_cube()
+
+    def tabular(config):
+        if TRAVERSAL == "vectorized":
+            from pokercfr.solvers.vectorized import VectorizedCFRSolver
+            # Raises TypeError on games it cannot handle (Leduc's mid-tree
+            # chance node). Deliberately not caught: a silent fall back to the
+            # scalar path would make a --traversal vectorized run a lie.
+            return VectorizedCFRSolver(game, config)
+        return CFRSolver(game, config)
+
     if spec.variant in cube:
-        return game, CFRSolver(game, cube[spec.variant])
+        return game, tabular(cube[spec.variant])
     if spec.variant.startswith("dcfr-"):
         # dcfr-a1.5-b0-g2, or dcfr-alt-a1.5-b0-g2 for alternating updates
         fields = spec.variant.split("-")[1:]
@@ -74,7 +84,7 @@ def build_solver(spec: RunSpec):
         if alternating:
             fields = fields[1:]
         parts = {f[0]: float(f[1:]) for f in fields}
-        return game, CFRSolver(game, CFRConfig(
+        return game, tabular(CFRConfig(
             averaging="linear", alternating=alternating,
             dcfr=(parts["a"], parts["b"], parts["g"])))
     if spec.variant.startswith("mccfr-"):
@@ -84,6 +94,21 @@ def build_solver(spec: RunSpec):
         from pokercfr.solvers.lp_oracle import LPOracleSolver
         return game, LPOracleSolver(game)
     raise KeyError(f"unknown variant {spec.variant!r}")
+
+
+TRAVERSALS = ("scalar", "vectorized")
+# Which traversal the tabular CFR solvers use. An implementation detail, NOT part
+# of RunSpec: both traversals must produce the same numbers, so a cell keeps one
+# spec hash either way and results stay interchangeable. Recorded in the result
+# so a run can still be attributed to the code path that produced it.
+TRAVERSAL = "scalar"
+
+
+def _set_traversal(name: str) -> None:
+    global TRAVERSAL
+    if name not in TRAVERSALS:
+        raise ValueError(f"traversal must be one of {TRAVERSALS}, got {name!r}")
+    TRAVERSAL = name
 
 
 TIME_CHECKPOINTS = (0.05, 0.1, 0.2, 0.5, 1.0)
@@ -261,6 +286,7 @@ def _record(spec: RunSpec, game, curve: list[dict], complete: bool) -> dict:
 
     return {
         "schema_version": RECORD_SCHEMA_VERSION,
+        "traversal": TRAVERSAL,
         "spec": {**spec.__dict__, "spec_hash": spec.spec_hash()},
         "game": {"name": game.name, "players": game.num_players,
                  "info_sets": game.num_info_sets()},
@@ -384,6 +410,10 @@ def main() -> None:
                          "(e.g. 600 for H1, or 3600,21600 for the H3 Leduc cells)")
     ap.add_argument("--games", default=None,
                     help="comma-separated rung-name prefixes to keep")
+    ap.add_argument("--traversal", choices=TRAVERSALS, default="scalar",
+                    help="scalar is the reference path; vectorized is the numpy "
+                         "traversal for the large Kuhn-family rungs and errors "
+                         "on games it cannot handle rather than falling back")
     ap.add_argument("--order", choices=("longest-first", "matrix"), default="longest-first",
                     help="longest-first keeps cores busy to the end; matrix "
                          "preserves registry order")
@@ -393,6 +423,8 @@ def main() -> None:
                     help="train each cell for this many wall-clock seconds instead of "
                          "a fixed iteration count (H1 is a wall-clock hypothesis)")
     args = ap.parse_args()
+
+    _set_traversal(args.traversal)
 
     from pokercfr.experiments import registry
     if args.matrix not in registry.MATRICES:

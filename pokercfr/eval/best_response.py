@@ -170,7 +170,14 @@ def best_response(game: Game, policy: Policy, responder: int) -> tuple[float, Po
                 result = value(state.apply_action(br_action[key]))
             else:
                 probs = policy[state.information_set_key(player)]
-                result = sum(probs[a] * value(state.apply_action(a)) for a in actions)
+                # Skip zero-probability branches, exactly as `collect` does.
+                # Those contribute nothing to the value, and walking them here
+                # while pass 1 pruned them means br_action has no entry for the
+                # info sets inside -- a KeyError that only a PURE opponent
+                # strategy triggers, which is why CFR policies never hit it and
+                # an exact LP solution does.
+                result = sum(probs[a] * value(state.apply_action(a))
+                             for a in actions if probs[a] > 0.0)
         memo[state] = result
         return result
 

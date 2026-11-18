@@ -68,8 +68,15 @@ class RunSpec:
             raise ValueError("RunSpec fields must be finite, JSON-serializable values") from exc
 
     def spec_hash(self) -> str:
-        payload = json.dumps(_normalize_numbers(asdict(self)), sort_keys=True,
-                             separators=(",", ":"), allow_nan=False)
+        # NOTE: integral floats are deliberately NOT normalised to ints here.
+        # Doing so is more robust in principle -- max_seconds=25200.0 and 25200
+        # would then be one cell rather than two -- but it changes every hash,
+        # and the hash is the result filename. Applying it after ~15 hours of
+        # runs had landed would have orphaned all 260 committed results,
+        # including H1 and H3. Hash stability outranks the normalisation now
+        # that results exist; revisit only if the results tree is ever reset.
+        payload = json.dumps(asdict(self), sort_keys=True, separators=(",", ":"),
+                             allow_nan=False)
         return hashlib.sha256(payload.encode()).hexdigest()[:16]
 
     @property
@@ -80,17 +87,6 @@ class RunSpec:
         # hash, so existing result hashes stay valid.
         variant = self.variant.replace("/", "-")
         return f"results/{self.game}__{variant}__s{self.seed}__{self.spec_hash()}.json"
-
-
-def _normalize_numbers(value):
-    """Make mathematically integral JSON floats share the integer identity."""
-    if isinstance(value, dict):
-        return {key: _normalize_numbers(item) for key, item in value.items()}
-    if isinstance(value, list):
-        return [_normalize_numbers(item) for item in value]
-    if isinstance(value, float) and math.isfinite(value) and value.is_integer():
-        return int(value)
-    return value
 
 
 def derive_seed(base: int, *parts: object) -> int:

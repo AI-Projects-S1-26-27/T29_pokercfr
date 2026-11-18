@@ -58,10 +58,38 @@ class TestRunSpecIdentity(unittest.TestCase):
         ]
         self.assertEqual(len({base.spec_hash(), *(s.spec_hash() for s in changed)}), 8)
 
-    def test_integral_numbers_share_one_identity(self):
+    def test_int_and_float_budgets_hash_differently(self):
+        """Documents a deliberate limitation, not an aspiration.
+
+        Normalising integral floats to ints before hashing would be more robust
+        -- time_budget 3600 and 3600.0 would then be one cell rather than two --
+        but it changes every hash, and the hash is the result filename. By the
+        time this was proposed ~15 hours of runs had landed, including all of H1
+        and H3, so applying it would have orphaned 260 committed results. Pass a
+        budget consistently (the registry always uses floats) and this cannot
+        bite. Revisit only if the results tree is ever reset.
+        """
         integer = RunSpec("leduc", "cfr", extra={"time_budget": 3600})
         floating = RunSpec("leduc", "cfr", extra={"time_budget": 3600.0})
-        self.assertEqual(integer.spec_hash(), floating.spec_hash())
+        self.assertNotEqual(integer.spec_hash(), floating.spec_hash())
+
+    def test_committed_results_still_rehash_to_their_filenames(self):
+        """The guard that would have caught the orphaning before it happened."""
+        import glob
+        import json
+        from pathlib import Path
+
+        files = glob.glob("results/*.json")
+        if not files:
+            self.skipTest("no committed results")
+        for path in files:
+            blob = json.loads(Path(path).read_text())["spec"]
+            spec = RunSpec(game=blob["game"], variant=blob["variant"], seed=blob["seed"],
+                           iterations=blob["iterations"], max_seconds=blob.get("max_seconds"),
+                           checkpoints=tuple(blob.get("checkpoints", ())),
+                           extra=blob.get("extra", {}))
+            self.assertEqual(spec.spec_hash(), blob["spec_hash"], path)
+            self.assertEqual(Path(spec.result_path).name, Path(path).name, path)
 
     def test_invalid_specs_fail_at_construction(self):
         invalid = (
