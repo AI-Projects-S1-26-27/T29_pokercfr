@@ -141,3 +141,29 @@ def test_fig_ablation_cube_on_committed_results(tmp_path):
     assert rows[0].startswith("game,effect,mean_log10")
     assert len(rows) > 1 and len(rows[1:]) % 7 == 0
     assert all(p.exists() for p in paths)
+
+
+def test_fig_nashconv_players_uses_longest_budget_per_player_count(tmp_path):
+    runs = []
+    for n, budget in ((2, 600.0), (2, 3600.0), (3, 3600.0)):
+        for s in range(2):
+            r = _fake_run(f"leduc-{n}p-cap1", "cfr", s, [0.1, 0.05], players=n, budget=budget)
+            r["game"]["info_sets"] = 100 * n
+            r["_file"] = f"leduc-{n}p-cap1__cfr__s{s}__{budget:g}.json"
+            runs.append(r)
+    plots.fig_nashconv_players(runs, variants=("cfr",), out_dir=tmp_path)
+    sources = (tmp_path / "fig_nashconv_players.sources.txt").read_text().split()
+    assert len(sources) == 4 and not any("__600" in s for s in sources)
+    rows = (tmp_path / "fig_nashconv_players.csv").read_text().splitlines()[1:]
+    assert [r.split(",")[1] for r in rows] == ["2", "3"]
+
+
+def test_fig_nashconv_players_skips_without_multiplayer_runs(tmp_path):
+    runs = [_fake_run("leduc-2p-cap1", "cfr", 0, [0.1, 0.05])]
+    with pytest.raises(NotImplementedError):
+        plots.fig_nashconv_players(runs, out_dir=tmp_path)
+
+
+def test_fig_nashconv_players_on_committed_results(tmp_path):
+    paths = plots.fig_nashconv_players(out_dir=tmp_path)
+    assert all(p.exists() for p in paths)

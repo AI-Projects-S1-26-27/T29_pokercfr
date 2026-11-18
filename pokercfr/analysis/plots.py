@@ -383,3 +383,80 @@ def fig_ablation_cube(records: list[dict] | None = None,
     csv_path = (FIGURE_DIR if out_dir is None else Path(out_dir)) / "fig_ablation_cube.csv"
     csv_path.write_text("\n".join(lines) + "\n")
     return paths + [csv_path]
+
+
+# --- NashConv vs player count (H3) ---------------------------------------------------
+# One ordinal blue ramp, light -> dark as N grows, so "more players" reads as "more"
+# without inventing new hues. Each N also gets its own marker for print.
+PLAYER_STYLE = {2: ("#86b6ef", "o"), 3: ("#3987e5", "s"), 4: ("#1c5cab", "^"),
+                5: ("#0d366b", "D"), 6: ("#08264d", "v")}
+
+
+def fig_nashconv_players(records: list[dict] | None = None, cap: int = 1,
+                         variants: tuple[str, ...] = ("cfr", "cfr+", "linear-cfr"),
+                         out_dir: Path | None = None) -> list[Path]:
+    """Mean NashConv per seat vs iterations, one line per player count, deck fixed.
+
+    H3 asks whether NashConv plateaus above zero once there are 3+ players. Plotting
+    against iterations (not one end-of-budget number) is what separates a genuine
+    plateau from a curve that is simply slower: under a fixed wall-clock budget a
+    4-player run gets ~300x fewer iterations than a 2-player one, so comparing final
+    values alone would confound "more players" with "less training".
+    The per-seat MEAN is used because total NashConv grows with N by construction.
+    """
+    records = load_results() if records is None else records
+    cells: dict[tuple[str, int], list[dict]] = {}
+    for r in records:
+        name = r["game"]["name"]
+        if not name.startswith("leduc-") or not name.endswith(f"-cap{cap}"):
+            continue
+        if r["spec"]["variant"] not in variants or r["time_budget"] is None:
+            continue
+        cells.setdefault((r["spec"]["variant"], r["game"]["players"]), []).append(r)
+    # One budget per player count: the longest available, so 2p is not a 10-minute
+    # run sitting beside hour-long multiplayer ones.
+    for key, runs in cells.items():
+        longest = max(r["time_budget"] for r in runs)
+        cells[key] = [r for r in runs if r["time_budget"] == longest]
+    panels = [v for v in variants if any(k[0] == v and k[1] > 2 for k in cells)]
+    if not panels:
+        raise NotImplementedError(f"no multiplayer leduc cap{cap} runs in results/ yet")
+
+    fig, axes = plt.subplots(1, len(panels), figsize=(2.7 * len(panels) + 0.6, 3.3),
+                             sharey=True, squeeze=False)
+    used: list[str] = []
+    lines = ["variant,players,info_sets,n_seeds,time_budget_s,iterations,nashconv_mean_median,"
+             "nashconv_mean_min,nashconv_mean_max"]
+    for ax, variant in zip(axes[0], panels, strict=True):
+        _style_axis(ax)
+        for n in sorted(p for v, p in cells if v == variant):
+            runs = cells[(variant, n)]
+            x, y, lo, hi = seed_band(runs, "iterations", "nashconv_mean")
+            color, marker = PLAYER_STYLE.get(n, ("#08264d", "x"))
+            if len(runs) > 1:
+                ax.fill_between(x, lo, hi, color=color, alpha=0.2, linewidth=0, zorder=2)
+            ax.plot(x, y, color=color, marker=marker, markersize=4, linewidth=1.6, zorder=3,
+                    label=f"{n} players")
+            ax.annotate(f"N={n}" + ("" if len(runs) > 1 else "*"), (x[-1], y[-1]),
+                        xytext=(4, 0), textcoords="offset points", fontsize=7, color=INK,
+                        va="center")
+            used += [r["_file"] for r in runs]
+            lines.append(f"{variant},{n},{runs[0]['game']['info_sets']},{len(runs)},"
+                         f"{runs[0]['time_budget']:g},{x[-1]:.0f},{y[-1]:.6g},{lo[-1]:.6g},"
+                         f"{hi[-1]:.6g}")
+        ax.set_title(VARIANT_STYLE.get(variant, {"label": variant})["label"], fontsize=9,
+                     color=INK, loc="left")
+        ax.set_xlabel("iterations", fontsize=9, color=INK)
+    axes[0][0].set_ylabel("mean NashConv per seat, chips/hand", fontsize=8, color=INK)
+    handles, labels = axes[0][0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=len(labels), frameon=False, fontsize=8,
+               bbox_to_anchor=(0.5, 1.06))
+    fig.text(0.5, -0.05, f"Leduc, raise cap {cap}, deck fixed as players are added. Line: median "
+             "over seeds; band: seed range; * = one seed only. Each N uses its longest wall-clock "
+             "budget. Sources: fig_nashconv_players.sources.txt; numbers: fig_nashconv_players.csv",
+             ha="center", fontsize=7, color=MUTED, wrap=True)
+    fig.tight_layout()
+    paths = save(fig, "fig_nashconv_players", out_dir=out_dir, sources=used)
+    csv_path = (FIGURE_DIR if out_dir is None else Path(out_dir)) / "fig_nashconv_players.csv"
+    csv_path.write_text("\n".join(lines) + "\n")
+    return paths + [csv_path]
