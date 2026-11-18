@@ -1,6 +1,9 @@
 results/4rank-2suit-2dealt__cfr+__s0__78e75157d4bbd414.json
 results/4rank-2suit-2dealt__cfr__s0__47940ae62fbf8a1a.json
 results/4rank-2suit-2dealt__linear-cfr__s0__2ea2aa9847b4aef4.json
+results/4rank-2suit-2dealt__rm+-linear-sim__s0__6529c1d767e687a8.json
+results/4rank-2suit-2dealt__rm+-uniform-alt__s0__70284b6246b0a029.json
+results/4rank-2suit-2dealt__rm+-uniform-sim__s0__cfd93dc0fa037070.json
 results/4rank-2suit-2dealt__rm-linear-alt__s0__ca3db96cb4d0245b.json
 results/4rank-2suit-2dealt__rm-uniform-alt__s0__9057339aa887a64a.json
 results/4rank-2suit__cfr+__s0__013054687a9722a5.json
@@ -13,6 +16,7 @@ results/4rank-2suit__rm-linear-alt__s0__526d6b9e3e8aa058.json
 results/4rank-2suit__rm-uniform-alt__s0__f293be41fc3a1011.json
 results/4rank__cfr+__s0__23dc82d5a84d9fd2.json
 results/4rank__cfr__s0__3522983c98b47712.json
+results/4rank__linear-cfr__s0__8c23abd21f0e282b.json
 results/4rank__rm+-linear-sim__s0__cd8e818a2692fa2f.json
 results/4rank__rm+-uniform-alt__s0__9377d654423caade.json
 results/4rank__rm+-uniform-sim__s0__e93ae771b27d6077.json
@@ -21,6 +25,8 @@ results/4rank__rm-uniform-alt__s0__6a1b6ad95d02e878.json
 results/kuhn__cfr+__s0__57d0833a0f0b40e1.json
 results/kuhn__cfr__s0__03ab73a4b6b0c72b.json
 results/kuhn__linear-cfr__s0__db8790730c2d4469.json
+results/kuhn__rm+-linear-sim__s0__3e8b839cd7ff5df3.json
 results/kuhn__rm+-uniform-alt__s0__5b7fd7b9bffa2b9e.json
+results/kuhn__rm+-uniform-sim__s0__c1c1e67430fe3e59.json
 results/kuhn__rm-linear-alt__s0__6bedf8113e99e1ed.json
 results/kuhn__rm-uniform-alt__s0__1288188cef2e711d.json
