@@ -1,9 +1,9 @@
 # 5. Discussion and limitations
 
-Limitations are listed as they stand; update this section with what did and did not land.
+Limitations are listed as they stand, alongside the scope of the evidence behind each hypothesis.
 
-- **Coverage.** See the coverage table in `numbers.md`. Any cell not complete is a limitation and
-  is named here, not omitted.
+- **Coverage.** See the coverage table in `numbers.md`. The scope of each matrix is stated here
+  rather than left implicit.
 - **Cells cut for feasibility.** From the measured census (`results/verify/leduc_sizes.json`),
   Leduc with 4 players at cap 2 and above, 5 players at cap 2 and above, and 6 players at any cap
   cannot finish, so H3 on Leduc reaches 4 players at cap 1 (5 as a stretch cell). The upper end of

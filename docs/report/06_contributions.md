@@ -16,5 +16,5 @@ _TODO: own entry._
 ## Samanyu Reddy Allipuram
 _TODO: own entry._
 
-## Sai Aashish Juryala, Vikranth Reddy Vanga Reddy, Siddhant Narlawar, Shashwat Kumar, Akhil Thindi
+## Sai Aashish Juryala, Vikranth Reddy Vanga Reddy, Siddhant Narlawar, Akhil Thindi
 _TODO: each member writes their own entry._
