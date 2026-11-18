@@ -339,3 +339,233 @@ running 96 cells on 4 cores
   rm+/uniform/sim          50% of budget  T=6,983       300.02s
   rm+/uniform/alt          50% of budget  T=3,695       300.06s
   rm+/uniform/alt          50% of budget  T=3,637       300.06s
+  rm+/uniform/sim         100% of budget  T=13,984      600.00s
+[49/96] DONE  leduc-2p-cap2          rm+/uniform/sim    T=13984      0.17h expl=2.3728e-03   | elapsed 2.17h, eta ~2.08h
+  rm+/uniform/sim         100% of budget  T=13,934      600.00s
+[50/96] DONE  leduc-2p-cap2          rm+/uniform/sim    T=13934      0.17h expl=2.3754e-03   | elapsed 2.17h, eta ~2.00h
+  rm+/uniform/alt         100% of budget  T=7,386       600.00s
+[51/96] DONE  leduc-2p-cap2          rm+/uniform/alt    T=7386       0.17h expl=9.4157e-04   | elapsed 2.17h, eta ~1.92h
+  rm+/uniform/alt         100% of budget  T=7,270       600.03s
+[52/96] DONE  leduc-2p-cap2          rm+/uniform/alt    T=7270       0.17h expl=9.5663e-04   | elapsed 2.17h, eta ~1.84h
+  rm+/uniform/alt           5% of budget  T=373          30.03s
+  rm+/uniform/alt           5% of budget  T=373          30.04s
+  rm+/uniform/alt           5% of budget  T=377          30.01s
+  rm+/linear/sim            5% of budget  T=712          30.01s
+  rm+/uniform/alt          20% of budget  T=1,473       120.07s
+  rm+/uniform/alt          20% of budget  T=1,471       120.08s
+  rm+/uniform/alt          20% of budget  T=1,487       120.08s
+  rm+/linear/sim           20% of budget  T=2,782       120.03s
+  rm+/uniform/alt          50% of budget  T=3,682       300.05s
+  rm+/uniform/alt          50% of budget  T=3,647       300.00s
+  rm+/uniform/alt          50% of budget  T=3,709       300.08s
+  rm+/linear/sim           50% of budget  T=6,920       300.03s
+  rm+/uniform/alt         100% of budget  T=7,372       600.08s
+[53/96] DONE  leduc-2p-cap2          rm+/uniform/alt    T=7372       0.17h expl=9.4378e-04   | elapsed 2.34h, eta ~1.90h
+  rm+/uniform/alt         100% of budget  T=7,313       600.02s
+[54/96] DONE  leduc-2p-cap2          rm+/uniform/alt    T=7313       0.17h expl=9.5110e-04   | elapsed 2.34h, eta ~1.82h
+  rm+/uniform/alt         100% of budget  T=7,425       600.08s
+[55/96] DONE  leduc-2p-cap2          rm+/uniform/alt    T=7425       0.17h expl=9.3676e-04   | elapsed 2.34h, eta ~1.74h
+  rm+/linear/sim          100% of budget  T=13,802      600.02s
+[56/96] DONE  leduc-2p-cap2          rm+/linear/sim     T=13802      0.17h expl=1.2247e-03   | elapsed 2.34h, eta ~1.67h
+  rm+/linear/sim            5% of budget  T=728          30.03s
+  rm+/linear/sim            5% of budget  T=727          30.01s
+  rm+/linear/sim            5% of budget  T=729          30.02s
+  rm+/linear/sim            5% of budget  T=721          30.03s
+  rm+/linear/sim           20% of budget  T=2,843       120.03s
+  rm+/linear/sim           20% of budget  T=2,829       120.01s
+  rm+/linear/sim           20% of budget  T=2,860       120.03s
+  rm+/linear/sim           20% of budget  T=2,822       120.03s
+  rm+/linear/sim           50% of budget  T=7,091       300.01s
+  rm+/linear/sim           50% of budget  T=7,052       300.03s
+  rm+/linear/sim           50% of budget  T=7,137       300.04s
+  rm+/linear/sim           50% of budget  T=7,029       300.02s
+  rm+/linear/sim          100% of budget  T=14,158      600.01s
+[57/96] DONE  leduc-2p-cap2          rm+/linear/sim     T=14158      0.17h expl=1.2211e-03   | elapsed 2.50h, eta ~1.71h
+  rm+/linear/sim          100% of budget  T=14,094      600.03s
+[58/96] DONE  leduc-2p-cap2          rm+/linear/sim     T=14094      0.17h expl=1.2521e-03   | elapsed 2.50h, eta ~1.64h
+  rm+/linear/sim          100% of budget  T=14,272      600.04s
+[59/96] DONE  leduc-2p-cap2          rm+/linear/sim     T=14272      0.17h expl=1.2479e-03   | elapsed 2.50h, eta ~1.57h
+  rm+/linear/sim          100% of budget  T=14,082      600.01s
+[60/96] DONE  leduc-2p-cap2          rm+/linear/sim     T=14082      0.17h expl=1.2407e-03   | elapsed 2.50h, eta ~1.50h
+  cfr+                      5% of budget  T=382          30.03s
+  cfr+                      5% of budget  T=382          30.05s
+  cfr+                      5% of budget  T=385          30.07s
+  cfr+                      5% of budget  T=379          30.06s
+  cfr+                     20% of budget  T=1,486       120.04s
+  cfr+                     20% of budget  T=1,495       120.01s
+  cfr+                     20% of budget  T=1,512       120.05s
+  cfr+                     20% of budget  T=1,491       120.07s
+  cfr+                     50% of budget  T=3,725       300.01s
+  cfr+                     50% of budget  T=3,728       300.08s
+  cfr+                     50% of budget  T=3,767       300.07s
+  cfr+                     50% of budget  T=3,725       300.03s
+  cfr+                    100% of budget  T=7,460       600.02s
+[61/96] DONE  leduc-2p-cap2          cfr+               T=7460       0.17h expl=7.9826e-06   | elapsed 2.67h, eta ~1.53h
+  cfr+                    100% of budget  T=7,449       600.03s
+[62/96] DONE  leduc-2p-cap2          cfr+               T=7449       0.17h expl=8.0033e-06   | elapsed 2.67h, eta ~1.46h
+  cfr+                    100% of budget  T=7,533       600.02s
+[63/96] DONE  leduc-2p-cap2          cfr+               T=7533       0.17h expl=7.6402e-06   | elapsed 2.67h, eta ~1.40h
+  cfr+                    100% of budget  T=7,443       600.02s
+[64/96] DONE  leduc-2p-cap2          cfr+               T=7443       0.17h expl=7.7106e-06   | elapsed 2.67h, eta ~1.34h
+  cfr+                      5% of budget  T=383          30.07s
+  cfr                       5% of budget  T=382          30.03s
+  cfr                       5% of budget  T=388          30.08s
+  cfr                       5% of budget  T=382          30.06s
+  cfr+                     20% of budget  T=1,498       120.01s
+  cfr                      20% of budget  T=1,495       120.07s
+  cfr                      20% of budget  T=1,517       120.08s
+  cfr                      20% of budget  T=1,496       120.02s
+  cfr+                     50% of budget  T=3,732       300.01s
+  cfr                      50% of budget  T=3,722       300.03s
+  cfr                      50% of budget  T=3,771       300.06s
+  cfr                      50% of budget  T=3,725       300.00s
+  cfr+                    100% of budget  T=7,474       600.03s
+[65/96] DONE  leduc-2p-cap2          cfr+               T=7474       0.17h expl=7.5346e-06   | elapsed 2.84h, eta ~1.35h
+  cfr                     100% of budget  T=7,433       600.06s
+[66/96] DONE  leduc-2p-cap3          cfr                T=7433       0.17h expl=1.2841e-02   | elapsed 2.84h, eta ~1.29h
+  cfr                     100% of budget  T=7,533       600.03s
+[67/96] DONE  leduc-2p-cap3          cfr                T=7533       0.17h expl=1.2896e-02   | elapsed 2.84h, eta ~1.23h
+  cfr                     100% of budget  T=7,442       600.05s
+[68/96] DONE  leduc-2p-cap3          cfr                T=7442       0.17h expl=1.2984e-02   | elapsed 2.84h, eta ~1.17h
+  cfr                       5% of budget  T=378          30.01s
+  cfr                       5% of budget  T=375          30.08s
+  rm/uniform/alt            5% of budget  T=198          30.01s
+  rm/uniform/alt            5% of budget  T=196          30.06s
+  cfr                      20% of budget  T=1,496       120.02s
+  cfr                      20% of budget  T=1,487       120.02s
+  rm/uniform/alt           20% of budget  T=790         120.08s
+  rm/uniform/alt           20% of budget  T=781         120.02s
+  cfr                      50% of budget  T=3,738       300.08s
+  cfr                      50% of budget  T=3,720       300.03s
+  rm/uniform/alt           50% of budget  T=1,973       300.03s
+  rm/uniform/alt           50% of budget  T=1,951       300.09s
+  cfr                     100% of budget  T=7,479       600.05s
+[69/96] DONE  leduc-2p-cap3          cfr                T=7479       0.17h expl=1.3102e-02   | elapsed 3.01h, eta ~1.18h
+  cfr                     100% of budget  T=7,439       600.04s
+[70/96] DONE  leduc-2p-cap3          cfr                T=7439       0.17h expl=1.2933e-02   | elapsed 3.01h, eta ~1.12h
+  rm/uniform/alt          100% of budget  T=3,945       600.06s
+[71/96] DONE  leduc-2p-cap3          rm/uniform/alt     T=3945       0.17h expl=4.9661e-03   | elapsed 3.01h, eta ~1.06h
+  rm/uniform/alt          100% of budget  T=3,903       600.12s
+[72/96] DONE  leduc-2p-cap3          rm/uniform/alt     T=3903       0.17h expl=5.1406e-03   | elapsed 3.01h, eta ~1.00h
+  linear-cfr                5% of budget  T=382          30.03s
+  linear-cfr                5% of budget  T=382          30.07s
+  linear-cfr                5% of budget  T=385          30.02s
+  rm/linear/alt             5% of budget  T=199          30.08s
+  linear-cfr               20% of budget  T=1,496       120.07s
+  linear-cfr               20% of budget  T=1,489       120.05s
+  linear-cfr               20% of budget  T=1,506       120.03s
+  rm/linear/alt            20% of budget  T=780         120.08s
+  linear-cfr               50% of budget  T=3,726       300.06s
+  linear-cfr               50% of budget  T=3,708       300.06s
+  linear-cfr               50% of budget  T=3,757       300.05s
+  rm/linear/alt            50% of budget  T=1,946       300.04s
+  linear-cfr              100% of budget  T=7,441       600.02s
+[73/96] DONE  leduc-2p-cap3          linear-cfr         T=7441       0.17h expl=8.3848e-02   | elapsed 3.17h, eta ~1.00h
+  linear-cfr              100% of budget  T=7,408       600.06s
+[74/96] DONE  leduc-2p-cap3          linear-cfr         T=7408       0.17h expl=8.8918e-02   | elapsed 3.17h, eta ~0.94h
+  linear-cfr              100% of budget  T=7,507       600.05s
+[75/96] DONE  leduc-2p-cap3          linear-cfr         T=7507       0.17h expl=7.9884e-02   | elapsed 3.17h, eta ~0.89h
+  rm/linear/alt           100% of budget  T=3,889       600.13s
+[76/96] DONE  leduc-2p-cap3          rm/linear/alt      T=3889       0.17h expl=2.6002e-02   | elapsed 3.17h, eta ~0.84h
+  rm/linear/alt             5% of budget  T=200          30.00s
+  rm/linear/alt             5% of budget  T=200          30.13s
+  rm/linear/alt             5% of budget  T=202          30.12s
+  rm/linear/alt             5% of budget  T=199          30.01s
+  rm/linear/alt            20% of budget  T=786         120.01s
+  rm/linear/alt            20% of budget  T=783         120.02s
+  rm/linear/alt            20% of budget  T=792         120.08s
+  rm/linear/alt            20% of budget  T=783         120.12s
+  rm/linear/alt            50% of budget  T=1,959       300.05s
+  rm/linear/alt            50% of budget  T=1,953       300.09s
+  rm/linear/alt            50% of budget  T=1,973       300.11s
+  rm/linear/alt            50% of budget  T=1,948       300.01s
+  rm/linear/alt           100% of budget  T=3,914       600.11s
+[77/96] DONE  leduc-2p-cap3          rm/linear/alt      T=3914       0.17h expl=2.6558e-02   | elapsed 3.34h, eta ~0.82h
+  rm/linear/alt           100% of budget  T=3,900       600.06s
+[78/96] DONE  leduc-2p-cap3          rm/linear/alt      T=3900       0.17h expl=2.5442e-02   | elapsed 3.34h, eta ~0.77h
+  rm/linear/alt           100% of budget  T=3,938       600.05s
+[79/96] DONE  leduc-2p-cap3          rm/linear/alt      T=3938       0.17h expl=2.6651e-02   | elapsed 3.34h, eta ~0.72h
+  rm/linear/alt           100% of budget  T=3,885       600.14s
+[80/96] DONE  leduc-2p-cap3          rm/linear/alt      T=3885       0.17h expl=2.6351e-02   | elapsed 3.34h, eta ~0.67h
+  rm+/uniform/sim           5% of budget  T=383          30.02s
+  rm+/uniform/sim           5% of budget  T=381          30.03s
+  rm+/uniform/sim           5% of budget  T=382          30.01s
+  rm+/uniform/sim           5% of budget  T=377          30.06s
+  rm+/uniform/sim          20% of budget  T=1,498       120.05s
+  rm+/uniform/sim          20% of budget  T=1,492       120.04s
+  rm+/uniform/sim          20% of budget  T=1,503       120.04s
+  rm+/uniform/sim          20% of budget  T=1,481       120.01s
+  rm+/uniform/sim          50% of budget  T=3,733       300.01s
+  rm+/uniform/sim          50% of budget  T=3,718       300.05s
+  rm+/uniform/sim          50% of budget  T=3,749       300.03s
+  rm+/uniform/sim          50% of budget  T=3,698       300.05s
+  rm+/uniform/sim         100% of budget  T=7,460       600.02s
+[81/96] DONE  leduc-2p-cap3          rm+/uniform/sim    T=7460       0.17h expl=3.7328e-03   | elapsed 3.51h, eta ~0.65h
+  rm+/uniform/sim         100% of budget  T=7,420       600.03s
+[82/96] DONE  leduc-2p-cap3          rm+/uniform/sim    T=7420       0.17h expl=3.7663e-03   | elapsed 3.51h, eta ~0.60h
+  rm+/uniform/sim         100% of budget  T=7,500       600.02s
+[83/96] DONE  leduc-2p-cap3          rm+/uniform/sim    T=7500       0.17h expl=3.7105e-03   | elapsed 3.51h, eta ~0.55h
+  rm+/uniform/sim         100% of budget  T=7,404       600.00s
+[84/96] DONE  leduc-2p-cap3          rm+/uniform/sim    T=7404       0.17h expl=3.7161e-03   | elapsed 3.51h, eta ~0.50h
+  rm+/uniform/sim           5% of budget  T=383          30.03s
+  rm+/uniform/alt           5% of budget  T=200          30.02s
+  rm+/uniform/alt           5% of budget  T=202          30.10s
+  rm+/uniform/alt           5% of budget  T=199          30.05s
+  rm+/uniform/sim          20% of budget  T=1,499       120.04s
+  rm+/uniform/alt          20% of budget  T=784         120.14s
+  rm+/uniform/alt          20% of budget  T=793         120.07s
+  rm+/uniform/alt          20% of budget  T=782         120.02s
+  rm+/uniform/sim          50% of budget  T=3,740       300.05s
+  rm+/uniform/alt          50% of budget  T=1,953       300.05s
+  rm+/uniform/alt          50% of budget  T=1,978       300.02s
+  rm+/uniform/alt          50% of budget  T=1,946       300.03s
+  rm+/uniform/sim         100% of budget  T=7,405       600.04s
+[85/96] DONE  leduc-2p-cap3          rm+/uniform/sim    T=7405       0.17h expl=3.7152e-03   | elapsed 3.68h, eta ~0.48h
+  rm+/uniform/alt         100% of budget  T=3,866       600.10s
+[86/96] DONE  leduc-2p-cap3          rm+/uniform/alt    T=3866       0.17h expl=2.5445e-03   | elapsed 3.68h, eta ~0.43h
+  rm+/uniform/alt         100% of budget  T=3,909       600.07s
+[87/96] DONE  leduc-2p-cap3          rm+/uniform/alt    T=3909       0.17h expl=2.5176e-03   | elapsed 3.68h, eta ~0.38h
+  rm+/uniform/alt         100% of budget  T=3,850       600.03s
+[88/96] DONE  leduc-2p-cap3          rm+/uniform/alt    T=3850       0.17h expl=2.5555e-03   | elapsed 3.68h, eta ~0.33h
+  rm+/uniform/alt           5% of budget  T=196          30.12s
+  rm+/uniform/alt           5% of budget  T=195          30.08s
+  rm+/linear/sim            5% of budget  T=375          30.06s
+  rm+/linear/sim            5% of budget  T=368          30.05s
+  rm+/uniform/alt          20% of budget  T=765         120.08s
+  rm+/uniform/alt          20% of budget  T=764         120.16s
+  rm+/linear/sim           20% of budget  T=1,459       120.05s
+  rm+/linear/sim           20% of budget  T=1,433       120.05s
+  rm+/uniform/alt          50% of budget  T=1,918       300.14s
+  rm+/uniform/alt          50% of budget  T=1,913       300.07s
+  rm+/linear/sim           50% of budget  T=3,655       300.03s
+  rm+/linear/sim           50% of budget  T=3,589       300.01s
+  rm+/uniform/alt         100% of budget  T=3,840       600.12s
+[89/96] DONE  leduc-2p-cap3          rm+/uniform/alt    T=3840       0.17h expl=2.5626e-03   | elapsed 3.84h, eta ~0.30h
+  rm+/uniform/alt         100% of budget  T=3,829       600.03s
+[90/96] DONE  leduc-2p-cap3          rm+/uniform/alt    T=3829       0.17h expl=2.5700e-03   | elapsed 3.84h, eta ~0.26h
+  rm+/linear/sim          100% of budget  T=7,329       600.04s
+[91/96] DONE  leduc-2p-cap3          rm+/linear/sim     T=7329       0.17h expl=1.6208e-03   | elapsed 3.84h, eta ~0.21h
+  rm+/linear/sim          100% of budget  T=7,196       600.01s
+[92/96] DONE  leduc-2p-cap3          rm+/linear/sim     T=7196       0.17h expl=1.7037e-03   | elapsed 3.84h, eta ~0.17h
+  rm+/linear/sim            5% of budget  T=369          30.04s
+  rm+/linear/sim            5% of budget  T=368          30.04s
+  rm+/linear/sim            5% of budget  T=369          30.01s
+  cfr+                      5% of budget  T=191          30.10s
+  rm+/linear/sim           20% of budget  T=1,445       120.02s
+  rm+/linear/sim           20% of budget  T=1,441       120.04s
+  rm+/linear/sim           20% of budget  T=1,451       120.01s
+  cfr+                     20% of budget  T=751         120.03s
+  rm+/linear/sim           50% of budget  T=3,629       300.02s
+  rm+/linear/sim           50% of budget  T=3,620       300.05s
+  rm+/linear/sim           50% of budget  T=3,648       300.06s
+  cfr+                     50% of budget  T=1,889       300.13s
+  rm+/linear/sim          100% of budget  T=7,250       600.04s
+[93/96] DONE  leduc-2p-cap3          rm+/linear/sim     T=7250       0.17h expl=1.6173e-03   | elapsed 4.01h, eta ~0.13h
+  rm+/linear/sim          100% of budget  T=7,225       600.02s
+[94/96] DONE  leduc-2p-cap3          rm+/linear/sim     T=7225       0.17h expl=1.6201e-03   | elapsed 4.01h, eta ~0.09h
+  rm+/linear/sim          100% of budget  T=7,292       600.06s
+[95/96] DONE  leduc-2p-cap3          rm+/linear/sim     T=7292       0.17h expl=1.6044e-03   | elapsed 4.01h, eta ~0.04h
+  cfr+                    100% of budget  T=3,772       600.00s
+[96/96] DONE  leduc-2p-cap3          cfr+               T=3772       0.17h expl=4.5419e-05   | elapsed 4.01h, eta ~0.00h
+
+shard complete: 96 cells in 4.01h
