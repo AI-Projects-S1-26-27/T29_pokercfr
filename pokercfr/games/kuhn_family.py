@@ -30,12 +30,30 @@ class GameConfig:
     cards_dealt: int = 1
     players: int = 2
 
+    def __post_init__(self) -> None:
+        for name in ("ranks", "suits", "cards_dealt", "players"):
+            value = getattr(self, name)
+            if isinstance(value, bool) or not isinstance(value, int):
+                raise ValueError(f"{name} must be an integer")
+        if self.ranks < 1 or self.ranks > len(RANK_NAMES):
+            raise ValueError(f"ranks must be between 1 and {len(RANK_NAMES)}")
+        if self.suits < 1 or self.suits > len(SUIT_NAMES):
+            raise ValueError(f"suits must be between 1 and {len(SUIT_NAMES)}")
+        if self.cards_dealt < 1:
+            raise ValueError("cards_dealt must be positive")
+        if self.players < 2:
+            raise ValueError("players must be at least 2")
+        if self.cards_dealt * self.players > self.ranks * self.suits:
+            raise ValueError("not enough cards in deck for all players")
+
     @property
     def deck(self) -> list[int]:
         """Cards as ints: rank * suits + suit."""
         return list(range(self.ranks * self.suits))
 
     def card_name(self, card: int) -> str:
+        if isinstance(card, bool) or not isinstance(card, int) or card < 0 or card >= len(self.deck):
+            raise ValueError(f"card index out of range: {card!r}")
         names = "JQKA"[: self.ranks] if self.ranks <= 4 else RANK_NAMES[-self.ranks:]
         rank = names[card // self.suits]
         return rank + (SUIT_NAMES[card % self.suits] if self.suits > 1 else "")
@@ -67,6 +85,10 @@ LADDER = {
 
 
 def _hand_strength(cards: tuple[int, ...], suits: int) -> tuple:
+    if not cards:
+        raise ValueError("a hand must contain at least one card")
+    if suits < 1:
+        raise ValueError("suits must be positive")
     counts = Counter(c // suits for c in cards)
     groups = sorted(counts.items(), key=lambda rc: (rc[1], rc[0]), reverse=True)
     return tuple(c for _, c in groups), tuple(r for r, _ in groups)
@@ -77,11 +99,18 @@ def _decision_histories(players: int) -> list[str]:
     out, frontier = [], [""]
     while frontier:
         h = frontier.pop()
-        if PokerState(GameConfig(players=players), ((),) * players, h).is_terminal():
+        if _history_is_terminal(h, players):
             continue
         out.append(h)
         frontier += [h + "p", h + "b"]
     return out
+
+
+def _history_is_terminal(history: str, players: int) -> bool:
+    bet = history.find("b")
+    if bet < 0:
+        return len(history) == players
+    return len(history) - bet - 1 == players - 1
 
 
 @dataclass(frozen=True)
@@ -89,6 +118,25 @@ class PokerState:
     config: GameConfig
     hands: tuple[tuple[int, ...], ...]
     history: str = ""
+
+    def __post_init__(self) -> None:
+        if len(self.hands) != self.config.players:
+            raise ValueError("hands must contain exactly one hand per player")
+        if any(len(hand) != self.config.cards_dealt for hand in self.hands):
+            raise ValueError("each hand must contain exactly cards_dealt cards")
+        cards = [card for hand in self.hands for card in hand]
+        if any(isinstance(card, bool) or not isinstance(card, int) or card not in self.config.deck
+               for card in cards):
+            raise ValueError("hands contain a card outside the configured deck")
+        if len(set(cards)) != len(cards):
+            raise ValueError("a card cannot be dealt to more than one player")
+        if any(action not in "pb" for action in self.history):
+            raise ValueError("history may contain only 'p' and 'b'")
+        if any(_history_is_terminal(self.history[:i], self.config.players)
+               for i in range(1, len(self.history))):
+            raise ValueError("history continues after the hand is terminal")
+        if len(self.history) > 2 * self.config.players - 1:
+            raise ValueError("history is longer than a hand can last")
 
     def _bet_index(self) -> int:
         return self.history.find("b")
@@ -113,10 +161,7 @@ class PokerState:
         return PokerState(self.config, self.hands, self.history + action)
 
     def is_terminal(self) -> bool:
-        n, i = self.config.players, self._bet_index()
-        if i < 0:
-            return len(self.history) == n
-        return len(self.history) - i - 1 == n - 1
+        return _history_is_terminal(self.history, self.config.players)
 
     def utilities(self) -> list[float]:
         if not self.is_terminal():
@@ -140,9 +185,13 @@ class PokerState:
         return [(pot / len(winners) if p in winners else 0) - contrib[p] for p in range(n)]
 
     def utility(self, player: int) -> float:
+        if isinstance(player, bool) or not isinstance(player, int) or not 0 <= player < self.config.players:
+            raise ValueError(f"player index out of range: {player!r}")
         return self.utilities()[player]
 
     def information_set_key(self, player: int) -> str:
+        if isinstance(player, bool) or not isinstance(player, int) or not 0 <= player < self.config.players:
+            raise ValueError(f"player index out of range: {player!r}")
         cards = "".join(self.config.card_name(c) for c in sorted(self.hands[player], reverse=True))
         return f"{cards}{self.history}"
 

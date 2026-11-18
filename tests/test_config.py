@@ -1,4 +1,8 @@
+import os
+import subprocess
+import sys
 import unittest
+from dataclasses import replace
 
 from pokercfr.core.config import RunSpec
 from pokercfr.experiments import registry
@@ -23,6 +27,42 @@ class TestResultPathIsFlat(unittest.TestCase):
         spec = RunSpec(game="kuhn", variant="rm+/uniform/alt", seed=0)
         self.assertNotIn("/", spec.result_path[len("results/"):])
         self.assertIn(spec.spec_hash(), spec.result_path)
+
+
+class TestRunSpecIdentity(unittest.TestCase):
+    def test_hash_is_stable_across_processes(self):
+        spec = RunSpec("kuhn", "cfr", extra={"z": [1, 2], "a": {"x": True}})
+        code = ("from pokercfr.core.config import RunSpec; "
+                "print(RunSpec('kuhn','cfr',extra={'z':[1,2],'a':{'x':True}}).spec_hash())")
+        env = {**os.environ, "PYTHONHASHSEED": "random"}
+        hashes = [subprocess.check_output([sys.executable, "-c", code], env=env, text=True).strip()
+                  for _ in range(2)]
+        self.assertEqual(hashes, [spec.spec_hash()] * 2)
+
+    def test_dict_insertion_order_does_not_change_hash(self):
+        left = RunSpec("kuhn", "cfr", extra={"a": 1, "b": {"x": 2, "y": 3}})
+        right = RunSpec("kuhn", "cfr", extra={"b": {"y": 3, "x": 2}, "a": 1})
+        self.assertEqual(left.spec_hash(), right.spec_hash())
+
+    def test_every_field_changes_hash(self):
+        base = RunSpec("kuhn", "cfr")
+        changed = [
+            replace(base, game="4rank"), replace(base, variant="cfr+"),
+            replace(base, seed=1), replace(base, iterations=2),
+            replace(base, max_seconds=1.0), replace(base, checkpoints=(1,)),
+            replace(base, extra={"x": 1}),
+        ]
+        self.assertEqual(len({base.spec_hash(), *(s.spec_hash() for s in changed)}), 8)
+
+    def test_full_traversal_cfr_ignores_seed(self):
+        from pokercfr.experiments.runner import build_solver
+
+        _, a = build_solver(RunSpec("kuhn", "cfr", seed=0))
+        _, b = build_solver(RunSpec("kuhn", "cfr", seed=9182))
+        a.train(100)
+        b.train(100)
+        self.assertEqual(a.regret_sum, b.regret_sum)
+        self.assertEqual(a.strategy_sum, b.strategy_sum)
 
 
 if __name__ == "__main__":
