@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import asdict, dataclass, field
 
 
@@ -45,16 +46,30 @@ class RunSpec:
             raise ValueError("game must be a non-empty string")
         if not isinstance(self.variant, str) or not self.variant:
             raise ValueError("variant must be a non-empty string")
-        if self.seed < 0:
+        if isinstance(self.seed, bool) or not isinstance(self.seed, int) or self.seed < 0:
             raise ValueError("seed must be non-negative")
-        if self.iterations < 1:
+        if isinstance(self.iterations, bool) or not isinstance(self.iterations, int) or self.iterations < 1:
             raise ValueError("iterations must be positive")
-        if self.max_seconds is not None and self.max_seconds <= 0:
+        if self.max_seconds is not None and (
+            isinstance(self.max_seconds, bool) or not isinstance(self.max_seconds, (int, float))
+            or not math.isfinite(self.max_seconds) or self.max_seconds <= 0
+        ):
             raise ValueError("max_seconds must be positive when provided")
+        previous = 0
+        for checkpoint in self.checkpoints:
+            if isinstance(checkpoint, bool) or not isinstance(checkpoint, int):
+                raise ValueError("checkpoints must be integers")
+            if checkpoint <= previous or checkpoint > self.iterations:
+                raise ValueError("checkpoints must be strictly increasing and no greater than iterations")
+            previous = checkpoint
+        try:
+            self.spec_hash()
+        except (TypeError, ValueError) as exc:
+            raise ValueError("RunSpec fields must be finite, JSON-serializable values") from exc
 
     def spec_hash(self) -> str:
-        payload = json.dumps(asdict(self), sort_keys=True, separators=(",", ":"),
-                             ensure_ascii=True, allow_nan=False)
+        payload = json.dumps(_normalize_numbers(asdict(self)), sort_keys=True,
+                             separators=(",", ":"), allow_nan=False)
         return hashlib.sha256(payload.encode()).hexdigest()[:16]
 
     @property
@@ -65,6 +80,17 @@ class RunSpec:
         # hash, so existing result hashes stay valid.
         variant = self.variant.replace("/", "-")
         return f"results/{self.game}__{variant}__s{self.seed}__{self.spec_hash()}.json"
+
+
+def _normalize_numbers(value):
+    """Make mathematically integral JSON floats share the integer identity."""
+    if isinstance(value, dict):
+        return {key: _normalize_numbers(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_normalize_numbers(item) for item in value]
+    if isinstance(value, float) and math.isfinite(value) and value.is_integer():
+        return int(value)
+    return value
 
 
 def derive_seed(base: int, *parts: object) -> int:

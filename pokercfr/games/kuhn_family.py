@@ -52,7 +52,7 @@ class GameConfig:
         return list(range(self.ranks * self.suits))
 
     def card_name(self, card: int) -> str:
-        if isinstance(card, bool) or not isinstance(card, int) or card < 0 or card >= len(self.deck):
+        if isinstance(card, bool) or not isinstance(card, int) or card < 0 or card >= self.ranks * self.suits:
             raise ValueError(f"card index out of range: {card!r}")
         names = "JQKA"[: self.ranks] if self.ranks <= 4 else RANK_NAMES[-self.ranks:]
         rank = names[card // self.suits]
@@ -132,11 +132,9 @@ class PokerState:
             raise ValueError("a card cannot be dealt to more than one player")
         if any(action not in "pb" for action in self.history):
             raise ValueError("history may contain only 'p' and 'b'")
-        if any(_history_is_terminal(self.history[:i], self.config.players)
-               for i in range(1, len(self.history))):
-            raise ValueError("history continues after the hand is terminal")
-        if len(self.history) > 2 * self.config.players - 1:
-            raise ValueError("history is longer than a hand can last")
+        for i in range(1, len(self.history)):
+            if _history_is_terminal(self.history[:i], self.config.players):
+                raise ValueError("history continues after the hand is terminal")
 
     def _bet_index(self) -> int:
         return self.history.find("b")
@@ -158,7 +156,13 @@ class PokerState:
             raise ValueError("apply_action() called on a terminal state")
         if action not in ("p", "b"):
             raise ValueError(f"illegal action: {action!r}")
-        return PokerState(self.config, self.hands, self.history + action)
+        # The parent has already passed full validation and action was checked;
+        # avoid rescanning the unchanged deal and every history prefix per node.
+        child = object.__new__(PokerState)
+        object.__setattr__(child, "config", self.config)
+        object.__setattr__(child, "hands", self.hands)
+        object.__setattr__(child, "history", self.history + action)
+        return child
 
     def is_terminal(self) -> bool:
         return _history_is_terminal(self.history, self.config.players)
@@ -185,15 +189,18 @@ class PokerState:
         return [(pot / len(winners) if p in winners else 0) - contrib[p] for p in range(n)]
 
     def utility(self, player: int) -> float:
-        if isinstance(player, bool) or not isinstance(player, int) or not 0 <= player < self.config.players:
-            raise ValueError(f"player index out of range: {player!r}")
+        _check_player(player, self.config.players)
         return self.utilities()[player]
 
     def information_set_key(self, player: int) -> str:
-        if isinstance(player, bool) or not isinstance(player, int) or not 0 <= player < self.config.players:
-            raise ValueError(f"player index out of range: {player!r}")
+        _check_player(player, self.config.players)
         cards = "".join(self.config.card_name(c) for c in sorted(self.hands[player], reverse=True))
         return f"{cards}{self.history}"
+
+
+def _check_player(player: int, players: int) -> None:
+    if isinstance(player, bool) or not isinstance(player, int) or not 0 <= player < players:
+        raise ValueError(f"player index out of range: {player!r}")
 
 
 def deal_outcomes(config: GameConfig = KUHN) -> list[tuple[PokerState, Fraction]]:

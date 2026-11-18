@@ -30,6 +30,10 @@ class TestResultPathIsFlat(unittest.TestCase):
 
 
 class TestRunSpecIdentity(unittest.TestCase):
+    def test_spec_hash_is_pinned(self):
+        """Changing this deliberately changes filenames of committed results."""
+        self.assertEqual(RunSpec("kuhn", "cfr").spec_hash(), "f622906c2dd7045a")
+
     def test_hash_is_stable_across_processes(self):
         spec = RunSpec("kuhn", "cfr", extra={"z": [1, 2], "a": {"x": True}})
         code = ("from pokercfr.core.config import RunSpec; "
@@ -53,6 +57,22 @@ class TestRunSpecIdentity(unittest.TestCase):
             replace(base, extra={"x": 1}),
         ]
         self.assertEqual(len({base.spec_hash(), *(s.spec_hash() for s in changed)}), 8)
+
+    def test_integral_numbers_share_one_identity(self):
+        integer = RunSpec("leduc", "cfr", extra={"time_budget": 3600})
+        floating = RunSpec("leduc", "cfr", extra={"time_budget": 3600.0})
+        self.assertEqual(integer.spec_hash(), floating.spec_hash())
+
+    def test_invalid_specs_fail_at_construction(self):
+        invalid = (
+            {"seed": "0"},
+            {"iterations": 10, "checkpoints": (5, 1)},
+            {"iterations": 10, "checkpoints": (5, 11)},
+            {"extra": {"x": float("nan")}},
+        )
+        for fields in invalid:
+            with self.subTest(fields=fields), self.assertRaises(ValueError):
+                RunSpec("kuhn", "cfr", **fields)
 
     def test_full_traversal_cfr_ignores_seed(self):
         from pokercfr.experiments.runner import build_solver
