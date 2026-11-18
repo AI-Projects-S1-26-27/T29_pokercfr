@@ -3,7 +3,7 @@
 # because one owner per path is what keeps eight people out of each other's
 # merge conflicts. See the ownership table in CONTRIBUTING.md.
 #
-# NOTE: Siddhant, Shashwat and Akhil have not supplied GitHub handles yet, and
+# NOTE: Siddhant and Shashwat have not supplied GitHub handles yet, and
 # Vikranth's invite (Vik217) is still pending, so their paths currently route to
 # the two leads rather than to them. That keeps review unblocked but means
 # GitHub is not yet enforcing their file ownership -- they each own their paths
@@ -23,7 +23,8 @@
 /pokercfr/core/config.py         @Samanyu-dev
 /pokercfr/eval/                  @mrlegendary25
 /pokercfr/agents/                @Samanyu-dev
-/pokercfr/analysis/              @Samanyu-dev
+/pokercfr/analysis/              @hippiegeneral
+/figures/                        @hippiegeneral
 /pokercfr/experiments/           @mrlegendary25
 /pokercfr/demo/                  @mrlegendary25
 /web/                            @mrlegendary25

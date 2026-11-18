@@ -83,7 +83,7 @@ report's Individual Contributions section matches what each member committed to.
 | Vikranth Reddy Vanga Reddy | `Vik217` (invite pending) | `pokercfr/solvers/mccfr.py`, `pokercfr/solvers/deep_cfr.py` | Outcome / external / chance-sampled MCCFR; Deep CFR (gated stretch) |
 | Siddhant Narlawar | _handle TBD_ | `pokercfr/solvers/lp_oracle.py`, `pokercfr/solvers/vectorized.py` | Sequence-form LP exact Nash oracle; vectorized traversal for large decks |
 | Shashwat Kumar | _handle TBD_ | `pokercfr/agents/`, `pokercfr/eval/tournament.py` | Baseline opponent pool; seat-rotated duplicate-deal match runner and cross-play |
-| Akhil Thindi | _handle TBD_ | `pokercfr/analysis/`, `figures/` | Bootstrap CIs, paired tests, scaling-exponent fits; every figure in the report; fresh-clone reproducibility check |
+| Akhil Thindi | @hippiegeneral | `pokercfr/analysis/`, `figures/` | Bootstrap CIs, paired tests, scaling-exponent fits; every figure in the report; fresh-clone reproducibility check |
 
 Members whose handle reads _TBD_: open a one-line PR adding it to this table and
 to `.github/CODEOWNERS`. Until then CODEOWNERS routes review of those paths to
