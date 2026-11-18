@@ -229,9 +229,16 @@ def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
                  + (f"expl={expl:.3e}" if expl is not None
                     else f"nashconv={curve[-1]['nashconv_mean']:.3e}"))
         if spec.max_seconds is not None and train_seconds >= spec.max_seconds:
-            progress(f"BUDGET {spec.game}/{spec.variant} s{spec.seed} stopped at "
-                     f"{solver.iterations:,} iters ({train_seconds/3600:.1f} h)")
-            break
+            # Truncated, so NOT complete. An iteration-budgeted cell is compared
+            # against others at equal iterations; recording a cell that stopped
+            # early as complete would let cfr (which finished) be compared with
+            # cfr+ (which did not), and alternating corners cost N x more per
+            # iteration on multiplayer rungs, so they are the ones that get cut.
+            progress(f"BUDGET {spec.game}/{spec.variant} s{spec.seed} TRUNCATED at "
+                     f"{solver.iterations:,}/{spec.iterations:,} iters "
+                     f"({train_seconds / 3600:.1f} h cap)")
+            _write_result(spec, _record(spec, game, curve, complete=False))
+            return _record(spec, game, curve, complete=False)
     _ckpt_path(spec).unlink(missing_ok=True)  # finished: drop the resume state
     return _record(spec, game, curve, complete=True)
 
