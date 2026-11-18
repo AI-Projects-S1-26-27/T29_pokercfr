@@ -1,0 +1,22 @@
+game,effect,mean_log10,ci_low,ci_high,n_seeds
+leduc-2p-cap1,RM+,-1.48216,-1.49686,-1.46845,5
+leduc-2p-cap1,linear averaging,0.0426056,-0.00158429,0.0717702,5
+leduc-2p-cap1,alternating,-0.926702,-0.965045,-0.882155,5
+leduc-2p-cap1,RM+ × linear averaging,-0.913162,-0.942699,-0.89345,5
+leduc-2p-cap1,RM+ × alternating,-0.401072,-0.428947,-0.36661,5
+leduc-2p-cap1,linear averaging × alternating,-0.185145,-0.197723,-0.17215,5
+leduc-2p-cap1,RM+ × linear averaging × alternating,-0.438287,-0.451045,-0.423086,5
+leduc-2p-cap2,RM+,-1.49502,-1.5536,-1.43643,5
+leduc-2p-cap2,linear averaging,-0.16999,-0.220758,-0.119221,5
+leduc-2p-cap2,alternating,-0.844917,-0.903869,-0.785964,5
+leduc-2p-cap2,RM+ × linear averaging,-1.05954,-1.08187,-1.03722,5
+leduc-2p-cap2,RM+ × alternating,-0.501206,-0.533502,-0.469144,5
+leduc-2p-cap2,linear averaging × alternating,-0.338269,-0.360335,-0.316203,5
+leduc-2p-cap2,RM+ × linear averaging × alternating,-0.517529,-0.572793,-0.462569,5
+leduc-2p-cap3,RM+,-1.30116,-1.33202,-1.27745,5
+leduc-2p-cap3,linear averaging,-0.0990016,-0.116091,-0.0713726,5
+leduc-2p-cap3,alternating,-0.575532,-0.639638,-0.527431,5
+leduc-2p-cap3,RM+ × linear averaging,-0.825302,-0.889973,-0.779091,5
+leduc-2p-cap3,RM+ × alternating,-0.155182,-0.166827,-0.135143,5
+leduc-2p-cap3,linear averaging × alternating,-0.345621,-0.376208,-0.323808,5
+leduc-2p-cap3,RM+ × linear averaging × alternating,-0.220136,-0.257876,-0.192796,5

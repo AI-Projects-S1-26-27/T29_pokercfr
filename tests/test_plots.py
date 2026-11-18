@@ -107,3 +107,37 @@ def test_fig_convergence_on_committed_results(tmp_path):
     assert all(p.stat().st_size > 0 for p in paths)
     for line in (tmp_path / "fig_convergence.sources.txt").read_text().split():
         assert (RESULTS.parent / line).is_file()
+
+
+def test_cube_corner_maps_named_and_raw_labels():
+    assert plots.cube_corner("cfr") == (0, 0, 0)
+    assert plots.cube_corner("cfr+") == (1, 1, 1)
+    assert plots.cube_corner("linear-cfr") == (0, 1, 0)
+    assert plots.cube_corner("rm+/uniform/alt") == (1, 0, 1)
+    assert plots.cube_corner("dcfr-a1.5-b0-g2") is None
+
+
+def test_factorial_effects_recover_planted_effects():
+    # response = 5 - 1.0*rm+ - 0.5*alt + 0.3*(rm+ AND linear), coded 0/1
+    corners = [(a, b, c) for a in (0, 1) for b in (0, 1) for c in (0, 1)]
+    table = {s: {k: 5 - 1.0 * k[0] - 0.5 * k[2] + 0.3 * k[0] * k[1] + 0.01 * s for k in corners}
+             for s in range(3)}
+    eff = plots.factorial_effects(table)
+    # main effect of rm+ averages over linear: -1.0 + 0.3/2
+    assert eff[(0,)] == pytest.approx([-0.85] * 3)
+    assert eff[(2,)] == pytest.approx([-0.5] * 3)
+    assert eff[(0, 1)] == pytest.approx([0.15] * 3)  # +/-1 coding halves a 0/1 product
+    assert eff[(0, 1, 2)] == pytest.approx([0.0] * 3)
+
+
+def test_factorial_effects_require_every_corner():
+    with pytest.raises(ValueError, match="missing cube corners"):
+        plots.factorial_effects({0: {(0, 0, 0): 1.0}})
+
+
+def test_fig_ablation_cube_on_committed_results(tmp_path):
+    paths = plots.fig_ablation_cube(out_dir=tmp_path)
+    rows = (tmp_path / "fig_ablation_cube.csv").read_text().splitlines()
+    assert rows[0].startswith("game,effect,mean_log10")
+    assert len(rows) > 1 and len(rows[1:]) % 7 == 0
+    assert all(p.exists() for p in paths)

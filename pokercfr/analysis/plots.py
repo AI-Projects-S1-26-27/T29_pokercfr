@@ -261,3 +261,125 @@ def main(argv: list[str] | None = None) -> int:
             continue
         print(f"OK    {name}: " + ", ".join(str(p.relative_to(ROOT)) for p in paths))
     return 1 if failed else 0
+
+
+# --- ablation cube (R1) ------------------------------------------------------------
+# The 2**3 factorial: regret matching (rm vs rm+), averaging (uniform vs linear),
+# update schedule (simultaneous vs alternating). Three corners carry paper names.
+CUBE_FACTORS = ("RM+", "linear averaging", "alternating")
+_NAMED_CORNERS = {"cfr": "rm/uniform/sim", "cfr+": "rm+/linear/alt", "linear-cfr": "rm/linear/sim"}
+
+
+def cube_corner(variant: str) -> tuple[int, int, int] | None:
+    """(rm+, linear, alternating) as 0/1 for an ablation-cube variant, else None."""
+    parts = _NAMED_CORNERS.get(variant, variant).split("/")
+    if len(parts) != 3 or parts[0] not in ("rm", "rm+") or parts[1] not in ("uniform", "linear") \
+            or parts[2] not in ("sim", "alt"):
+        return None
+    return int(parts[0] == "rm+"), int(parts[1] == "linear"), int(parts[2] == "alt")
+
+
+def _effect_terms() -> list[tuple[int, ...]]:
+    """Main effects, then two-way interactions, then the three-way one."""
+    return [(0,), (1,), (2,), (0, 1), (0, 2), (1, 2), (0, 1, 2)]
+
+
+def factorial_effects(table: dict[int, dict[tuple[int, int, int], float]]):
+    """Per-seed factorial effects from {seed: {corner: response}}.
+
+    Standard +/-1 contrast coding: an effect is (mean response where the contrast
+    is +1) minus (mean where it is -1). Computed within each seed, so the corners
+    are compared on the same seed -- the paired design -- and the spread across
+    seeds is what the confidence interval describes.
+    """
+    corners = [(a, b, c) for a in (0, 1) for b in (0, 1) for c in (0, 1)]
+    seeds = sorted(table)
+    for s in seeds:
+        missing = [c for c in corners if c not in table[s]]
+        if missing:
+            raise ValueError(f"seed {s} is missing cube corners {missing}")
+    out = {}
+    for term in _effect_terms():
+        per_seed = []
+        for s in seeds:
+            total = 0.0
+            for corner in corners:
+                sign = np.prod([1 if corner[f] else -1 for f in term])
+                total += sign * table[s][corner]
+            per_seed.append(total / 4)  # 4 corners on each side of every contrast
+        out[term] = per_seed
+    return out
+
+
+def _term_label(term: tuple[int, ...]) -> str:
+    return " × ".join(CUBE_FACTORS[f] for f in term)
+
+
+def fig_ablation_cube(records: list[dict] | None = None,
+                      games: tuple[str, ...] = ("leduc-2p-cap1", "leduc-2p-cap2", "leduc-2p-cap3"),
+                      time_budget: float = 600.0, out_dir: Path | None = None) -> list[Path]:
+    """Main effects and interactions of the cube on final log10 exploitability.
+
+    Response: log10 exploitability at the end of the fixed wall-clock budget, so
+    alternating updates pay for their extra traversals. An effect of -1 means
+    switching that factor on cuts exploitability tenfold. Dots are the mean over
+    seeds; bars are bootstrap 95% CIs over seeds. Also writes the numbers to
+    <figure>.csv so the report quotes them from a file rather than a plot.
+    """
+    from pokercfr.analysis.stats import bootstrap_ci
+
+    records = load_results() if records is None else records
+    tables: dict[str, dict[int, dict]] = {}
+    used: list[tuple[str, int, str]] = []
+    for r in records:
+        corner = cube_corner(r["spec"]["variant"])
+        name = r["game"]["name"]
+        if corner is None or name not in games or r["time_budget"] != time_budget:
+            continue
+        y_key, _ = _metric(r)
+        tables.setdefault(name, {}).setdefault(r["spec"]["seed"], {})[corner] = \
+            float(np.log10(r["curve"][-1][y_key]))
+        used.append((name, r["spec"]["seed"], r["_file"]))
+    # Keep only seeds that ran all 8 corners, so every effect is a paired comparison.
+    for name in tables:
+        tables[name] = {s: t for s, t in tables[name].items() if len(t) == 8}
+    rows = [g for g in games if tables.get(g)]
+    if not rows:
+        raise NotImplementedError(f"no complete {time_budget:g}s ablation cube in results/ yet")
+
+    terms = _effect_terms()
+    fig, axes = plt.subplots(1, len(rows), figsize=(2.6 * len(rows) + 1.6, 3.4), sharey=True, sharex=True,
+                             squeeze=False)
+    lines = ["game,effect,mean_log10,ci_low,ci_high,n_seeds"]
+    for ax, game in zip(axes[0], rows, strict=True):
+        effects = factorial_effects(tables[game])
+        n = len(tables[game])
+        ax.axvline(0, color=MUTED, linewidth=0.8)
+        for i, term in enumerate(terms):
+            est = bootstrap_ci(effects[term], seed=i)
+            ax.plot(est.ci95, [i, i], color="#2a78d6", linewidth=2, solid_capstyle="round")
+            ax.plot(est.value, i, "o", color="#2a78d6", markersize=6,
+                    markeredgecolor="white", markeredgewidth=1.2)
+            lines.append(f"{game},{_term_label(term)},{est.value:.6g},{est.ci95[0]:.6g},"
+                         f"{est.ci95[1]:.6g},{n}")
+        ax.set_title(f"{game}  ·  n={n} seeds", fontsize=9, color=INK, loc="left")
+        ax.grid(True, axis="x", color=GRID, linewidth=0.6)
+        ax.tick_params(colors=MUTED, labelsize=8)
+        for side in ("top", "right"):
+            ax.spines[side].set_visible(False)
+        for side in ("left", "bottom"):
+            ax.spines[side].set_color(MUTED)
+        ax.set_xlabel("effect on log10 exploitability\n(negative = better)", fontsize=8, color=INK)
+    ax0 = axes[0][0]
+    ax0.set_yticks(range(len(terms)), [_term_label(t) for t in terms], fontsize=8, color=INK)
+    ax0.invert_yaxis()
+    fig.text(0.5, -0.04, f"Response: final exploitability after {time_budget:g}s on one machine. "
+             "Dot: mean effect over seeds. Bar: bootstrap 95% CI. "
+             "Sources: fig_ablation_cube.sources.txt; numbers: fig_ablation_cube.csv",
+             ha="center", fontsize=7, color=MUTED)
+    fig.tight_layout()
+    kept = [f for g, s, f in used if g in rows and s in tables[g]]
+    paths = save(fig, "fig_ablation_cube", out_dir=out_dir, sources=kept)
+    csv_path = (FIGURE_DIR if out_dir is None else Path(out_dir)) / "fig_ablation_cube.csv"
+    csv_path.write_text("\n".join(lines) + "\n")
+    return paths + [csv_path]
