@@ -203,6 +203,9 @@ def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
         _ckpt_path(spec).unlink(missing_ok=True)
         return _record(spec, game, curve, complete=True)
 
+    step_iters = max(1, int(spec.iterations * PROGRESS_EVERY_FRACTION))
+    next_log_at = (solver.iterations // step_iters + 1) * step_iters
+
     started = time.perf_counter() - elapsed
     for target in checkpoints:
         if target > spec.iterations:
@@ -211,6 +214,18 @@ def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
             continue  # already done before the interruption
         while solver.iterations < target:
             solver.step()
+            if solver.iterations >= next_log_at:
+                done = solver.iterations / spec.iterations
+                secs = time.perf_counter() - started
+                rate = solver.iterations / secs if secs > 0 else 0.0
+                remaining = (spec.iterations - solver.iterations) / rate if rate else 0.0
+                progress(f"  {spec.game}/{spec.variant} s{spec.seed}  {done:>4.0%}  "
+                         f"T={solver.iterations:,}/{spec.iterations:,}  "
+                         f"{secs / 60:>5.1f}m  {rate:,.0f} it/s  "
+                         f"eta {remaining / 60:>5.1f}m")
+                # Derive the next marker from the iteration count, not from the
+                # float fraction: rounding let it land on the same 5% twice.
+                next_log_at = (solver.iterations // step_iters + 1) * step_iters
         train_seconds = time.perf_counter() - started
         # Evaluation time is excluded from train_seconds on purpose: a wall-clock
         # comparison must not be polluted by how often we chose to measure.
@@ -223,9 +238,7 @@ def run_one(spec: RunSpec, resume: bool = True, progress=print) -> dict:
         _save_checkpoint(spec, solver, curve, train_seconds)
         _write_result(spec, _record(spec, game, curve, complete=False))
         expl = curve[-1]["exploitability"]
-        progress(f"    {spec.game}/{spec.variant} s{spec.seed}  "
-                 f"T={solver.iterations:,}/{spec.iterations:,}  "
-                 f"{train_seconds / 60:.1f}m  "
+        progress(f"    {spec.game}/{spec.variant} s{spec.seed}  ckpt T={solver.iterations:,}  "
                  + (f"expl={expl:.3e}" if expl is not None
                     else f"nashconv={curve[-1]['nashconv_mean']:.3e}"))
         if spec.max_seconds is not None and train_seconds >= spec.max_seconds:
@@ -325,20 +338,12 @@ def _already_complete(spec: RunSpec) -> bool:
         return False
 
 
-PROGRESS_EVERY_SECONDS = 60.0
+PROGRESS_EVERY_FRACTION = 0.05   # a progress line every 5% of the budget
 
 
 def _worker(spec: RunSpec) -> str:
-    # Checkpoints are log-spaced, so the first dozen land within milliseconds on
-    # a cheap rung. Throttle to roughly one line a minute per cell: enough to
-    # see a run is alive over seven hours, without burying the DONE lines.
-    last = [0.0]
-
     def progress(line: str) -> None:
-        now = time.perf_counter()
-        if now - last[0] >= PROGRESS_EVERY_SECONDS or last[0] == 0.0:
-            last[0] = now
-            print(line, flush=True)
+        print(line, flush=True)
 
     try:
         record = run_one(spec, progress=progress)

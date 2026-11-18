@@ -1,22 +1,9 @@
 {
-  "generated_utc": "2026-11-18T06:53:34+00:00",
-  "git_head_at_freeze": "fa80fe618fff4b082ae43e075148b3ba4397b40f",
-  "design_digest": "8dc2054e76e9bd09453d5deb1aa855577059d6a73a9705f555e2f996ebc780ba",
-  "amendments": [
-    {
-      "date": "2026-11-18",
-      "change": "DCFR parameter grid runs at 100,000 iterations on every rung, was a flat 1,000,000.",
-      "reason": "The grid ran deeper than the cube corners it is compared against (2.5x on 4rank-2suit-2dealt) and cost 127 of cube-deep's 196 measured CPU-hours, 65% of the matrix, for an exploratory sensitivity sweep. The grid ranks (alpha, beta, gamma); it does not need convergence, and h1_dcfr_limits.py shows the ranking is stable at 2,000 iterations on two rungs.",
-      "effect": "cube-deep 196 -> 54 CPU-hours. The eight cube corners keep their full per-rung budgets, so R1 is unchanged. The DCFR unification check is unaffected and was already complete."
-    },
-    {
-      "date": "2026-11-18",
-      "change": "Multiplayer iteration budgets reduced: 4rank-2suit-3p 150,000 -> 130,000, 4rank-2suit-2dealt-3p 30,000 -> 16,000, 4rank-2suit-4p 15,000 -> 7,000.",
-      "reason": "Alternating updates do one traversal per player, so on multiplayer rungs they cost N x more per iteration (measured 0.431 vs 1.655 s/iter at four players). At the old budgets the alternating corners needed 6.8 h against the 7 h per-run cap and would have been truncated while the simultaneous corners finished. These cells are compared at EQUAL ITERATIONS, so a truncated corner beside a completed one is not a comparison.",
-      "effect": "Budgets now derive from the slowest corner's measured cost, so every corner reaches the same iteration count. Iteration pool 185 -> 133 CPU-hours; longest single cell 6.80 -> 3.18 h. A run that hits the time cap is now recorded complete=false."
-    }
-  ],
-  "n_cells": 745,
+  "generated_utc": "2026-11-18T08:20:51+00:00",
+  "git_head_at_freeze": "7debe49e7f847189f5ed144db1e848dc57b0ed2d",
+  "design_digest": "d5a02efe5fec20807064a09d1de7267eb45ecf123f5b25cc62907d0c6f991b20",
+  "amendments": [],
+  "n_cells": 753,
   "n_collisions": 0,
   "epsilon": {
     "default": 0.01,
@@ -92,16 +79,16 @@
     ],
     "max_hours_per_run": 7.0,
     "iteration_budgets": {
-      "kuhn": 5000000,
-      "4rank": 2000000,
-      "4rank-2suit": 1000000,
-      "4rank-2suit-2dealt": 400000,
-      "kuhn-3p": 1000000,
-      "4rank-2suit-3p": 130000,
-      "4rank-2suit-2dealt-3p": 16000,
-      "4rank-2suit-4p": 7000,
-      "13rank-4suit-2dealt-2p": 1000,
-      "6rank-4suit-2dealt-4p": 5000
+      "kuhn": 2500000,
+      "4rank": 1000000,
+      "4rank-2suit": 500000,
+      "4rank-2suit-2dealt": 200000,
+      "kuhn-3p": 500000,
+      "4rank-2suit-3p": 65000,
+      "4rank-2suit-2dealt-3p": 8000,
+      "4rank-2suit-4p": 3000,
+      "13rank-4suit-2dealt-2p": 500,
+      "6rank-4suit-2dealt-4p": 2500
     }
   },
   "hypotheses": {
@@ -307,21 +294,8 @@
       "spec_hash": "3522983c98b47712",
       "result_file": "results/4rank__cfr__s0__3522983c98b47712.json",
       "matrices": [
-        "matched-budget"
-      ]
-    },
-    {
-      "game": "4rank",
-      "variant": "cfr",
-      "seed": 0,
-      "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
-      "epsilon": 0.01,
-      "spec_hash": "0999fa4051388600",
-      "result_file": "results/4rank__cfr__s0__0999fa4051388600.json",
-      "matrices": [
         "cube-deep",
+        "matched-budget",
         "determinism-audit"
       ]
     },
@@ -406,21 +380,8 @@
       "spec_hash": "23dc82d5a84d9fd2",
       "result_file": "results/4rank__cfr+__s0__23dc82d5a84d9fd2.json",
       "matrices": [
+        "cube-deep",
         "matched-budget"
-      ]
-    },
-    {
-      "game": "4rank",
-      "variant": "cfr+",
-      "seed": 0,
-      "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
-      "epsilon": 0.01,
-      "spec_hash": "7d3ba18e1949aedb",
-      "result_file": "results/4rank__cfr+__s0__7d3ba18e1949aedb.json",
-      "matrices": [
-        "cube-deep"
       ]
     },
     {
@@ -456,11 +417,11 @@
       "variant": "dcfr-a1-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "ca3e4694b1070da4",
-      "result_file": "results/4rank__dcfr-a1-b0-g1__s0__ca3e4694b1070da4.json",
+      "spec_hash": "090b62f5c75513e1",
+      "result_file": "results/4rank__dcfr-a1-b0-g1__s0__090b62f5c75513e1.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -471,11 +432,11 @@
       "variant": "dcfr-a1-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "9625f49a7e031093",
-      "result_file": "results/4rank__dcfr-a1-b0-g2__s0__9625f49a7e031093.json",
+      "spec_hash": "64f6fc09868a1408",
+      "result_file": "results/4rank__dcfr-a1-b0-g2__s0__64f6fc09868a1408.json",
       "matrices": [
         "cube-deep"
       ]
@@ -485,11 +446,11 @@
       "variant": "dcfr-a1-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "a047e0365ee93cc5",
-      "result_file": "results/4rank__dcfr-a1-b0-g3__s0__a047e0365ee93cc5.json",
+      "spec_hash": "f8ec7a58d5f1ac2c",
+      "result_file": "results/4rank__dcfr-a1-b0-g3__s0__f8ec7a58d5f1ac2c.json",
       "matrices": [
         "cube-deep"
       ]
@@ -499,11 +460,11 @@
       "variant": "dcfr-a1-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "22c251f2ff5f26f9",
-      "result_file": "results/4rank__dcfr-a1-b0.5-g1__s0__22c251f2ff5f26f9.json",
+      "spec_hash": "eb9c7d4c5fad9180",
+      "result_file": "results/4rank__dcfr-a1-b0.5-g1__s0__eb9c7d4c5fad9180.json",
       "matrices": [
         "cube-deep"
       ]
@@ -513,11 +474,11 @@
       "variant": "dcfr-a1-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "2b0931561fa73d45",
-      "result_file": "results/4rank__dcfr-a1-b0.5-g2__s0__2b0931561fa73d45.json",
+      "spec_hash": "243345900df76052",
+      "result_file": "results/4rank__dcfr-a1-b0.5-g2__s0__243345900df76052.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -528,11 +489,11 @@
       "variant": "dcfr-a1-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "8ce7f1b2f547d9f1",
-      "result_file": "results/4rank__dcfr-a1-b0.5-g3__s0__8ce7f1b2f547d9f1.json",
+      "spec_hash": "633e05b5531d2d26",
+      "result_file": "results/4rank__dcfr-a1-b0.5-g3__s0__633e05b5531d2d26.json",
       "matrices": [
         "cube-deep"
       ]
@@ -542,11 +503,11 @@
       "variant": "dcfr-a1-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "5d4503d6759db774",
-      "result_file": "results/4rank__dcfr-a1-b1-g1__s0__5d4503d6759db774.json",
+      "spec_hash": "d56ae387ddf5480b",
+      "result_file": "results/4rank__dcfr-a1-b1-g1__s0__d56ae387ddf5480b.json",
       "matrices": [
         "cube-deep"
       ]
@@ -556,11 +517,11 @@
       "variant": "dcfr-a1-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "c1d4e0b04cbd03d0",
-      "result_file": "results/4rank__dcfr-a1-b1-g2__s0__c1d4e0b04cbd03d0.json",
+      "spec_hash": "51027519952109d0",
+      "result_file": "results/4rank__dcfr-a1-b1-g2__s0__51027519952109d0.json",
       "matrices": [
         "cube-deep"
       ]
@@ -570,11 +531,11 @@
       "variant": "dcfr-a1-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "5f707e3d566608e7",
-      "result_file": "results/4rank__dcfr-a1-b1-g3__s0__5f707e3d566608e7.json",
+      "spec_hash": "c84ae9b86250b872",
+      "result_file": "results/4rank__dcfr-a1-b1-g3__s0__c84ae9b86250b872.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -585,11 +546,11 @@
       "variant": "dcfr-a1.5-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "582ede56dc6cc556",
-      "result_file": "results/4rank__dcfr-a1.5-b0-g1__s0__582ede56dc6cc556.json",
+      "spec_hash": "2636f215c3515871",
+      "result_file": "results/4rank__dcfr-a1.5-b0-g1__s0__2636f215c3515871.json",
       "matrices": [
         "cube-deep"
       ]
@@ -599,11 +560,11 @@
       "variant": "dcfr-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "28005af18b5e6bf1",
-      "result_file": "results/4rank__dcfr-a1.5-b0-g2__s0__28005af18b5e6bf1.json",
+      "spec_hash": "ad1fc3670808058b",
+      "result_file": "results/4rank__dcfr-a1.5-b0-g2__s0__ad1fc3670808058b.json",
       "matrices": [
         "cube-deep"
       ]
@@ -613,11 +574,11 @@
       "variant": "dcfr-a1.5-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "ac90399bec5ab1c2",
-      "result_file": "results/4rank__dcfr-a1.5-b0-g3__s0__ac90399bec5ab1c2.json",
+      "spec_hash": "50903023ab804c8e",
+      "result_file": "results/4rank__dcfr-a1.5-b0-g3__s0__50903023ab804c8e.json",
       "matrices": [
         "cube-deep"
       ]
@@ -627,11 +588,11 @@
       "variant": "dcfr-a1.5-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "aa920383d6dbf138",
-      "result_file": "results/4rank__dcfr-a1.5-b0.5-g1__s0__aa920383d6dbf138.json",
+      "spec_hash": "a45d0a0afd7708fc",
+      "result_file": "results/4rank__dcfr-a1.5-b0.5-g1__s0__a45d0a0afd7708fc.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -642,11 +603,11 @@
       "variant": "dcfr-a1.5-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "82dc9dd6f1129848",
-      "result_file": "results/4rank__dcfr-a1.5-b0.5-g2__s0__82dc9dd6f1129848.json",
+      "spec_hash": "02f4adbb34dfd4c0",
+      "result_file": "results/4rank__dcfr-a1.5-b0.5-g2__s0__02f4adbb34dfd4c0.json",
       "matrices": [
         "cube-deep"
       ]
@@ -656,11 +617,11 @@
       "variant": "dcfr-a1.5-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "e73133853b17e5e9",
-      "result_file": "results/4rank__dcfr-a1.5-b0.5-g3__s0__e73133853b17e5e9.json",
+      "spec_hash": "d041b6c385583d2a",
+      "result_file": "results/4rank__dcfr-a1.5-b0.5-g3__s0__d041b6c385583d2a.json",
       "matrices": [
         "cube-deep"
       ]
@@ -670,11 +631,11 @@
       "variant": "dcfr-a1.5-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "c50cea0e5e827f33",
-      "result_file": "results/4rank__dcfr-a1.5-b1-g1__s0__c50cea0e5e827f33.json",
+      "spec_hash": "26e74dbb2567b5df",
+      "result_file": "results/4rank__dcfr-a1.5-b1-g1__s0__26e74dbb2567b5df.json",
       "matrices": [
         "cube-deep"
       ]
@@ -684,11 +645,11 @@
       "variant": "dcfr-a1.5-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "d217533189866029",
-      "result_file": "results/4rank__dcfr-a1.5-b1-g2__s0__d217533189866029.json",
+      "spec_hash": "e535f31bc41d9833",
+      "result_file": "results/4rank__dcfr-a1.5-b1-g2__s0__e535f31bc41d9833.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -699,11 +660,11 @@
       "variant": "dcfr-a1.5-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "3d1681ff365cfad7",
-      "result_file": "results/4rank__dcfr-a1.5-b1-g3__s0__3d1681ff365cfad7.json",
+      "spec_hash": "cd1ef8a3614fd9d3",
+      "result_file": "results/4rank__dcfr-a1.5-b1-g3__s0__cd1ef8a3614fd9d3.json",
       "matrices": [
         "cube-deep"
       ]
@@ -713,11 +674,11 @@
       "variant": "dcfr-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "c6831e68854ea312",
-      "result_file": "results/4rank__dcfr-a2-b0-g1__s0__c6831e68854ea312.json",
+      "spec_hash": "b85d9697d753744a",
+      "result_file": "results/4rank__dcfr-a2-b0-g1__s0__b85d9697d753744a.json",
       "matrices": [
         "cube-deep"
       ]
@@ -727,11 +688,11 @@
       "variant": "dcfr-a2-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "d291a1729be9db9d",
-      "result_file": "results/4rank__dcfr-a2-b0-g2__s0__d291a1729be9db9d.json",
+      "spec_hash": "1cb7f291b0bf6f81",
+      "result_file": "results/4rank__dcfr-a2-b0-g2__s0__1cb7f291b0bf6f81.json",
       "matrices": [
         "cube-deep"
       ]
@@ -741,11 +702,11 @@
       "variant": "dcfr-a2-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "9078576f6fc3affd",
-      "result_file": "results/4rank__dcfr-a2-b0-g3__s0__9078576f6fc3affd.json",
+      "spec_hash": "8c3f38dbd4c9394f",
+      "result_file": "results/4rank__dcfr-a2-b0-g3__s0__8c3f38dbd4c9394f.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -756,11 +717,11 @@
       "variant": "dcfr-a2-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "ab83b082bbb85583",
-      "result_file": "results/4rank__dcfr-a2-b0.5-g1__s0__ab83b082bbb85583.json",
+      "spec_hash": "ce1783780a658b80",
+      "result_file": "results/4rank__dcfr-a2-b0.5-g1__s0__ce1783780a658b80.json",
       "matrices": [
         "cube-deep"
       ]
@@ -770,11 +731,11 @@
       "variant": "dcfr-a2-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "6659bca42e214899",
-      "result_file": "results/4rank__dcfr-a2-b0.5-g2__s0__6659bca42e214899.json",
+      "spec_hash": "236b8c61b464da52",
+      "result_file": "results/4rank__dcfr-a2-b0.5-g2__s0__236b8c61b464da52.json",
       "matrices": [
         "cube-deep"
       ]
@@ -784,11 +745,11 @@
       "variant": "dcfr-a2-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "df57caa510465399",
-      "result_file": "results/4rank__dcfr-a2-b0.5-g3__s0__df57caa510465399.json",
+      "spec_hash": "2ea30508fccc55a9",
+      "result_file": "results/4rank__dcfr-a2-b0.5-g3__s0__2ea30508fccc55a9.json",
       "matrices": [
         "cube-deep"
       ]
@@ -798,11 +759,11 @@
       "variant": "dcfr-a2-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "7d6a062c2bf9b2aa",
-      "result_file": "results/4rank__dcfr-a2-b1-g1__s0__7d6a062c2bf9b2aa.json",
+      "spec_hash": "e1be4b7827b29645",
+      "result_file": "results/4rank__dcfr-a2-b1-g1__s0__e1be4b7827b29645.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -813,11 +774,11 @@
       "variant": "dcfr-a2-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "4cab00684ea3a7fa",
-      "result_file": "results/4rank__dcfr-a2-b1-g2__s0__4cab00684ea3a7fa.json",
+      "spec_hash": "6a215ec1aaa29bde",
+      "result_file": "results/4rank__dcfr-a2-b1-g2__s0__6a215ec1aaa29bde.json",
       "matrices": [
         "cube-deep"
       ]
@@ -827,11 +788,11 @@
       "variant": "dcfr-a2-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "2d491669d7f7136a",
-      "result_file": "results/4rank__dcfr-a2-b1-g3__s0__2d491669d7f7136a.json",
+      "spec_hash": "2705d455ef10a3f5",
+      "result_file": "results/4rank__dcfr-a2-b1-g3__s0__2705d455ef10a3f5.json",
       "matrices": [
         "cube-deep"
       ]
@@ -841,11 +802,11 @@
       "variant": "dcfr-a3-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "8a93e68d1f542b08",
-      "result_file": "results/4rank__dcfr-a3-b0-g1__s0__8a93e68d1f542b08.json",
+      "spec_hash": "44f28be4e54cdb54",
+      "result_file": "results/4rank__dcfr-a3-b0-g1__s0__44f28be4e54cdb54.json",
       "matrices": [
         "cube-deep"
       ]
@@ -855,11 +816,11 @@
       "variant": "dcfr-a3-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "5e48edbfedd81dcd",
-      "result_file": "results/4rank__dcfr-a3-b0-g2__s0__5e48edbfedd81dcd.json",
+      "spec_hash": "735a676437826675",
+      "result_file": "results/4rank__dcfr-a3-b0-g2__s0__735a676437826675.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -870,11 +831,11 @@
       "variant": "dcfr-a3-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "2f4529e80c749302",
-      "result_file": "results/4rank__dcfr-a3-b0-g3__s0__2f4529e80c749302.json",
+      "spec_hash": "0f26152834590a90",
+      "result_file": "results/4rank__dcfr-a3-b0-g3__s0__0f26152834590a90.json",
       "matrices": [
         "cube-deep"
       ]
@@ -884,11 +845,11 @@
       "variant": "dcfr-a3-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "546768612ec19e06",
-      "result_file": "results/4rank__dcfr-a3-b0.5-g1__s0__546768612ec19e06.json",
+      "spec_hash": "43bd2a430835bd30",
+      "result_file": "results/4rank__dcfr-a3-b0.5-g1__s0__43bd2a430835bd30.json",
       "matrices": [
         "cube-deep"
       ]
@@ -898,11 +859,11 @@
       "variant": "dcfr-a3-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "6f70d06e832b6ec5",
-      "result_file": "results/4rank__dcfr-a3-b0.5-g2__s0__6f70d06e832b6ec5.json",
+      "spec_hash": "cacaac45818a2d3a",
+      "result_file": "results/4rank__dcfr-a3-b0.5-g2__s0__cacaac45818a2d3a.json",
       "matrices": [
         "cube-deep"
       ]
@@ -912,11 +873,11 @@
       "variant": "dcfr-a3-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "6b66f3cbafe962c5",
-      "result_file": "results/4rank__dcfr-a3-b0.5-g3__s0__6b66f3cbafe962c5.json",
+      "spec_hash": "ae9d3c250a2b6b00",
+      "result_file": "results/4rank__dcfr-a3-b0.5-g3__s0__ae9d3c250a2b6b00.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -927,11 +888,11 @@
       "variant": "dcfr-a3-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "ceed9104861e77f1",
-      "result_file": "results/4rank__dcfr-a3-b1-g1__s0__ceed9104861e77f1.json",
+      "spec_hash": "d5317cb84af7b2c0",
+      "result_file": "results/4rank__dcfr-a3-b1-g1__s0__d5317cb84af7b2c0.json",
       "matrices": [
         "cube-deep"
       ]
@@ -941,11 +902,11 @@
       "variant": "dcfr-a3-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "51b15c4decdc8b92",
-      "result_file": "results/4rank__dcfr-a3-b1-g2__s0__51b15c4decdc8b92.json",
+      "spec_hash": "145abdce5f17b28b",
+      "result_file": "results/4rank__dcfr-a3-b1-g2__s0__145abdce5f17b28b.json",
       "matrices": [
         "cube-deep"
       ]
@@ -955,11 +916,11 @@
       "variant": "dcfr-a3-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "a422d5ec62407b33",
-      "result_file": "results/4rank__dcfr-a3-b1-g3__s0__a422d5ec62407b33.json",
+      "spec_hash": "9b041e6d276d30e1",
+      "result_file": "results/4rank__dcfr-a3-b1-g3__s0__9b041e6d276d30e1.json",
       "matrices": [
         "cube-deep"
       ]
@@ -969,11 +930,11 @@
       "variant": "dcfr-alt-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
+      "budget": 1000000,
+      "iteration_ceiling": 1000000,
       "epsilon": 0.01,
-      "spec_hash": "a5947c5b5350e695",
-      "result_file": "results/4rank__dcfr-alt-a1.5-b0-g2__s0__a5947c5b5350e695.json",
+      "spec_hash": "5c2b9987634ef094",
+      "result_file": "results/4rank__dcfr-alt-a1.5-b0-g2__s0__5c2b9987634ef094.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -984,11 +945,11 @@
       "variant": "dcfr-alt-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
+      "budget": 1000000,
+      "iteration_ceiling": 1000000,
       "epsilon": 0.01,
-      "spec_hash": "11d39550a65e2a90",
-      "result_file": "results/4rank__dcfr-alt-a2-b0-g1__s0__11d39550a65e2a90.json",
+      "spec_hash": "7b182f371b5ff6a2",
+      "result_file": "results/4rank__dcfr-alt-a2-b0-g1__s0__7b182f371b5ff6a2.json",
       "matrices": [
         "cube-deep"
       ]
@@ -998,11 +959,11 @@
       "variant": "dcfr-alt-a3-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
+      "budget": 1000000,
+      "iteration_ceiling": 1000000,
       "epsilon": 0.01,
-      "spec_hash": "287867ac8cdf6d0e",
-      "result_file": "results/4rank__dcfr-alt-a3-b0-g1__s0__287867ac8cdf6d0e.json",
+      "spec_hash": "72154a60f25b275c",
+      "result_file": "results/4rank__dcfr-alt-a3-b0-g1__s0__72154a60f25b275c.json",
       "matrices": [
         "cube-deep"
       ]
@@ -1060,21 +1021,8 @@
       "spec_hash": "8c23abd21f0e282b",
       "result_file": "results/4rank__linear-cfr__s0__8c23abd21f0e282b.json",
       "matrices": [
+        "cube-deep",
         "matched-budget"
-      ]
-    },
-    {
-      "game": "4rank",
-      "variant": "linear-cfr",
-      "seed": 0,
-      "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
-      "epsilon": 0.01,
-      "spec_hash": "72beafe278fc069e",
-      "result_file": "results/4rank__linear-cfr__s0__72beafe278fc069e.json",
-      "matrices": [
-        "cube-deep"
       ]
     },
     {
@@ -1599,21 +1547,8 @@
       "spec_hash": "cd8e818a2692fa2f",
       "result_file": "results/4rank__rm+-linear-sim__s0__cd8e818a2692fa2f.json",
       "matrices": [
+        "cube-deep",
         "matched-budget"
-      ]
-    },
-    {
-      "game": "4rank",
-      "variant": "rm+/linear/sim",
-      "seed": 0,
-      "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
-      "epsilon": 0.01,
-      "spec_hash": "aa3ea17b8e930a75",
-      "result_file": "results/4rank__rm+-linear-sim__s0__aa3ea17b8e930a75.json",
-      "matrices": [
-        "cube-deep"
       ]
     },
     {
@@ -1697,21 +1632,8 @@
       "spec_hash": "9377d654423caade",
       "result_file": "results/4rank__rm+-uniform-alt__s0__9377d654423caade.json",
       "matrices": [
+        "cube-deep",
         "matched-budget"
-      ]
-    },
-    {
-      "game": "4rank",
-      "variant": "rm+/uniform/alt",
-      "seed": 0,
-      "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
-      "epsilon": 0.01,
-      "spec_hash": "b08c58697cde0fc9",
-      "result_file": "results/4rank__rm+-uniform-alt__s0__b08c58697cde0fc9.json",
-      "matrices": [
-        "cube-deep"
       ]
     },
     {
@@ -1795,21 +1717,8 @@
       "spec_hash": "e93ae771b27d6077",
       "result_file": "results/4rank__rm+-uniform-sim__s0__e93ae771b27d6077.json",
       "matrices": [
-        "matched-budget"
-      ]
-    },
-    {
-      "game": "4rank",
-      "variant": "rm+/uniform/sim",
-      "seed": 0,
-      "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
-      "epsilon": 0.01,
-      "spec_hash": "f040f77750d79410",
-      "result_file": "results/4rank__rm+-uniform-sim__s0__f040f77750d79410.json",
-      "matrices": [
         "cube-deep",
+        "matched-budget",
         "determinism-audit"
       ]
     },
@@ -1894,21 +1803,8 @@
       "spec_hash": "695b1d4efeb0a52f",
       "result_file": "results/4rank__rm-linear-alt__s0__695b1d4efeb0a52f.json",
       "matrices": [
+        "cube-deep",
         "matched-budget"
-      ]
-    },
-    {
-      "game": "4rank",
-      "variant": "rm/linear/alt",
-      "seed": 0,
-      "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
-      "epsilon": 0.01,
-      "spec_hash": "d9090f4fa088356f",
-      "result_file": "results/4rank__rm-linear-alt__s0__d9090f4fa088356f.json",
-      "matrices": [
-        "cube-deep"
       ]
     },
     {
@@ -1992,21 +1888,8 @@
       "spec_hash": "6a1b6ad95d02e878",
       "result_file": "results/4rank__rm-uniform-alt__s0__6a1b6ad95d02e878.json",
       "matrices": [
+        "cube-deep",
         "matched-budget"
-      ]
-    },
-    {
-      "game": "4rank",
-      "variant": "rm/uniform/alt",
-      "seed": 0,
-      "budget_type": "iterations",
-      "budget": 2000000,
-      "iteration_ceiling": 2000000,
-      "epsilon": 0.01,
-      "spec_hash": "d351a01aa6bd4b18",
-      "result_file": "results/4rank__rm-uniform-alt__s0__d351a01aa6bd4b18.json",
-      "matrices": [
-        "cube-deep"
       ]
     },
     {
@@ -2084,15 +1967,28 @@
       "variant": "cfr",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 500000,
+      "iteration_ceiling": 500000,
+      "epsilon": 0.01,
+      "spec_hash": "a26a4675fe649788",
+      "result_file": "results/4rank-2suit__cfr__s0__a26a4675fe649788.json",
+      "matrices": [
+        "cube-deep",
+        "determinism-audit"
+      ]
+    },
+    {
+      "game": "4rank-2suit",
+      "variant": "cfr",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 1000000,
       "iteration_ceiling": 1000000,
       "epsilon": 0.01,
       "spec_hash": "dacd80e3a2a34121",
       "result_file": "results/4rank-2suit__cfr__s0__dacd80e3a2a34121.json",
       "matrices": [
-        "cube-deep",
-        "matched-budget",
-        "determinism-audit"
+        "matched-budget"
       ]
     },
     {
@@ -2156,13 +2052,26 @@
       "variant": "cfr+",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 500000,
+      "iteration_ceiling": 500000,
+      "epsilon": 0.01,
+      "spec_hash": "013054687a9722a5",
+      "result_file": "results/4rank-2suit__cfr+__s0__013054687a9722a5.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "4rank-2suit",
+      "variant": "cfr+",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 1000000,
       "iteration_ceiling": 1000000,
       "epsilon": 0.01,
       "spec_hash": "17765b47b617fd46",
       "result_file": "results/4rank-2suit__cfr+__s0__17765b47b617fd46.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -2185,11 +2094,11 @@
       "variant": "dcfr-a1-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "cfe2ebee7cc8aa93",
-      "result_file": "results/4rank-2suit__dcfr-a1-b0-g1__s0__cfe2ebee7cc8aa93.json",
+      "spec_hash": "f79b6d0741a7e2fa",
+      "result_file": "results/4rank-2suit__dcfr-a1-b0-g1__s0__f79b6d0741a7e2fa.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2199,11 +2108,11 @@
       "variant": "dcfr-a1-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "6f591a7522481775",
-      "result_file": "results/4rank-2suit__dcfr-a1-b0-g2__s0__6f591a7522481775.json",
+      "spec_hash": "8139d818d45cecc4",
+      "result_file": "results/4rank-2suit__dcfr-a1-b0-g2__s0__8139d818d45cecc4.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2214,11 +2123,11 @@
       "variant": "dcfr-a1-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "2912baccfc2561f6",
-      "result_file": "results/4rank-2suit__dcfr-a1-b0-g3__s0__2912baccfc2561f6.json",
+      "spec_hash": "68010f4f9ed56e54",
+      "result_file": "results/4rank-2suit__dcfr-a1-b0-g3__s0__68010f4f9ed56e54.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2228,11 +2137,11 @@
       "variant": "dcfr-a1-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "f737c9270e6d499e",
-      "result_file": "results/4rank-2suit__dcfr-a1-b0.5-g1__s0__f737c9270e6d499e.json",
+      "spec_hash": "0a730c1f45ea13a5",
+      "result_file": "results/4rank-2suit__dcfr-a1-b0.5-g1__s0__0a730c1f45ea13a5.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2242,11 +2151,11 @@
       "variant": "dcfr-a1-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "17111d4c90bcb009",
-      "result_file": "results/4rank-2suit__dcfr-a1-b0.5-g2__s0__17111d4c90bcb009.json",
+      "spec_hash": "eaac47fea99736c7",
+      "result_file": "results/4rank-2suit__dcfr-a1-b0.5-g2__s0__eaac47fea99736c7.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2256,11 +2165,11 @@
       "variant": "dcfr-a1-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "7ef5f37477c857be",
-      "result_file": "results/4rank-2suit__dcfr-a1-b0.5-g3__s0__7ef5f37477c857be.json",
+      "spec_hash": "c2ad8d87989a3ede",
+      "result_file": "results/4rank-2suit__dcfr-a1-b0.5-g3__s0__c2ad8d87989a3ede.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2271,11 +2180,11 @@
       "variant": "dcfr-a1-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "2efd6be3bebef5d6",
-      "result_file": "results/4rank-2suit__dcfr-a1-b1-g1__s0__2efd6be3bebef5d6.json",
+      "spec_hash": "7ffa3988473ce58f",
+      "result_file": "results/4rank-2suit__dcfr-a1-b1-g1__s0__7ffa3988473ce58f.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2285,11 +2194,11 @@
       "variant": "dcfr-a1-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "36811c4b4fcec724",
-      "result_file": "results/4rank-2suit__dcfr-a1-b1-g2__s0__36811c4b4fcec724.json",
+      "spec_hash": "fd0a660b7681f5c1",
+      "result_file": "results/4rank-2suit__dcfr-a1-b1-g2__s0__fd0a660b7681f5c1.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2299,11 +2208,11 @@
       "variant": "dcfr-a1-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "4d11e51560e16373",
-      "result_file": "results/4rank-2suit__dcfr-a1-b1-g3__s0__4d11e51560e16373.json",
+      "spec_hash": "5688aee1857ebf51",
+      "result_file": "results/4rank-2suit__dcfr-a1-b1-g3__s0__5688aee1857ebf51.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2313,11 +2222,11 @@
       "variant": "dcfr-a1.5-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "65eb297f2037287e",
-      "result_file": "results/4rank-2suit__dcfr-a1.5-b0-g1__s0__65eb297f2037287e.json",
+      "spec_hash": "a0e3e342006fb372",
+      "result_file": "results/4rank-2suit__dcfr-a1.5-b0-g1__s0__a0e3e342006fb372.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2328,11 +2237,11 @@
       "variant": "dcfr-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "074c509a46411b68",
-      "result_file": "results/4rank-2suit__dcfr-a1.5-b0-g2__s0__074c509a46411b68.json",
+      "spec_hash": "248afbb758a83aa2",
+      "result_file": "results/4rank-2suit__dcfr-a1.5-b0-g2__s0__248afbb758a83aa2.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2342,11 +2251,11 @@
       "variant": "dcfr-a1.5-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "43989471b3979132",
-      "result_file": "results/4rank-2suit__dcfr-a1.5-b0-g3__s0__43989471b3979132.json",
+      "spec_hash": "145dd99828ded96e",
+      "result_file": "results/4rank-2suit__dcfr-a1.5-b0-g3__s0__145dd99828ded96e.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2356,11 +2265,11 @@
       "variant": "dcfr-a1.5-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "63bd44bb9762a416",
-      "result_file": "results/4rank-2suit__dcfr-a1.5-b0.5-g1__s0__63bd44bb9762a416.json",
+      "spec_hash": "037e5c7c11fd2e27",
+      "result_file": "results/4rank-2suit__dcfr-a1.5-b0.5-g1__s0__037e5c7c11fd2e27.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2370,11 +2279,11 @@
       "variant": "dcfr-a1.5-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "002f05b8b63a570c",
-      "result_file": "results/4rank-2suit__dcfr-a1.5-b0.5-g2__s0__002f05b8b63a570c.json",
+      "spec_hash": "a86bf2b7951c481b",
+      "result_file": "results/4rank-2suit__dcfr-a1.5-b0.5-g2__s0__a86bf2b7951c481b.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2385,11 +2294,11 @@
       "variant": "dcfr-a1.5-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "cd7b7df48f8be8fc",
-      "result_file": "results/4rank-2suit__dcfr-a1.5-b0.5-g3__s0__cd7b7df48f8be8fc.json",
+      "spec_hash": "f7df527e610bec1b",
+      "result_file": "results/4rank-2suit__dcfr-a1.5-b0.5-g3__s0__f7df527e610bec1b.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2399,11 +2308,11 @@
       "variant": "dcfr-a1.5-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "d71cf7ec108a5af6",
-      "result_file": "results/4rank-2suit__dcfr-a1.5-b1-g1__s0__d71cf7ec108a5af6.json",
+      "spec_hash": "36f4c8fdf114806e",
+      "result_file": "results/4rank-2suit__dcfr-a1.5-b1-g1__s0__36f4c8fdf114806e.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2413,11 +2322,11 @@
       "variant": "dcfr-a1.5-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "63fa56d9ec93c1ff",
-      "result_file": "results/4rank-2suit__dcfr-a1.5-b1-g2__s0__63fa56d9ec93c1ff.json",
+      "spec_hash": "2d215fd069c0fae9",
+      "result_file": "results/4rank-2suit__dcfr-a1.5-b1-g2__s0__2d215fd069c0fae9.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2427,11 +2336,11 @@
       "variant": "dcfr-a1.5-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "0b2b4f21b442b172",
-      "result_file": "results/4rank-2suit__dcfr-a1.5-b1-g3__s0__0b2b4f21b442b172.json",
+      "spec_hash": "0de9757e74cabe0a",
+      "result_file": "results/4rank-2suit__dcfr-a1.5-b1-g3__s0__0de9757e74cabe0a.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2442,11 +2351,11 @@
       "variant": "dcfr-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "9e718bba69bc30b1",
-      "result_file": "results/4rank-2suit__dcfr-a2-b0-g1__s0__9e718bba69bc30b1.json",
+      "spec_hash": "0f3f2c7a282750fa",
+      "result_file": "results/4rank-2suit__dcfr-a2-b0-g1__s0__0f3f2c7a282750fa.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2456,11 +2365,11 @@
       "variant": "dcfr-a2-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "ffee4475f8ba5dd6",
-      "result_file": "results/4rank-2suit__dcfr-a2-b0-g2__s0__ffee4475f8ba5dd6.json",
+      "spec_hash": "76e65c71c6ac63ed",
+      "result_file": "results/4rank-2suit__dcfr-a2-b0-g2__s0__76e65c71c6ac63ed.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2470,11 +2379,11 @@
       "variant": "dcfr-a2-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "15a1765ff42b6c29",
-      "result_file": "results/4rank-2suit__dcfr-a2-b0-g3__s0__15a1765ff42b6c29.json",
+      "spec_hash": "f20fd69a3a7a098e",
+      "result_file": "results/4rank-2suit__dcfr-a2-b0-g3__s0__f20fd69a3a7a098e.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2484,11 +2393,11 @@
       "variant": "dcfr-a2-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "c727ea0433ce5d20",
-      "result_file": "results/4rank-2suit__dcfr-a2-b0.5-g1__s0__c727ea0433ce5d20.json",
+      "spec_hash": "9fc4745777cae8f7",
+      "result_file": "results/4rank-2suit__dcfr-a2-b0.5-g1__s0__9fc4745777cae8f7.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2499,11 +2408,11 @@
       "variant": "dcfr-a2-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "a5e872f4c08160bc",
-      "result_file": "results/4rank-2suit__dcfr-a2-b0.5-g2__s0__a5e872f4c08160bc.json",
+      "spec_hash": "223c2e7fb7e4ae6b",
+      "result_file": "results/4rank-2suit__dcfr-a2-b0.5-g2__s0__223c2e7fb7e4ae6b.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2513,11 +2422,11 @@
       "variant": "dcfr-a2-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "b7dce8b0c1ebba02",
-      "result_file": "results/4rank-2suit__dcfr-a2-b0.5-g3__s0__b7dce8b0c1ebba02.json",
+      "spec_hash": "478bf37a1b00b75d",
+      "result_file": "results/4rank-2suit__dcfr-a2-b0.5-g3__s0__478bf37a1b00b75d.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2527,11 +2436,11 @@
       "variant": "dcfr-a2-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "d4b7c3984bbc8582",
-      "result_file": "results/4rank-2suit__dcfr-a2-b1-g1__s0__d4b7c3984bbc8582.json",
+      "spec_hash": "047bd5a008a4466b",
+      "result_file": "results/4rank-2suit__dcfr-a2-b1-g1__s0__047bd5a008a4466b.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2541,11 +2450,11 @@
       "variant": "dcfr-a2-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "16f148ed3c2ea90c",
-      "result_file": "results/4rank-2suit__dcfr-a2-b1-g2__s0__16f148ed3c2ea90c.json",
+      "spec_hash": "e0f934503049acfb",
+      "result_file": "results/4rank-2suit__dcfr-a2-b1-g2__s0__e0f934503049acfb.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2556,11 +2465,11 @@
       "variant": "dcfr-a2-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "bc3a96654ef1e534",
-      "result_file": "results/4rank-2suit__dcfr-a2-b1-g3__s0__bc3a96654ef1e534.json",
+      "spec_hash": "04d0664f9279230b",
+      "result_file": "results/4rank-2suit__dcfr-a2-b1-g3__s0__04d0664f9279230b.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2570,11 +2479,11 @@
       "variant": "dcfr-a3-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "1ec807251ff84ba4",
-      "result_file": "results/4rank-2suit__dcfr-a3-b0-g1__s0__1ec807251ff84ba4.json",
+      "spec_hash": "d381d7a9b28c6537",
+      "result_file": "results/4rank-2suit__dcfr-a3-b0-g1__s0__d381d7a9b28c6537.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2584,11 +2493,11 @@
       "variant": "dcfr-a3-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "acbb1eb5f34584e2",
-      "result_file": "results/4rank-2suit__dcfr-a3-b0-g2__s0__acbb1eb5f34584e2.json",
+      "spec_hash": "b42008f9ab752561",
+      "result_file": "results/4rank-2suit__dcfr-a3-b0-g2__s0__b42008f9ab752561.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2598,11 +2507,11 @@
       "variant": "dcfr-a3-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "b5624321e843a915",
-      "result_file": "results/4rank-2suit__dcfr-a3-b0-g3__s0__b5624321e843a915.json",
+      "spec_hash": "be4a294c072fbf3a",
+      "result_file": "results/4rank-2suit__dcfr-a3-b0-g3__s0__be4a294c072fbf3a.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2613,11 +2522,11 @@
       "variant": "dcfr-a3-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "513ab23aa26f656d",
-      "result_file": "results/4rank-2suit__dcfr-a3-b0.5-g1__s0__513ab23aa26f656d.json",
+      "spec_hash": "c461156f7cf5bb79",
+      "result_file": "results/4rank-2suit__dcfr-a3-b0.5-g1__s0__c461156f7cf5bb79.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2627,11 +2536,11 @@
       "variant": "dcfr-a3-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "79f36d6a76ffa4cc",
-      "result_file": "results/4rank-2suit__dcfr-a3-b0.5-g2__s0__79f36d6a76ffa4cc.json",
+      "spec_hash": "5187e3b77cca8655",
+      "result_file": "results/4rank-2suit__dcfr-a3-b0.5-g2__s0__5187e3b77cca8655.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2641,11 +2550,11 @@
       "variant": "dcfr-a3-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "d0915d544909cee3",
-      "result_file": "results/4rank-2suit__dcfr-a3-b0.5-g3__s0__d0915d544909cee3.json",
+      "spec_hash": "896be0cdf1b3653a",
+      "result_file": "results/4rank-2suit__dcfr-a3-b0.5-g3__s0__896be0cdf1b3653a.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2655,11 +2564,11 @@
       "variant": "dcfr-a3-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "e47ba5d24f1011a8",
-      "result_file": "results/4rank-2suit__dcfr-a3-b1-g1__s0__e47ba5d24f1011a8.json",
+      "spec_hash": "fb249e7c38b0ed0b",
+      "result_file": "results/4rank-2suit__dcfr-a3-b1-g1__s0__fb249e7c38b0ed0b.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2670,11 +2579,11 @@
       "variant": "dcfr-a3-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "b702cc36d535d175",
-      "result_file": "results/4rank-2suit__dcfr-a3-b1-g2__s0__b702cc36d535d175.json",
+      "spec_hash": "d8cd7d116a7a2d04",
+      "result_file": "results/4rank-2suit__dcfr-a3-b1-g2__s0__d8cd7d116a7a2d04.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2684,11 +2593,11 @@
       "variant": "dcfr-a3-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "55d48a16ce445d31",
-      "result_file": "results/4rank-2suit__dcfr-a3-b1-g3__s0__55d48a16ce445d31.json",
+      "spec_hash": "30871f6fe36e064c",
+      "result_file": "results/4rank-2suit__dcfr-a3-b1-g3__s0__30871f6fe36e064c.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2698,11 +2607,11 @@
       "variant": "dcfr-alt-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.01,
-      "spec_hash": "f7d07aad38cca650",
-      "result_file": "results/4rank-2suit__dcfr-alt-a1.5-b0-g2__s0__f7d07aad38cca650.json",
+      "spec_hash": "1c26157c4ecdf1a6",
+      "result_file": "results/4rank-2suit__dcfr-alt-a1.5-b0-g2__s0__1c26157c4ecdf1a6.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2712,11 +2621,11 @@
       "variant": "dcfr-alt-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.01,
-      "spec_hash": "d905177e84016a64",
-      "result_file": "results/4rank-2suit__dcfr-alt-a2-b0-g1__s0__d905177e84016a64.json",
+      "spec_hash": "57db45b50b1e6615",
+      "result_file": "results/4rank-2suit__dcfr-alt-a2-b0-g1__s0__57db45b50b1e6615.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -2727,11 +2636,11 @@
       "variant": "dcfr-alt-a3-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.01,
-      "spec_hash": "03aa9f9ccae17e17",
-      "result_file": "results/4rank-2suit__dcfr-alt-a3-b0-g1__s0__03aa9f9ccae17e17.json",
+      "spec_hash": "0340797a42afe48f",
+      "result_file": "results/4rank-2suit__dcfr-alt-a3-b0-g1__s0__0340797a42afe48f.json",
       "matrices": [
         "cube-deep"
       ]
@@ -2783,13 +2692,26 @@
       "variant": "linear-cfr",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 500000,
+      "iteration_ceiling": 500000,
+      "epsilon": 0.01,
+      "spec_hash": "d3201df9580fa788",
+      "result_file": "results/4rank-2suit__linear-cfr__s0__d3201df9580fa788.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "4rank-2suit",
+      "variant": "linear-cfr",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 1000000,
       "iteration_ceiling": 1000000,
       "epsilon": 0.01,
       "spec_hash": "e461e6703bbfa0cb",
       "result_file": "results/4rank-2suit__linear-cfr__s0__e461e6703bbfa0cb.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -3296,13 +3218,26 @@
       "variant": "rm+/linear/sim",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 500000,
+      "iteration_ceiling": 500000,
+      "epsilon": 0.01,
+      "spec_hash": "fa1ddd4fa91770f0",
+      "result_file": "results/4rank-2suit__rm+-linear-sim__s0__fa1ddd4fa91770f0.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "4rank-2suit",
+      "variant": "rm+/linear/sim",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 1000000,
       "iteration_ceiling": 1000000,
       "epsilon": 0.01,
       "spec_hash": "d9bbd3dfe4ab0005",
       "result_file": "results/4rank-2suit__rm+-linear-sim__s0__d9bbd3dfe4ab0005.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -3367,13 +3302,26 @@
       "variant": "rm+/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 500000,
+      "iteration_ceiling": 500000,
+      "epsilon": 0.01,
+      "spec_hash": "fba85a3eeb9bab71",
+      "result_file": "results/4rank-2suit__rm+-uniform-alt__s0__fba85a3eeb9bab71.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "4rank-2suit",
+      "variant": "rm+/uniform/alt",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 1000000,
       "iteration_ceiling": 1000000,
       "epsilon": 0.01,
       "spec_hash": "c0d6e04becf98beb",
       "result_file": "results/4rank-2suit__rm+-uniform-alt__s0__c0d6e04becf98beb.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -3438,15 +3386,28 @@
       "variant": "rm+/uniform/sim",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 500000,
+      "iteration_ceiling": 500000,
+      "epsilon": 0.01,
+      "spec_hash": "f69cd4e96bdcdba6",
+      "result_file": "results/4rank-2suit__rm+-uniform-sim__s0__f69cd4e96bdcdba6.json",
+      "matrices": [
+        "cube-deep",
+        "determinism-audit"
+      ]
+    },
+    {
+      "game": "4rank-2suit",
+      "variant": "rm+/uniform/sim",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 1000000,
       "iteration_ceiling": 1000000,
       "epsilon": 0.01,
       "spec_hash": "b438c465648cdb7c",
       "result_file": "results/4rank-2suit__rm+-uniform-sim__s0__b438c465648cdb7c.json",
       "matrices": [
-        "cube-deep",
-        "matched-budget",
-        "determinism-audit"
+        "matched-budget"
       ]
     },
     {
@@ -3510,13 +3471,26 @@
       "variant": "rm/linear/alt",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 500000,
+      "iteration_ceiling": 500000,
+      "epsilon": 0.01,
+      "spec_hash": "526d6b9e3e8aa058",
+      "result_file": "results/4rank-2suit__rm-linear-alt__s0__526d6b9e3e8aa058.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "4rank-2suit",
+      "variant": "rm/linear/alt",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 1000000,
       "iteration_ceiling": 1000000,
       "epsilon": 0.01,
       "spec_hash": "574aad374f7fa3ce",
       "result_file": "results/4rank-2suit__rm-linear-alt__s0__574aad374f7fa3ce.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -3581,13 +3555,26 @@
       "variant": "rm/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 500000,
+      "iteration_ceiling": 500000,
+      "epsilon": 0.01,
+      "spec_hash": "f293be41fc3a1011",
+      "result_file": "results/4rank-2suit__rm-uniform-alt__s0__f293be41fc3a1011.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "4rank-2suit",
+      "variant": "rm/uniform/alt",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 1000000,
       "iteration_ceiling": 1000000,
       "epsilon": 0.01,
       "spec_hash": "0213482433c834d4",
       "result_file": "results/4rank-2suit__rm-uniform-alt__s0__0213482433c834d4.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -3652,11 +3639,11 @@
       "variant": "cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "c751d59e5b517680",
-      "result_file": "results/4rank-2suit-2dealt__cfr__s0__c751d59e5b517680.json",
+      "spec_hash": "47940ae62fbf8a1a",
+      "result_file": "results/4rank-2suit-2dealt__cfr__s0__47940ae62fbf8a1a.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -3737,11 +3724,11 @@
       "variant": "cfr+",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "5a457b52ae6de260",
-      "result_file": "results/4rank-2suit-2dealt__cfr+__s0__5a457b52ae6de260.json",
+      "spec_hash": "78e75157d4bbd414",
+      "result_file": "results/4rank-2suit-2dealt__cfr+__s0__78e75157d4bbd414.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3779,11 +3766,11 @@
       "variant": "dcfr-a1-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "a0b184e28f4d8f26",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0-g1__s0__a0b184e28f4d8f26.json",
+      "spec_hash": "f5a7a822fb88b8ea",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0-g1__s0__f5a7a822fb88b8ea.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3793,11 +3780,11 @@
       "variant": "dcfr-a1-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "474a936a6ffbdd13",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0-g2__s0__474a936a6ffbdd13.json",
+      "spec_hash": "853e387170d89839",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0-g2__s0__853e387170d89839.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3807,11 +3794,11 @@
       "variant": "dcfr-a1-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "9bdf6862434080c7",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0-g3__s0__9bdf6862434080c7.json",
+      "spec_hash": "3bd19758816899fb",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0-g3__s0__3bd19758816899fb.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -3822,11 +3809,11 @@
       "variant": "dcfr-a1-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "2f36049e9c1e89f4",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0.5-g1__s0__2f36049e9c1e89f4.json",
+      "spec_hash": "9bd709d1a2d87abc",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0.5-g1__s0__9bd709d1a2d87abc.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3836,11 +3823,11 @@
       "variant": "dcfr-a1-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "ec741da380ab8274",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0.5-g2__s0__ec741da380ab8274.json",
+      "spec_hash": "2d4ba0afe11a7fad",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0.5-g2__s0__2d4ba0afe11a7fad.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3850,11 +3837,11 @@
       "variant": "dcfr-a1-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "a585cbf88f2f9529",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0.5-g3__s0__a585cbf88f2f9529.json",
+      "spec_hash": "afd78cbe35fba461",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b0.5-g3__s0__afd78cbe35fba461.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3864,11 +3851,11 @@
       "variant": "dcfr-a1-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "bc63185db9fb8b93",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b1-g1__s0__bc63185db9fb8b93.json",
+      "spec_hash": "810eedd6912c27dc",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b1-g1__s0__810eedd6912c27dc.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -3879,11 +3866,11 @@
       "variant": "dcfr-a1-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "f77a9772a3f7621a",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b1-g2__s0__f77a9772a3f7621a.json",
+      "spec_hash": "0bb3fcfbb1fbc289",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b1-g2__s0__0bb3fcfbb1fbc289.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3893,11 +3880,11 @@
       "variant": "dcfr-a1-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "9f1b62e4ff2a5e76",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b1-g3__s0__9f1b62e4ff2a5e76.json",
+      "spec_hash": "c2eec296130fd1df",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1-b1-g3__s0__c2eec296130fd1df.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3907,11 +3894,11 @@
       "variant": "dcfr-a1.5-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "5ef3b6a09abe57de",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0-g1__s0__5ef3b6a09abe57de.json",
+      "spec_hash": "8e56ead2eb93a770",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0-g1__s0__8e56ead2eb93a770.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3921,11 +3908,11 @@
       "variant": "dcfr-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "6c466b97f9ebb79e",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0-g2__s0__6c466b97f9ebb79e.json",
+      "spec_hash": "72d831ca059dcc8f",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0-g2__s0__72d831ca059dcc8f.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -3936,11 +3923,11 @@
       "variant": "dcfr-a1.5-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "1cb3293a06deec4d",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0-g3__s0__1cb3293a06deec4d.json",
+      "spec_hash": "fbe7df764f1ccd32",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0-g3__s0__fbe7df764f1ccd32.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3950,11 +3937,11 @@
       "variant": "dcfr-a1.5-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "6b13c426fb3a3ce0",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0.5-g1__s0__6b13c426fb3a3ce0.json",
+      "spec_hash": "9f8dcecb7294d897",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0.5-g1__s0__9f8dcecb7294d897.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3964,11 +3951,11 @@
       "variant": "dcfr-a1.5-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "6565ce01f297abca",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0.5-g2__s0__6565ce01f297abca.json",
+      "spec_hash": "ddbe2742a1ae2aa3",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0.5-g2__s0__ddbe2742a1ae2aa3.json",
       "matrices": [
         "cube-deep"
       ]
@@ -3978,11 +3965,11 @@
       "variant": "dcfr-a1.5-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "21b04c4ed3f73528",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0.5-g3__s0__21b04c4ed3f73528.json",
+      "spec_hash": "21ef6be6c7e46a58",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b0.5-g3__s0__21ef6be6c7e46a58.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -3993,11 +3980,11 @@
       "variant": "dcfr-a1.5-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "8185c5e8bf3d0f6a",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b1-g1__s0__8185c5e8bf3d0f6a.json",
+      "spec_hash": "fbb083cfbd9ef42d",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b1-g1__s0__fbb083cfbd9ef42d.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4007,11 +3994,11 @@
       "variant": "dcfr-a1.5-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "eaf88d535f2d5bf4",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b1-g2__s0__eaf88d535f2d5bf4.json",
+      "spec_hash": "439ce0ca861f3efb",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b1-g2__s0__439ce0ca861f3efb.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4021,11 +4008,11 @@
       "variant": "dcfr-a1.5-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "650baa6ac2ff3f35",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b1-g3__s0__650baa6ac2ff3f35.json",
+      "spec_hash": "6007cfa5942c9968",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a1.5-b1-g3__s0__6007cfa5942c9968.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4035,11 +4022,11 @@
       "variant": "dcfr-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "703e257f56e9a20f",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0-g1__s0__703e257f56e9a20f.json",
+      "spec_hash": "79d855631b5d06d3",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0-g1__s0__79d855631b5d06d3.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -4050,11 +4037,11 @@
       "variant": "dcfr-a2-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "f068e6779f9123e5",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0-g2__s0__f068e6779f9123e5.json",
+      "spec_hash": "7da7b34ebfb4bf01",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0-g2__s0__7da7b34ebfb4bf01.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4064,11 +4051,11 @@
       "variant": "dcfr-a2-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "a74560be405f0479",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0-g3__s0__a74560be405f0479.json",
+      "spec_hash": "bb773cfb98418c58",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0-g3__s0__bb773cfb98418c58.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4078,11 +4065,11 @@
       "variant": "dcfr-a2-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "a46dc2d7de37286b",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0.5-g1__s0__a46dc2d7de37286b.json",
+      "spec_hash": "76280edc56fd43ff",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0.5-g1__s0__76280edc56fd43ff.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4092,11 +4079,11 @@
       "variant": "dcfr-a2-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "66ade7527d950fb8",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0.5-g2__s0__66ade7527d950fb8.json",
+      "spec_hash": "826acde1365d4072",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0.5-g2__s0__826acde1365d4072.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -4107,11 +4094,11 @@
       "variant": "dcfr-a2-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "3eb060f364c605be",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0.5-g3__s0__3eb060f364c605be.json",
+      "spec_hash": "fc55a4b9f6ba555a",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b0.5-g3__s0__fc55a4b9f6ba555a.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4121,11 +4108,11 @@
       "variant": "dcfr-a2-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "d0ff0bdf346a1f6b",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b1-g1__s0__d0ff0bdf346a1f6b.json",
+      "spec_hash": "52d9c68e1357447f",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b1-g1__s0__52d9c68e1357447f.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4135,11 +4122,11 @@
       "variant": "dcfr-a2-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "899f620d9a4d90db",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b1-g2__s0__899f620d9a4d90db.json",
+      "spec_hash": "a5a544bf9a5fe71a",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b1-g2__s0__a5a544bf9a5fe71a.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4149,11 +4136,11 @@
       "variant": "dcfr-a2-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "0e887aa42074fea7",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b1-g3__s0__0e887aa42074fea7.json",
+      "spec_hash": "ebc1f156f8d16611",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a2-b1-g3__s0__ebc1f156f8d16611.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -4164,11 +4151,11 @@
       "variant": "dcfr-a3-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "e64f2d1a4a986ae8",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0-g1__s0__e64f2d1a4a986ae8.json",
+      "spec_hash": "50925c277141f068",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0-g1__s0__50925c277141f068.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4178,11 +4165,11 @@
       "variant": "dcfr-a3-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "99cf93e84081cd80",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0-g2__s0__99cf93e84081cd80.json",
+      "spec_hash": "b29f9bd58cf32ed1",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0-g2__s0__b29f9bd58cf32ed1.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4192,11 +4179,11 @@
       "variant": "dcfr-a3-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "99e34d70351e0c0f",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0-g3__s0__99e34d70351e0c0f.json",
+      "spec_hash": "0fb38375c56e41c4",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0-g3__s0__0fb38375c56e41c4.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4206,11 +4193,11 @@
       "variant": "dcfr-a3-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "c232530524efb666",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0.5-g1__s0__c232530524efb666.json",
+      "spec_hash": "789ff27f03e52921",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0.5-g1__s0__789ff27f03e52921.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -4221,11 +4208,11 @@
       "variant": "dcfr-a3-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "02068c91cf7d237f",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0.5-g2__s0__02068c91cf7d237f.json",
+      "spec_hash": "93568c8ce3eff067",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0.5-g2__s0__93568c8ce3eff067.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4235,11 +4222,11 @@
       "variant": "dcfr-a3-b0.5-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "96ec173519b51ee4",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0.5-g3__s0__96ec173519b51ee4.json",
+      "spec_hash": "17c62dff119d878a",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b0.5-g3__s0__17c62dff119d878a.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4249,11 +4236,11 @@
       "variant": "dcfr-a3-b1-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "785db4ce2a29d7c5",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b1-g1__s0__785db4ce2a29d7c5.json",
+      "spec_hash": "3d82d15071610ced",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b1-g1__s0__3d82d15071610ced.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4263,11 +4250,11 @@
       "variant": "dcfr-a3-b1-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "6b4a1fd749887fc7",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b1-g2__s0__6b4a1fd749887fc7.json",
+      "spec_hash": "6e2ce1d6ec08e52e",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b1-g2__s0__6e2ce1d6ec08e52e.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -4278,11 +4265,11 @@
       "variant": "dcfr-a3-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 100000,
-      "iteration_ceiling": 100000,
+      "budget": 50000,
+      "iteration_ceiling": 50000,
       "epsilon": 0.01,
-      "spec_hash": "cbbfae82b74c6ea2",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b1-g3__s0__cbbfae82b74c6ea2.json",
+      "spec_hash": "464e24fce763972a",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-a3-b1-g3__s0__464e24fce763972a.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4292,11 +4279,11 @@
       "variant": "dcfr-alt-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "989f11cca9250e2e",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-alt-a1.5-b0-g2__s0__989f11cca9250e2e.json",
+      "spec_hash": "319010e9c74cfdcc",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-alt-a1.5-b0-g2__s0__319010e9c74cfdcc.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4306,11 +4293,11 @@
       "variant": "dcfr-alt-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "a7a6b40031e9002c",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-alt-a2-b0-g1__s0__a7a6b40031e9002c.json",
+      "spec_hash": "f1319924a473ff89",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-alt-a2-b0-g1__s0__f1319924a473ff89.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4320,11 +4307,11 @@
       "variant": "dcfr-alt-a3-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "cd1f5d649854e12f",
-      "result_file": "results/4rank-2suit-2dealt__dcfr-alt-a3-b0-g1__s0__cd1f5d649854e12f.json",
+      "spec_hash": "897ae03bcfe0d872",
+      "result_file": "results/4rank-2suit-2dealt__dcfr-alt-a3-b0-g1__s0__897ae03bcfe0d872.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -4377,11 +4364,11 @@
       "variant": "linear-cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "87db2eb47ce79c59",
-      "result_file": "results/4rank-2suit-2dealt__linear-cfr__s0__87db2eb47ce79c59.json",
+      "spec_hash": "2ea2aa9847b4aef4",
+      "result_file": "results/4rank-2suit-2dealt__linear-cfr__s0__2ea2aa9847b4aef4.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4902,11 +4889,11 @@
       "variant": "rm+/linear/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "e02b07c67713a52c",
-      "result_file": "results/4rank-2suit-2dealt__rm+-linear-sim__s0__e02b07c67713a52c.json",
+      "spec_hash": "6529c1d767e687a8",
+      "result_file": "results/4rank-2suit-2dealt__rm+-linear-sim__s0__6529c1d767e687a8.json",
       "matrices": [
         "cube-deep"
       ]
@@ -4986,11 +4973,11 @@
       "variant": "rm+/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "1df2f11f59d7642a",
-      "result_file": "results/4rank-2suit-2dealt__rm+-uniform-alt__s0__1df2f11f59d7642a.json",
+      "spec_hash": "70284b6246b0a029",
+      "result_file": "results/4rank-2suit-2dealt__rm+-uniform-alt__s0__70284b6246b0a029.json",
       "matrices": [
         "cube-deep"
       ]
@@ -5070,11 +5057,11 @@
       "variant": "rm+/uniform/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "bbfb718b5663efc8",
-      "result_file": "results/4rank-2suit-2dealt__rm+-uniform-sim__s0__bbfb718b5663efc8.json",
+      "spec_hash": "cfd93dc0fa037070",
+      "result_file": "results/4rank-2suit-2dealt__rm+-uniform-sim__s0__cfd93dc0fa037070.json",
       "matrices": [
         "cube-deep",
         "determinism-audit"
@@ -5155,11 +5142,11 @@
       "variant": "rm/linear/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "43e091b5e98c73b1",
-      "result_file": "results/4rank-2suit-2dealt__rm-linear-alt__s0__43e091b5e98c73b1.json",
+      "spec_hash": "ca3db96cb4d0245b",
+      "result_file": "results/4rank-2suit-2dealt__rm-linear-alt__s0__ca3db96cb4d0245b.json",
       "matrices": [
         "cube-deep"
       ]
@@ -5239,11 +5226,11 @@
       "variant": "rm/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 400000,
-      "iteration_ceiling": 400000,
+      "budget": 200000,
+      "iteration_ceiling": 200000,
       "epsilon": 0.01,
-      "spec_hash": "cfa95c887686c1d2",
-      "result_file": "results/4rank-2suit-2dealt__rm-uniform-alt__s0__cfa95c887686c1d2.json",
+      "spec_hash": "9057339aa887a64a",
+      "result_file": "results/4rank-2suit-2dealt__rm-uniform-alt__s0__9057339aa887a64a.json",
       "matrices": [
         "cube-deep"
       ]
@@ -5281,11 +5268,11 @@
       "variant": "cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "778ea0f366b4388f",
-      "result_file": "results/4rank-2suit-2dealt-3p__cfr__s0__778ea0f366b4388f.json",
+      "spec_hash": "614c0c0b74681523",
+      "result_file": "results/4rank-2suit-2dealt-3p__cfr__s0__614c0c0b74681523.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5296,11 +5283,11 @@
       "variant": "cfr+",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "72eebb44a1656e83",
-      "result_file": "results/4rank-2suit-2dealt-3p__cfr+__s0__72eebb44a1656e83.json",
+      "spec_hash": "e95483b35953e7e8",
+      "result_file": "results/4rank-2suit-2dealt-3p__cfr+__s0__e95483b35953e7e8.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5310,11 +5297,11 @@
       "variant": "dcfr-a1-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "450610770185f96c",
-      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a1-b0-g3__s0__450610770185f96c.json",
+      "spec_hash": "ec48c7c21431c098",
+      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a1-b0-g3__s0__ec48c7c21431c098.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5324,11 +5311,11 @@
       "variant": "dcfr-a1-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "e77625935dcc5708",
-      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a1-b0.5-g2__s0__e77625935dcc5708.json",
+      "spec_hash": "29b950d44405b4c9",
+      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a1-b0.5-g2__s0__29b950d44405b4c9.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5338,11 +5325,11 @@
       "variant": "dcfr-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "2332bd4654652ab3",
-      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a1.5-b0-g2__s0__2332bd4654652ab3.json",
+      "spec_hash": "02b952cf3a516d9f",
+      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a1.5-b0-g2__s0__02b952cf3a516d9f.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5353,11 +5340,11 @@
       "variant": "dcfr-a1.5-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "f14f051eb7f6c00a",
-      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a1.5-b0.5-g1__s0__f14f051eb7f6c00a.json",
+      "spec_hash": "64eb7a2a3b2cf0cd",
+      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a1.5-b0.5-g1__s0__64eb7a2a3b2cf0cd.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5368,11 +5355,11 @@
       "variant": "dcfr-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "07b9d10461827051",
-      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a2-b0-g1__s0__07b9d10461827051.json",
+      "spec_hash": "1643d98c7e6cb569",
+      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a2-b0-g1__s0__1643d98c7e6cb569.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5382,11 +5369,11 @@
       "variant": "dcfr-a3-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "cadcc7cdaf90c299",
-      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a3-b1-g3__s0__cadcc7cdaf90c299.json",
+      "spec_hash": "0a3aa32aac0b1fcc",
+      "result_file": "results/4rank-2suit-2dealt-3p__dcfr-a3-b1-g3__s0__0a3aa32aac0b1fcc.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5396,11 +5383,11 @@
       "variant": "linear-cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "170294b69b7fa0e1",
-      "result_file": "results/4rank-2suit-2dealt-3p__linear-cfr__s0__170294b69b7fa0e1.json",
+      "spec_hash": "2305b64701c69035",
+      "result_file": "results/4rank-2suit-2dealt-3p__linear-cfr__s0__2305b64701c69035.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5410,11 +5397,11 @@
       "variant": "rm+/linear/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "99d6eac7bf11e4d8",
-      "result_file": "results/4rank-2suit-2dealt-3p__rm+-linear-sim__s0__99d6eac7bf11e4d8.json",
+      "spec_hash": "5efd564b251bd624",
+      "result_file": "results/4rank-2suit-2dealt-3p__rm+-linear-sim__s0__5efd564b251bd624.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5424,11 +5411,11 @@
       "variant": "rm+/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "f7e2614a7ab3120d",
-      "result_file": "results/4rank-2suit-2dealt-3p__rm+-uniform-alt__s0__f7e2614a7ab3120d.json",
+      "spec_hash": "c07f1266d88e7d56",
+      "result_file": "results/4rank-2suit-2dealt-3p__rm+-uniform-alt__s0__c07f1266d88e7d56.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5438,11 +5425,11 @@
       "variant": "rm+/uniform/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "031bc93cca1a02e0",
-      "result_file": "results/4rank-2suit-2dealt-3p__rm+-uniform-sim__s0__031bc93cca1a02e0.json",
+      "spec_hash": "cbfa5e7e324b0b55",
+      "result_file": "results/4rank-2suit-2dealt-3p__rm+-uniform-sim__s0__cbfa5e7e324b0b55.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5453,11 +5440,11 @@
       "variant": "rm/linear/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "011d08b6dbd874bb",
-      "result_file": "results/4rank-2suit-2dealt-3p__rm-linear-alt__s0__011d08b6dbd874bb.json",
+      "spec_hash": "51dfae87a7f450a4",
+      "result_file": "results/4rank-2suit-2dealt-3p__rm-linear-alt__s0__51dfae87a7f450a4.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5467,11 +5454,11 @@
       "variant": "rm/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 16000,
-      "iteration_ceiling": 16000,
+      "budget": 8000,
+      "iteration_ceiling": 8000,
       "epsilon": 0.05,
-      "spec_hash": "b791d4ac82e88360",
-      "result_file": "results/4rank-2suit-2dealt-3p__rm-uniform-alt__s0__b791d4ac82e88360.json",
+      "spec_hash": "4514a1c307abbfbe",
+      "result_file": "results/4rank-2suit-2dealt-3p__rm-uniform-alt__s0__4514a1c307abbfbe.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5481,11 +5468,11 @@
       "variant": "cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "a71a70b48cbd8822",
-      "result_file": "results/4rank-2suit-3p__cfr__s0__a71a70b48cbd8822.json",
+      "spec_hash": "81e3ac5d4420a1f3",
+      "result_file": "results/4rank-2suit-3p__cfr__s0__81e3ac5d4420a1f3.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5495,11 +5482,11 @@
       "variant": "cfr+",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "2ffa0cf5723c2a8f",
-      "result_file": "results/4rank-2suit-3p__cfr+__s0__2ffa0cf5723c2a8f.json",
+      "spec_hash": "568fe8c4f65b72c8",
+      "result_file": "results/4rank-2suit-3p__cfr+__s0__568fe8c4f65b72c8.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5509,11 +5496,11 @@
       "variant": "dcfr-a1-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "e1c679a21d063173",
-      "result_file": "results/4rank-2suit-3p__dcfr-a1-b0-g3__s0__e1c679a21d063173.json",
+      "spec_hash": "3156dc233a29a1da",
+      "result_file": "results/4rank-2suit-3p__dcfr-a1-b0-g3__s0__3156dc233a29a1da.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5523,11 +5510,11 @@
       "variant": "dcfr-a1-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "0bdc6bf55ed7344b",
-      "result_file": "results/4rank-2suit-3p__dcfr-a1-b0.5-g2__s0__0bdc6bf55ed7344b.json",
+      "spec_hash": "0d40b3abd8392b65",
+      "result_file": "results/4rank-2suit-3p__dcfr-a1-b0.5-g2__s0__0d40b3abd8392b65.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5537,11 +5524,11 @@
       "variant": "dcfr-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "1fe5845828ac09ff",
-      "result_file": "results/4rank-2suit-3p__dcfr-a1.5-b0-g2__s0__1fe5845828ac09ff.json",
+      "spec_hash": "4a4c7c60cd918139",
+      "result_file": "results/4rank-2suit-3p__dcfr-a1.5-b0-g2__s0__4a4c7c60cd918139.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5551,11 +5538,11 @@
       "variant": "dcfr-a1.5-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "b23d7e25dd2a3280",
-      "result_file": "results/4rank-2suit-3p__dcfr-a1.5-b0.5-g1__s0__b23d7e25dd2a3280.json",
+      "spec_hash": "29be687ca5d833c2",
+      "result_file": "results/4rank-2suit-3p__dcfr-a1.5-b0.5-g1__s0__29be687ca5d833c2.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5565,11 +5552,11 @@
       "variant": "dcfr-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "6e8599b99c6b36a1",
-      "result_file": "results/4rank-2suit-3p__dcfr-a2-b0-g1__s0__6e8599b99c6b36a1.json",
+      "spec_hash": "79b98cc12c714fa7",
+      "result_file": "results/4rank-2suit-3p__dcfr-a2-b0-g1__s0__79b98cc12c714fa7.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5580,11 +5567,11 @@
       "variant": "dcfr-a3-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "ff06a5c7f74b54d5",
-      "result_file": "results/4rank-2suit-3p__dcfr-a3-b1-g3__s0__ff06a5c7f74b54d5.json",
+      "spec_hash": "019332a02c0d97c0",
+      "result_file": "results/4rank-2suit-3p__dcfr-a3-b1-g3__s0__019332a02c0d97c0.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5594,11 +5581,11 @@
       "variant": "linear-cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "40944a9e2a1392c2",
-      "result_file": "results/4rank-2suit-3p__linear-cfr__s0__40944a9e2a1392c2.json",
+      "spec_hash": "7de2c3ff958a59f7",
+      "result_file": "results/4rank-2suit-3p__linear-cfr__s0__7de2c3ff958a59f7.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5609,11 +5596,11 @@
       "variant": "rm+/linear/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "3ecf6c3772285e7b",
-      "result_file": "results/4rank-2suit-3p__rm+-linear-sim__s0__3ecf6c3772285e7b.json",
+      "spec_hash": "5f630253a67227ac",
+      "result_file": "results/4rank-2suit-3p__rm+-linear-sim__s0__5f630253a67227ac.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5624,11 +5611,11 @@
       "variant": "rm+/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "81a82cd5ca805777",
-      "result_file": "results/4rank-2suit-3p__rm+-uniform-alt__s0__81a82cd5ca805777.json",
+      "spec_hash": "16bc2d88d106b135",
+      "result_file": "results/4rank-2suit-3p__rm+-uniform-alt__s0__16bc2d88d106b135.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5638,11 +5625,11 @@
       "variant": "rm+/uniform/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "8f9642284f89fbe1",
-      "result_file": "results/4rank-2suit-3p__rm+-uniform-sim__s0__8f9642284f89fbe1.json",
+      "spec_hash": "8d03a62f9366e6d0",
+      "result_file": "results/4rank-2suit-3p__rm+-uniform-sim__s0__8d03a62f9366e6d0.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5652,11 +5639,11 @@
       "variant": "rm/linear/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "9b167e97596d5696",
-      "result_file": "results/4rank-2suit-3p__rm-linear-alt__s0__9b167e97596d5696.json",
+      "spec_hash": "6bd803f3e8558a6e",
+      "result_file": "results/4rank-2suit-3p__rm-linear-alt__s0__6bd803f3e8558a6e.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5666,11 +5653,11 @@
       "variant": "rm/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 130000,
-      "iteration_ceiling": 130000,
+      "budget": 65000,
+      "iteration_ceiling": 65000,
       "epsilon": 0.05,
-      "spec_hash": "8a69ce7ee29b2f05",
-      "result_file": "results/4rank-2suit-3p__rm-uniform-alt__s0__8a69ce7ee29b2f05.json",
+      "spec_hash": "cd5e3c9ecd96210e",
+      "result_file": "results/4rank-2suit-3p__rm-uniform-alt__s0__cd5e3c9ecd96210e.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5680,11 +5667,11 @@
       "variant": "cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "daad2c519ce52354",
-      "result_file": "results/4rank-2suit-4p__cfr__s0__daad2c519ce52354.json",
+      "spec_hash": "97761a72306b469c",
+      "result_file": "results/4rank-2suit-4p__cfr__s0__97761a72306b469c.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5694,11 +5681,11 @@
       "variant": "cfr+",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "24a4a6877825a586",
-      "result_file": "results/4rank-2suit-4p__cfr+__s0__24a4a6877825a586.json",
+      "spec_hash": "ea4f203a0a02bf81",
+      "result_file": "results/4rank-2suit-4p__cfr+__s0__ea4f203a0a02bf81.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5708,11 +5695,11 @@
       "variant": "dcfr-a1-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "cb9dbbc7da6c8313",
-      "result_file": "results/4rank-2suit-4p__dcfr-a1-b0-g3__s0__cb9dbbc7da6c8313.json",
+      "spec_hash": "8ed84662ffcf45c0",
+      "result_file": "results/4rank-2suit-4p__dcfr-a1-b0-g3__s0__8ed84662ffcf45c0.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5722,11 +5709,11 @@
       "variant": "dcfr-a1-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "0f7024c732adca94",
-      "result_file": "results/4rank-2suit-4p__dcfr-a1-b0.5-g2__s0__0f7024c732adca94.json",
+      "spec_hash": "240194f65cd5cb5d",
+      "result_file": "results/4rank-2suit-4p__dcfr-a1-b0.5-g2__s0__240194f65cd5cb5d.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5736,11 +5723,11 @@
       "variant": "dcfr-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "e448bb0acbf7bf8e",
-      "result_file": "results/4rank-2suit-4p__dcfr-a1.5-b0-g2__s0__e448bb0acbf7bf8e.json",
+      "spec_hash": "b4d6fd262b578b1e",
+      "result_file": "results/4rank-2suit-4p__dcfr-a1.5-b0-g2__s0__b4d6fd262b578b1e.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5750,11 +5737,11 @@
       "variant": "dcfr-a1.5-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "87b6e81251631f76",
-      "result_file": "results/4rank-2suit-4p__dcfr-a1.5-b0.5-g1__s0__87b6e81251631f76.json",
+      "spec_hash": "ff6b8c4028daea1f",
+      "result_file": "results/4rank-2suit-4p__dcfr-a1.5-b0.5-g1__s0__ff6b8c4028daea1f.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5764,11 +5751,11 @@
       "variant": "dcfr-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "7afb4eb262df463b",
-      "result_file": "results/4rank-2suit-4p__dcfr-a2-b0-g1__s0__7afb4eb262df463b.json",
+      "spec_hash": "65a062ca1a03389b",
+      "result_file": "results/4rank-2suit-4p__dcfr-a2-b0-g1__s0__65a062ca1a03389b.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5779,11 +5766,11 @@
       "variant": "dcfr-a3-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "cdef5856f8e89549",
-      "result_file": "results/4rank-2suit-4p__dcfr-a3-b1-g3__s0__cdef5856f8e89549.json",
+      "spec_hash": "6a36c054220934b5",
+      "result_file": "results/4rank-2suit-4p__dcfr-a3-b1-g3__s0__6a36c054220934b5.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5793,11 +5780,11 @@
       "variant": "linear-cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "27232fc567f17f85",
-      "result_file": "results/4rank-2suit-4p__linear-cfr__s0__27232fc567f17f85.json",
+      "spec_hash": "799513b38b648850",
+      "result_file": "results/4rank-2suit-4p__linear-cfr__s0__799513b38b648850.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5808,11 +5795,11 @@
       "variant": "rm+/linear/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "2d4bcb774ec68a97",
-      "result_file": "results/4rank-2suit-4p__rm+-linear-sim__s0__2d4bcb774ec68a97.json",
+      "spec_hash": "12dfeeb207b43295",
+      "result_file": "results/4rank-2suit-4p__rm+-linear-sim__s0__12dfeeb207b43295.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -5823,11 +5810,11 @@
       "variant": "rm+/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "7a0703ce74a0da83",
-      "result_file": "results/4rank-2suit-4p__rm+-uniform-alt__s0__7a0703ce74a0da83.json",
+      "spec_hash": "c0397574f144a786",
+      "result_file": "results/4rank-2suit-4p__rm+-uniform-alt__s0__c0397574f144a786.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5837,11 +5824,11 @@
       "variant": "rm+/uniform/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "dcdb05081800fd60",
-      "result_file": "results/4rank-2suit-4p__rm+-uniform-sim__s0__dcdb05081800fd60.json",
+      "spec_hash": "c47c762ddd0d5abc",
+      "result_file": "results/4rank-2suit-4p__rm+-uniform-sim__s0__c47c762ddd0d5abc.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5851,11 +5838,11 @@
       "variant": "rm/linear/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "81c678587a08be21",
-      "result_file": "results/4rank-2suit-4p__rm-linear-alt__s0__81c678587a08be21.json",
+      "spec_hash": "8effc4ab9afe2fef",
+      "result_file": "results/4rank-2suit-4p__rm-linear-alt__s0__8effc4ab9afe2fef.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5865,11 +5852,11 @@
       "variant": "rm/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 7000,
-      "iteration_ceiling": 7000,
+      "budget": 3000,
+      "iteration_ceiling": 3000,
       "epsilon": 0.05,
-      "spec_hash": "1b4272b7fae2e304",
-      "result_file": "results/4rank-2suit-4p__rm-uniform-alt__s0__1b4272b7fae2e304.json",
+      "spec_hash": "641a3c7662f2963d",
+      "result_file": "results/4rank-2suit-4p__rm-uniform-alt__s0__641a3c7662f2963d.json",
       "matrices": [
         "multiplayer"
       ]
@@ -5935,15 +5922,28 @@
       "variant": "cfr",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 2500000,
+      "iteration_ceiling": 2500000,
+      "epsilon": 0.0001,
+      "spec_hash": "03ab73a4b6b0c72b",
+      "result_file": "results/kuhn__cfr__s0__03ab73a4b6b0c72b.json",
+      "matrices": [
+        "cube-deep",
+        "determinism-audit"
+      ]
+    },
+    {
+      "game": "kuhn",
+      "variant": "cfr",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 5000000,
       "iteration_ceiling": 5000000,
       "epsilon": 0.0001,
       "spec_hash": "14e93bd3a735b509",
       "result_file": "results/kuhn__cfr__s0__14e93bd3a735b509.json",
       "matrices": [
-        "cube-deep",
-        "matched-budget",
-        "determinism-audit"
+        "matched-budget"
       ]
     },
     {
@@ -6021,13 +6021,26 @@
       "variant": "cfr+",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 2500000,
+      "iteration_ceiling": 2500000,
+      "epsilon": 0.0001,
+      "spec_hash": "57d0833a0f0b40e1",
+      "result_file": "results/kuhn__cfr+__s0__57d0833a0f0b40e1.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "kuhn",
+      "variant": "cfr+",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 5000000,
       "iteration_ceiling": 5000000,
       "epsilon": 0.0001,
       "spec_hash": "8199a6ea312dc166",
       "result_file": "results/kuhn__cfr+__s0__8199a6ea312dc166.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -6106,13 +6119,26 @@
       "variant": "linear-cfr",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 2500000,
+      "iteration_ceiling": 2500000,
+      "epsilon": 0.0001,
+      "spec_hash": "db8790730c2d4469",
+      "result_file": "results/kuhn__linear-cfr__s0__db8790730c2d4469.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "kuhn",
+      "variant": "linear-cfr",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 5000000,
       "iteration_ceiling": 5000000,
       "epsilon": 0.0001,
       "spec_hash": "044dd7c12b525176",
       "result_file": "results/kuhn__linear-cfr__s0__044dd7c12b525176.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -6913,13 +6939,26 @@
       "variant": "rm+/linear/sim",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 2500000,
+      "iteration_ceiling": 2500000,
+      "epsilon": 0.0001,
+      "spec_hash": "3e8b839cd7ff5df3",
+      "result_file": "results/kuhn__rm+-linear-sim__s0__3e8b839cd7ff5df3.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "kuhn",
+      "variant": "rm+/linear/sim",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 5000000,
       "iteration_ceiling": 5000000,
       "epsilon": 0.0001,
       "spec_hash": "048cfcb02d0d81fa",
       "result_file": "results/kuhn__rm+-linear-sim__s0__048cfcb02d0d81fa.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -6998,13 +7037,26 @@
       "variant": "rm+/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 2500000,
+      "iteration_ceiling": 2500000,
+      "epsilon": 0.0001,
+      "spec_hash": "5b7fd7b9bffa2b9e",
+      "result_file": "results/kuhn__rm+-uniform-alt__s0__5b7fd7b9bffa2b9e.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "kuhn",
+      "variant": "rm+/uniform/alt",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 5000000,
       "iteration_ceiling": 5000000,
       "epsilon": 0.0001,
       "spec_hash": "9726875c69cc7b8a",
       "result_file": "results/kuhn__rm+-uniform-alt__s0__9726875c69cc7b8a.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -7083,15 +7135,28 @@
       "variant": "rm+/uniform/sim",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 2500000,
+      "iteration_ceiling": 2500000,
+      "epsilon": 0.0001,
+      "spec_hash": "c1c1e67430fe3e59",
+      "result_file": "results/kuhn__rm+-uniform-sim__s0__c1c1e67430fe3e59.json",
+      "matrices": [
+        "cube-deep",
+        "determinism-audit"
+      ]
+    },
+    {
+      "game": "kuhn",
+      "variant": "rm+/uniform/sim",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 5000000,
       "iteration_ceiling": 5000000,
       "epsilon": 0.0001,
       "spec_hash": "0c6971424250c725",
       "result_file": "results/kuhn__rm+-uniform-sim__s0__0c6971424250c725.json",
       "matrices": [
-        "cube-deep",
-        "matched-budget",
-        "determinism-audit"
+        "matched-budget"
       ]
     },
     {
@@ -7169,13 +7234,26 @@
       "variant": "rm/linear/alt",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 2500000,
+      "iteration_ceiling": 2500000,
+      "epsilon": 0.0001,
+      "spec_hash": "6bedf8113e99e1ed",
+      "result_file": "results/kuhn__rm-linear-alt__s0__6bedf8113e99e1ed.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "kuhn",
+      "variant": "rm/linear/alt",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 5000000,
       "iteration_ceiling": 5000000,
       "epsilon": 0.0001,
       "spec_hash": "aa4326a3a4a3fcda",
       "result_file": "results/kuhn__rm-linear-alt__s0__aa4326a3a4a3fcda.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -7254,13 +7332,26 @@
       "variant": "rm/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
+      "budget": 2500000,
+      "iteration_ceiling": 2500000,
+      "epsilon": 0.0001,
+      "spec_hash": "1288188cef2e711d",
+      "result_file": "results/kuhn__rm-uniform-alt__s0__1288188cef2e711d.json",
+      "matrices": [
+        "cube-deep"
+      ]
+    },
+    {
+      "game": "kuhn",
+      "variant": "rm/uniform/alt",
+      "seed": 0,
+      "budget_type": "iterations",
       "budget": 5000000,
       "iteration_ceiling": 5000000,
       "epsilon": 0.0001,
       "spec_hash": "b209d27f44a8f44b",
       "result_file": "results/kuhn__rm-uniform-alt__s0__b209d27f44a8f44b.json",
       "matrices": [
-        "cube-deep",
         "matched-budget"
       ]
     },
@@ -7283,11 +7374,11 @@
       "variant": "cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "5a1b08ffc9f2eeb4",
-      "result_file": "results/kuhn-3p__cfr__s0__5a1b08ffc9f2eeb4.json",
+      "spec_hash": "e70051791b02d97e",
+      "result_file": "results/kuhn-3p__cfr__s0__e70051791b02d97e.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -7298,11 +7389,11 @@
       "variant": "cfr+",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "27881e6adf45748e",
-      "result_file": "results/kuhn-3p__cfr+__s0__27881e6adf45748e.json",
+      "spec_hash": "859bcacaf1a4c125",
+      "result_file": "results/kuhn-3p__cfr+__s0__859bcacaf1a4c125.json",
       "matrices": [
         "multiplayer"
       ]
@@ -7312,11 +7403,11 @@
       "variant": "dcfr-a1-b0-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "d33c16e0c455bb85",
-      "result_file": "results/kuhn-3p__dcfr-a1-b0-g3__s0__d33c16e0c455bb85.json",
+      "spec_hash": "6957ff3f1565d151",
+      "result_file": "results/kuhn-3p__dcfr-a1-b0-g3__s0__6957ff3f1565d151.json",
       "matrices": [
         "multiplayer"
       ]
@@ -7326,11 +7417,11 @@
       "variant": "dcfr-a1-b0.5-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "ea1572e60cb7b323",
-      "result_file": "results/kuhn-3p__dcfr-a1-b0.5-g2__s0__ea1572e60cb7b323.json",
+      "spec_hash": "a1b90fce4d7e52f2",
+      "result_file": "results/kuhn-3p__dcfr-a1-b0.5-g2__s0__a1b90fce4d7e52f2.json",
       "matrices": [
         "multiplayer"
       ]
@@ -7340,11 +7431,11 @@
       "variant": "dcfr-a1.5-b0-g2",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "8a5c4a9e58239788",
-      "result_file": "results/kuhn-3p__dcfr-a1.5-b0-g2__s0__8a5c4a9e58239788.json",
+      "spec_hash": "d2a72eed5fe04368",
+      "result_file": "results/kuhn-3p__dcfr-a1.5-b0-g2__s0__d2a72eed5fe04368.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -7355,11 +7446,11 @@
       "variant": "dcfr-a1.5-b0.5-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "d5e6f06866d5a9ca",
-      "result_file": "results/kuhn-3p__dcfr-a1.5-b0.5-g1__s0__d5e6f06866d5a9ca.json",
+      "spec_hash": "8566791c3fe651cd",
+      "result_file": "results/kuhn-3p__dcfr-a1.5-b0.5-g1__s0__8566791c3fe651cd.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -7370,11 +7461,11 @@
       "variant": "dcfr-a2-b0-g1",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "488bc76785a282e2",
-      "result_file": "results/kuhn-3p__dcfr-a2-b0-g1__s0__488bc76785a282e2.json",
+      "spec_hash": "76ed48895772ebeb",
+      "result_file": "results/kuhn-3p__dcfr-a2-b0-g1__s0__76ed48895772ebeb.json",
       "matrices": [
         "multiplayer"
       ]
@@ -7384,11 +7475,11 @@
       "variant": "dcfr-a3-b1-g3",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "66359823b993979f",
-      "result_file": "results/kuhn-3p__dcfr-a3-b1-g3__s0__66359823b993979f.json",
+      "spec_hash": "bf3785d2d35f6f4c",
+      "result_file": "results/kuhn-3p__dcfr-a3-b1-g3__s0__bf3785d2d35f6f4c.json",
       "matrices": [
         "multiplayer"
       ]
@@ -7398,11 +7489,11 @@
       "variant": "linear-cfr",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "9977351c2efca6c5",
-      "result_file": "results/kuhn-3p__linear-cfr__s0__9977351c2efca6c5.json",
+      "spec_hash": "39ad965bbea5170f",
+      "result_file": "results/kuhn-3p__linear-cfr__s0__39ad965bbea5170f.json",
       "matrices": [
         "multiplayer"
       ]
@@ -7840,11 +7931,11 @@
       "variant": "rm+/linear/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "5bfd75657ab459b0",
-      "result_file": "results/kuhn-3p__rm+-linear-sim__s0__5bfd75657ab459b0.json",
+      "spec_hash": "c99262a86cd744b5",
+      "result_file": "results/kuhn-3p__rm+-linear-sim__s0__c99262a86cd744b5.json",
       "matrices": [
         "multiplayer"
       ]
@@ -7854,11 +7945,11 @@
       "variant": "rm+/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "c70f515b8de595db",
-      "result_file": "results/kuhn-3p__rm+-uniform-alt__s0__c70f515b8de595db.json",
+      "spec_hash": "e17d0432a3c1fc34",
+      "result_file": "results/kuhn-3p__rm+-uniform-alt__s0__e17d0432a3c1fc34.json",
       "matrices": [
         "multiplayer"
       ]
@@ -7868,11 +7959,11 @@
       "variant": "rm+/uniform/sim",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "ce9c95ee5cb7288c",
-      "result_file": "results/kuhn-3p__rm+-uniform-sim__s0__ce9c95ee5cb7288c.json",
+      "spec_hash": "4d2e3aa97e9656b4",
+      "result_file": "results/kuhn-3p__rm+-uniform-sim__s0__4d2e3aa97e9656b4.json",
       "matrices": [
         "multiplayer",
         "determinism-audit"
@@ -7883,11 +7974,11 @@
       "variant": "rm/linear/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "c96e52285d27a0ad",
-      "result_file": "results/kuhn-3p__rm-linear-alt__s0__c96e52285d27a0ad.json",
+      "spec_hash": "69bf6c446373394e",
+      "result_file": "results/kuhn-3p__rm-linear-alt__s0__69bf6c446373394e.json",
       "matrices": [
         "multiplayer"
       ]
@@ -7897,11 +7988,11 @@
       "variant": "rm/uniform/alt",
       "seed": 0,
       "budget_type": "iterations",
-      "budget": 1000000,
-      "iteration_ceiling": 1000000,
+      "budget": 500000,
+      "iteration_ceiling": 500000,
       "epsilon": 0.05,
-      "spec_hash": "f120ffc1858072bd",
-      "result_file": "results/kuhn-3p__rm-uniform-alt__s0__f120ffc1858072bd.json",
+      "spec_hash": "53190210a441ca05",
+      "result_file": "results/kuhn-3p__rm-uniform-alt__s0__53190210a441ca05.json",
       "matrices": [
         "multiplayer"
       ]

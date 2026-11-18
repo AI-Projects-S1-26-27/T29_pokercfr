@@ -1,5 +1,5 @@
-858 cells across 8 matrices -> 745 distinct (547 iteration-budgeted, 198 wall-clock-budgeted)
+858 cells across 8 matrices -> 753 distinct (555 iteration-budgeted, 198 wall-clock-budgeted)
 no spec-hash or result-filename collisions
-design digest 8dc2054e76e9bd09  head fa80fe618f
+design digest d5a02efe5fec2080  head 7debe49e7f
 wrote /Users/mrlegendary/Code/Assignments/pokercfr/results/verify/preregistration.json
 wrote /Users/mrlegendary/Code/Assignments/pokercfr/docs/report/preregistration.md

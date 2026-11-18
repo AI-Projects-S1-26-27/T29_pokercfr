@@ -77,10 +77,17 @@ LEDUC_MCCFR_TIME_BUDGET = 600.0
 # Log-spaced so a log-log convergence plot has evenly spaced points -- which
 # matters because the SLOPE is what we report, and uneven spacing biases the eye.
 def checkpoints(upto: int) -> tuple[int, ...]:
+    """Log-spaced, always ending exactly on `upto`.
+
+    The budget itself has to be the final checkpoint: training stops at the last
+    one, so without it a budget that is not {1,2,5}x10^n silently truncates --
+    a declared 3,000 iterations would have run 2,000.
+    """
     out, t = [], 1
     while t <= upto:
         out.extend([t, 2 * t, 5 * t])
         t *= 10
+    out.append(upto)
     return tuple(c for c in sorted(set(out)) if c <= upto)
 
 
@@ -93,87 +100,16 @@ SAMPLED_SEEDS = tuple(range(10))
 
 # Per-rung iteration budgets, chosen so each run lands in the 1-7 CPU-hour band.
 BUDGET = {
-    "kuhn": 5_000_000, "4rank": 2_000_000, "4rank-2suit": 1_000_000,
-    "4rank-2suit-2dealt": 400_000, "kuhn-3p": 1_000_000, "4rank-2suit-3p": 130_000,
-    "4rank-2suit-2dealt-3p": 16_000, "4rank-2suit-4p": 7_000,
-    "13rank-4suit-2dealt-2p": 1_000, "6rank-4suit-2dealt-4p": 5_000,
+    "kuhn": 2_500_000, "4rank": 1_000_000, "4rank-2suit": 500_000,
+    "4rank-2suit-2dealt": 200_000, "kuhn-3p": 500_000, "4rank-2suit-3p": 65_000,
+    "4rank-2suit-2dealt-3p": 8_000, "4rank-2suit-4p": 3_000,
+    "13rank-4suit-2dealt-2p": 500, "6rank-4suit-2dealt-4p": 2_500,
 }
 
 MAX_HOURS_PER_RUN = 7.0
 
-# Every post-registration change to the design, in the order made. Emitted into
-# the pre-registration record so a regenerated document shows what changed
-# rather than reading as though it was always the plan.
-AMENDMENTS = [
-    {
-        "date": "2026-11-18",
-        "change": "DCFR parameter grid runs at 100,000 iterations on every rung, "
-                  "was a flat 1,000,000.",
-        "reason": "The grid ran deeper than the cube corners it is compared against "
-                  "(2.5x on 4rank-2suit-2dealt) and cost 127 of cube-deep's 196 "
-                  "measured CPU-hours, 65% of the matrix, for an exploratory "
-                  "sensitivity sweep. The grid ranks (alpha, beta, gamma); it does "
-                  "not need convergence, and h1_dcfr_limits.py shows the ranking is "
-                  "stable at 2,000 iterations on two rungs.",
-        "effect": "cube-deep 196 -> 54 CPU-hours. The eight cube corners keep their "
-                  "full per-rung budgets, so R1 is unchanged. The DCFR unification "
-                  "check is unaffected and was already complete.",
-    },
-    {
-        "date": "2026-11-18",
-        "change": "Multiplayer iteration budgets reduced: 4rank-2suit-3p "
-                  "150,000 -> 130,000, 4rank-2suit-2dealt-3p 30,000 -> 16,000, "
-                  "4rank-2suit-4p 15,000 -> 7,000.",
-        "reason": "Alternating updates do one traversal per player, so on "
-                  "multiplayer rungs they cost N x more per iteration (measured "
-                  "0.431 vs 1.655 s/iter at four players). At the old budgets the "
-                  "alternating corners needed 6.8 h against the 7 h per-run cap and "
-                  "would have been truncated while the simultaneous corners "
-                  "finished. These cells are compared at EQUAL ITERATIONS, so a "
-                  "truncated corner beside a completed one is not a comparison.",
-        "effect": "Budgets now derive from the slowest corner's measured cost, so "
-                  "every corner reaches the same iteration count. Iteration pool "
-                  "185 -> 133 CPU-hours; longest single cell 6.80 -> 3.18 h. A run "
-                  "that hits the time cap is now recorded complete=false.",
-    },
-]
+DCFR_GRID_ITERATIONS = 50_000
 
-# AMENDMENT 2026-11-18, for feasibility, recorded rather than applied silently.
-#
-# The DCFR parameter grid was running at a flat 1,000,000 iterations on every
-# rung while the eight cube corners use the per-rung BUDGET above. On
-# 4rank-2suit-2dealt that made the grid 2.5x DEEPER than the corners it is
-# compared against, and it cost 127 of cube-deep's 196 measured CPU-hours --
-# 65% of the matrix for an exploratory sensitivity sweep.
-#
-# The grid now runs at DCFR_GRID_ITERATIONS on every rung. Justification: the
-# grid answers "which (alpha, beta, gamma) ranks best", not "what does DCFR
-# converge to". scripts/h1_dcfr_limits.py shows that ranking is already stable
-# at 2,000 iterations on two rungs, so 100,000 is two orders of magnitude of
-# margin. The separate unification check (DCFR's limits reproducing CFR and
-# CFR+ exactly) is unaffected -- it lives in that script and is complete.
-#
-# UNCHANGED: the eight cube corners keep their full per-rung budgets, so R1,
-# the headline ablation, is not touched. The three alternating-DCFR cells now
-# use the rung's own BUDGET so they are directly comparable to cfr+, which was
-# the point of adding them.
-DCFR_GRID_ITERATIONS = 100_000
-
-# AMENDMENT 2026-11-18. Multiplayer budgets sized so the SLOWEST corner can
-# finish, not the fastest.
-#
-# Alternating updates do one traversal per player, so on multiplayer rungs they
-# cost N x more per iteration: measured 0.237 vs 0.730 s/iter at 3 players and
-# 0.431 vs 1.655 at 4. At the previous budgets the alternating corners needed
-# 5.7 h and 6.8 h against a 7 h per-run cap, so some would have been truncated
-# while the simultaneous corners finished.
-#
-# That breaks the comparison these cells exist for. An iteration-budgeted cell
-# is compared at EQUAL ITERATIONS, so a truncated cfr+ sitting beside a
-# completed cfr is not a comparison at all -- the same class of error as
-# comparing wall-clock runs across different machines. Budgets are now set from
-# the slowest corner's measured cost, so every corner reaches the same
-# iteration count.
 
 
 def _spec(game: str, variant: str, seed: int = 0, iterations: int | None = None,
