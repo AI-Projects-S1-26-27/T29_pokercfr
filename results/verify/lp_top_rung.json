@@ -1,0 +1,35 @@
+{
+  "lp": [
+    {
+      "game": "13rank-4suit-2dealt-2p",
+      "info_sets": 5304,
+      "value": -0.053817559308835854,
+      "value_check": -0.053817559308835826,
+      "sequences": [
+        5305,
+        5305
+      ],
+      "infosets": [
+        2652,
+        2652
+      ],
+      "payoff_nnz": 8087820,
+      "terminals": 8121750,
+      "unreachable_infosets": 516,
+      "max_flow_residual": 1.2323475573339238e-13,
+      "build_seconds": 76.42944330299997,
+      "solve_seconds": 39.74616014999992,
+      "exploitability_eval": null,
+      "eval_seconds": 2.6369998522568494e-06,
+      "policy_value": null,
+      "exploitability_vectorized": 5.93275428784068e-16
+    }
+  ],
+  "cfr_plus_agreement": [],
+  "failures": [],
+  "env": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "node": "vm"
+  }
+}

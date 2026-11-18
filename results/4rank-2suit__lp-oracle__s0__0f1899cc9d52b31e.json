@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "spec": {
+    "game": "4rank-2suit",
+    "variant": "lp-oracle",
+    "seed": 0,
+    "iterations": 1,
+    "max_seconds": 25200.0,
+    "checkpoints": [
+      1
+    ],
+    "extra": {},
+    "spec_hash": "0f1899cc9d52b31e"
+  },
+  "game": {
+    "name": "4rank-2suit",
+    "players": 2,
+    "info_sets": 32
+  },
+  "curve": [
+    {
+      "iterations": 1,
+      "train_seconds": 0.009657181999955355,
+      "eval_seconds": 0.013108400999954029,
+      "nashconv_total": 9.71445146547012e-17,
+      "nashconv_mean": 4.85722573273506e-17,
+      "nashconv_max": 5.551115123125783e-17,
+      "nashconv_max_seat": 0,
+      "exploitability": 4.85722573273506e-17,
+      "gains": [
+        5.551115123125783e-17,
+        4.163336342344337e-17
+      ]
+    }
+  ],
+  "time_budget": null,
+  "iterations_reached": 1,
+  "complete": true,
+  "traversal": null,
+  "env": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "node": "vm"
+  }
+}

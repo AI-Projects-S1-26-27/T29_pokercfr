@@ -1,0 +1,271 @@
+{
+  "lp": [
+    {
+      "game": "kuhn",
+      "info_sets": 12,
+      "value": -0.055555555555555525,
+      "value_check": -0.055555555555555525,
+      "sequences": [
+        13,
+        13
+      ],
+      "infosets": [
+        6,
+        6
+      ],
+      "payoff_nnz": 30,
+      "terminals": 30,
+      "unreachable_infosets": 0,
+      "max_flow_residual": 5.551115123125783e-17,
+      "build_seconds": 0.0009314730000369309,
+      "solve_seconds": 0.005151924000074359,
+      "exploitability_eval": 2.0816681711721685e-17,
+      "eval_seconds": 0.0015360479999344534,
+      "policy_value": -0.055555555555555525,
+      "exploitability_vectorized": -1.3877787807814457e-17
+    },
+    {
+      "game": "4rank",
+      "info_sets": 16,
+      "value": -0.04166666666666667,
+      "value_check": -0.04166666666666667,
+      "sequences": [
+        17,
+        17
+      ],
+      "infosets": [
+        8,
+        8
+      ],
+      "payoff_nnz": 60,
+      "terminals": 60,
+      "unreachable_infosets": 0,
+      "max_flow_residual": 5.551115123125783e-17,
+      "build_seconds": 0.0011851080000724323,
+      "solve_seconds": 0.004005700999869077,
+      "exploitability_eval": 6.938893903907228e-18,
+      "eval_seconds": 0.002550345000145171,
+      "policy_value": -0.041666666666666685,
+      "exploitability_vectorized": 3.122502256758253e-17
+    },
+    {
+      "game": "4rank-2dealt",
+      "info_sets": 24,
+      "value": -0.0,
+      "value_check": 0.0,
+      "sequences": [
+        25,
+        25
+      ],
+      "infosets": [
+        12,
+        12
+      ],
+      "payoff_nnz": 30,
+      "terminals": 30,
+      "unreachable_infosets": 3,
+      "max_flow_residual": 0.0,
+      "build_seconds": 0.0005833179998262494,
+      "solve_seconds": 0.0037537690000135626,
+      "exploitability_eval": 0.0,
+      "eval_seconds": 0.0011746850000236009,
+      "policy_value": 0.0,
+      "exploitability_vectorized": 0.0
+    },
+    {
+      "game": "4rank-2suit",
+      "info_sets": 32,
+      "value": -0.04192546583850924,
+      "value_check": -0.04192546583850931,
+      "sequences": [
+        33,
+        33
+      ],
+      "infosets": [
+        16,
+        16
+      ],
+      "payoff_nnz": 256,
+      "terminals": 280,
+      "unreachable_infosets": 1,
+      "max_flow_residual": 1.1102230246251565e-16,
+      "build_seconds": 0.0030485319998661,
+      "solve_seconds": 0.005059699999947043,
+      "exploitability_eval": 4.85722573273506e-17,
+      "eval_seconds": 0.011656575999950292,
+      "policy_value": -0.04192546583850931,
+      "exploitability_vectorized": 7.632783294297951e-17
+    },
+    {
+      "game": "4rank-2suit-2dealt",
+      "info_sets": 112,
+      "value": -0.04105907923335314,
+      "value_check": -0.04105907923335301,
+      "sequences": [
+        113,
+        113
+      ],
+      "infosets": [
+        56,
+        56
+      ],
+      "payoff_nnz": 2028,
+      "terminals": 2100,
+      "unreachable_infosets": 6,
+      "max_flow_residual": 8.881784197001252e-16,
+      "build_seconds": 0.018560772000000725,
+      "solve_seconds": 0.009349382999971567,
+      "exploitability_eval": 2.7755575615628914e-17,
+      "eval_seconds": 0.09441421300016373,
+      "policy_value": -0.041059079233353266,
+      "exploitability_vectorized": 4.85722573273506e-17
+    },
+    {
+      "game": "leduc-2p-cap1",
+      "info_sets": 384,
+      "value": -0.07810634334443389,
+      "value_check": -0.07810634334443398,
+      "sequences": [
+        385,
+        385
+      ],
+      "infosets": [
+        192,
+        192
+      ],
+      "payoff_nnz": 1644,
+      "terminals": 1860,
+      "unreachable_infosets": 8,
+      "max_flow_residual": 2.3613923316734287e-16,
+      "build_seconds": 0.016639895000025717,
+      "solve_seconds": 0.027184446000092066,
+      "exploitability_eval": 6.522560269672795e-16,
+      "eval_seconds": 0.12480053600006613,
+      "policy_value": -0.07810634334443405
+    },
+    {
+      "game": "leduc-2p-cap2",
+      "info_sets": 936,
+      "value": -0.0856064240780006,
+      "value_check": -0.08560642407800043,
+      "sequences": [
+        1093,
+        1093
+      ],
+      "infosets": [
+        468,
+        468
+      ],
+      "payoff_nnz": 4920,
+      "terminals": 5520,
+      "unreachable_infosets": 130,
+      "max_flow_residual": 1.5959455978986625e-16,
+      "build_seconds": 0.051945800000112285,
+      "solve_seconds": 0.14502029300001595,
+      "exploitability_eval": 9.367506770274758e-16,
+      "eval_seconds": 0.3000664369999413,
+      "policy_value": -0.08560642407800044
+    },
+    {
+      "game": "leduc-2p-cap3",
+      "info_sets": 1728,
+      "value": -0.07790405679408063,
+      "value_check": -0.07790405679408069,
+      "sequences": [
+        2161,
+        2161
+      ],
+      "infosets": [
+        864,
+        864
+      ],
+      "payoff_nnz": 9924,
+      "terminals": 11100,
+      "unreachable_infosets": 584,
+      "max_flow_residual": 8.881784197001252e-16,
+      "build_seconds": 0.08015895399989859,
+      "solve_seconds": 0.45537601399996674,
+      "exploitability_eval": 9.853229343548264e-16,
+      "eval_seconds": 0.44403935400009686,
+      "policy_value": -0.07790405679408062
+    }
+  ],
+  "cfr_plus_agreement": [
+    {
+      "game": "kuhn",
+      "solver": "vectorized",
+      "iterations": 200000,
+      "cfr_plus_value": -0.0555555555460453,
+      "lp_value": -0.055555555555555525,
+      "abs_diff": 9.510225940090322e-12,
+      "cfr_plus_exploitability": 1.3151326870436408e-06,
+      "train_seconds": 36.87229707000006
+    },
+    {
+      "game": "kuhn",
+      "solver": "scalar",
+      "iterations": 200000,
+      "cfr_plus_value": -0.055555555546045465,
+      "lp_value": -0.055555555555555525,
+      "abs_diff": 9.510059406636628e-12,
+      "cfr_plus_exploitability": 1.3151326881954972e-06,
+      "train_seconds": 135.18590548700013
+    },
+    {
+      "game": "4rank",
+      "solver": "vectorized",
+      "iterations": 200000,
+      "cfr_plus_value": -0.0416666667925617,
+      "lp_value": -0.04166666666666667,
+      "abs_diff": 1.2589503051163575e-10,
+      "cfr_plus_exploitability": 4.2316940678313597e-07,
+      "train_seconds": 39.050127457999906
+    },
+    {
+      "game": "4rank",
+      "solver": "scalar",
+      "iterations": 200000,
+      "cfr_plus_value": -0.04166666679256187,
+      "lp_value": -0.04166666666666667,
+      "abs_diff": 1.2589519704508945e-10,
+      "cfr_plus_exploitability": 4.231695339348973e-07,
+      "train_seconds": 259.8883955229999
+    },
+    {
+      "game": "4rank-2suit",
+      "solver": "vectorized",
+      "iterations": 200000,
+      "cfr_plus_value": -0.04192546642362837,
+      "lp_value": -0.04192546583850924,
+      "abs_diff": 5.85119126761402e-10,
+      "cfr_plus_exploitability": 4.0350376310713254e-07,
+      "train_seconds": 39.471552915000075
+    },
+    {
+      "game": "4rank-2suit",
+      "solver": "scalar",
+      "iterations": 200000,
+      "cfr_plus_value": -0.04192546642362828,
+      "lp_value": -0.04192546583850924,
+      "abs_diff": 5.851190365557812e-10,
+      "cfr_plus_exploitability": 4.035038103089583e-07,
+      "train_seconds": 1164.308369613
+    },
+    {
+      "game": "4rank-2suit-2dealt",
+      "solver": "vectorized",
+      "iterations": 200000,
+      "cfr_plus_value": -0.04105907930846045,
+      "lp_value": -0.04105907923335314,
+      "abs_diff": 7.510730926085785e-11,
+      "cfr_plus_exploitability": 6.022072218669905e-08,
+      "train_seconds": 41.466076460000295
+    }
+  ],
+  "failures": [],
+  "env": {
+    "python": "3.12.3",
+    "machine": "x86_64",
+    "node": "vm"
+  }
+}

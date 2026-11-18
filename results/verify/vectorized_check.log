@@ -1,0 +1,28 @@
+rung                    config   scalar s/it  vector s/it   speedup  scalar MB  vector MB  max rel diff
+kuhn                    cfr        4.007e-04    1.681e-04       2.4         31         38      1.67e-15  OK
+kuhn                    cfr+       7.345e-04    2.244e-04       3.3         30         37      6.66e-16  OK
+4rank                   cfr        7.142e-04    1.727e-04       4.1         30         38      1.28e-15  OK
+4rank                   cfr+       1.349e-03    2.255e-04       6.0         29         37      9.99e-16  OK
+4rank-2suit             cfr        3.191e-03    1.613e-04      19.8         31         38      1.67e-15  OK
+4rank-2suit             cfr+       6.046e-03    2.203e-04      27.4         34         37      1.68e-15  OK
+4rank-2suit-2dealt      cfr        2.467e-02    1.757e-04     140.4         36         38      2.76e-15  OK
+4rank-2suit-2dealt      cfr+       4.779e-02    2.272e-04     210.3         38         39      2.87e-15  OK
+kuhn-3p                 cfr        4.178e-03    6.772e-04       6.2         40         40      3.33e-15  OK
+kuhn-3p                 cfr+       1.150e-02    9.268e-04      12.4         41         41      1.47e-15  OK
+4rank-2suit-3p          cfr        5.648e-02    6.568e-04      86.0         41         41      9.10e-15  OK
+4rank-2suit-3p          cfr+       1.565e-01    9.489e-04     164.9         41         41      1.05e-14  OK
+4rank-2suit-2dealt-3p   cfr        4.462e-01    1.205e-03     370.4         42         43      1.40e-14  OK
+4rank-2suit-2dealt-3p   cfr+       1.277e+00    1.392e-03     916.9         43         43      2.46e-14  OK
+4rank-2suit-4p          cfr        8.076e-01    3.189e-03     253.3         43         43      2.59e-14  OK
+4rank-2suit-4p          cfr+       3.075e+00    4.196e-03     732.9         43         43      1.15e-01  MISMATCH
+13rank-4suit-2dealt-2p  cfr        9.616e+01    6.609e-03   14550.0        659        903      5.73e-14  OK
+13rank-4suit-2dealt-2p  cfr+       1.878e+02    9.837e-03   19091.0        658        903      8.35e-14  OK
+
+exact evaluation of the scalar CFR+ average strategy on 13rank-4suit-2dealt-2p
+  eval           467.76s  peak    3053 MB  gains [0.07757372375114369, 0.09550856724808272]
+  vectorized       8.24s  peak     905 MB  gains [0.07757372374626653, 0.09550856725295911]
+  max |gain diff| 4.88e-12, speedup 57x
+
+wrote results/verify/vectorized_check.json
+FAILURES:
+  4rank-2suit-4p/cfr+: {'regret_sum': {'keys_equal': True, 'max_abs_diff': 0.00785561806766212, 'max_abs_entry': 0.3102678571428568, 'rel_diff': 0.00785561806766212}, 'strategy_sum': {'keys_equal': True, 'max_abs_diff': 2412.4084490529276, 'max_abs_entry': 97545.0, 'rel_diff': 0.024731236342743632}, 'average': {'keys_equal': True, 'max_abs_diff': 0.024704643615492045, 'max_abs_entry': 0.999430909931461, 'rel_diff': 0.024704643615492045}, 'current': {'keys_equal': True, 'max_abs_diff': 0.11465054786735851, 'max_abs_entry': 1.0, 'rel_diff': 0.11465054786735851}}
