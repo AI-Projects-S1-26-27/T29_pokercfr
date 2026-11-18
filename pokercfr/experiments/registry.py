@@ -101,6 +101,27 @@ BUDGET = {
 
 MAX_HOURS_PER_RUN = 7.0
 
+# AMENDMENT 2026-11-18, for feasibility, recorded rather than applied silently.
+#
+# The DCFR parameter grid was running at a flat 1,000,000 iterations on every
+# rung while the eight cube corners use the per-rung BUDGET above. On
+# 4rank-2suit-2dealt that made the grid 2.5x DEEPER than the corners it is
+# compared against, and it cost 127 of cube-deep's 196 measured CPU-hours --
+# 65% of the matrix for an exploratory sensitivity sweep.
+#
+# The grid now runs at DCFR_GRID_ITERATIONS on every rung. Justification: the
+# grid answers "which (alpha, beta, gamma) ranks best", not "what does DCFR
+# converge to". scripts/h1_dcfr_limits.py shows that ranking is already stable
+# at 2,000 iterations on two rungs, so 100,000 is two orders of magnitude of
+# margin. The separate unification check (DCFR's limits reproducing CFR and
+# CFR+ exactly) is unaffected -- it lives in that script and is complete.
+#
+# UNCHANGED: the eight cube corners keep their full per-rung budgets, so R1,
+# the headline ablation, is not touched. The three alternating-DCFR cells now
+# use the rung's own BUDGET so they are directly comparable to cfr+, which was
+# the point of adding them.
+DCFR_GRID_ITERATIONS = 100_000
+
 
 def _spec(game: str, variant: str, seed: int = 0, iterations: int | None = None,
           time_budget: float | None = None) -> RunSpec:
@@ -133,7 +154,7 @@ def cube_deep() -> list[RunSpec]:
             for gamma in (1.0, 2.0, 3.0):
                 label = f"dcfr-a{alpha:g}-b{beta:g}-g{gamma:g}"
                 for rung in ("4rank", "4rank-2suit", "4rank-2suit-2dealt"):
-                    specs.append(_spec(rung, label, iterations=1_000_000))
+                    specs.append(_spec(rung, label, iterations=DCFR_GRID_ITERATIONS))
 
     # Every DCFR setting above uses simultaneous updates, because that is what
     # the discount family can express. No DCFR setting reached CFR+ in the
@@ -144,7 +165,7 @@ def cube_deep() -> list[RunSpec]:
     for alpha, beta, gamma in ((1.5, 0.0, 2.0), (2.0, 0.0, 1.0), (3.0, 0.0, 1.0)):
         label = f"dcfr-alt-a{alpha:g}-b{beta:g}-g{gamma:g}"
         for rung in ("4rank", "4rank-2suit", "4rank-2suit-2dealt"):
-            specs.append(_spec(rung, label, iterations=1_000_000))
+            specs.append(_spec(rung, label))   # the rung's own budget, as cfr+ uses
     return specs
 
 
