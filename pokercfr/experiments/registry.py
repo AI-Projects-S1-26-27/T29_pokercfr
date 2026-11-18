@@ -72,7 +72,8 @@ H3_VARIANTS = ("cfr", "cfr+", "linear-cfr")
 H3_SEEDS = (0, 1, 2)
 H3_TIME_BUDGET = 3600.0
 H3_STRETCH_TIME_BUDGET = 21_600.0
-LEDUC_MCCFR_TIME_BUDGET = 600.0
+LEDUC_MCCFR_TIME_BUDGET = 240.0
+MCCFR_VARIANCE_ITERATIONS = 3_800_000
 
 # Log-spaced so a log-log convergence plot has evenly spaced points -- which
 # matters because the SLOPE is what we report, and uneven spacing biases the eye.
@@ -135,6 +136,19 @@ AMENDMENTS = [
                   "every corner reaches the same iteration count. Iteration pool "
                   "185 -> 133 CPU-hours; longest single cell 6.80 -> 3.18 h. A run "
                   "that hits the time cap is now recorded complete=false.",
+    },
+    {
+        "date": "2026-11-18",
+        "change": "MCCFR variance matrix reduced from 10M to 3.8M iterations per "
+                  "fixed-budget cell and from 600 to 240 seconds per Leduc cell.",
+        "reason": "The owner requested a four-hour single-machine run window. The "
+                  "original estimate was about 155 CPU-hours; this preserves all "
+                  "three samplers, five rungs, and ten seeds while fitting the "
+                  "measured workload to the requested window.",
+        "effect": "The matrix estimator projects about four hours on the current "
+                  "12-core machine. Lower iteration depth reduces power for "
+                  "asymptotic conclusions; results will be treated as a shorter "
+                  "budget comparison and can be extrapolated from saved curves.",
     },
 ]
 
@@ -294,9 +308,10 @@ def mccfr_variance() -> list[RunSpec]:
 
     MCCFR trades per-iteration cost for variance, so it needs orders of magnitude
     more iterations than full-traversal CFR to reach the same exploitability --
-    which is exactly the trade-off being measured, and why these budgets are the
-    largest in the study. Ten seeds per cell because a single-seed MCCFR number is
-    not a result, it is one draw from a distribution.
+    which is exactly the trade-off being measured. This matrix uses a four-hour
+    single-machine budget: 3M iterations per fixed-budget cell and 180 seconds
+    per Leduc cell. Ten seeds per cell because a single-seed MCCFR number is not
+    a result, it is one draw from a distribution.
 
     The textbook claim is that external sampling has lower variance than outcome
     sampling. We verify it rather than cite it, on games where the truth is known.
@@ -305,7 +320,8 @@ def mccfr_variance() -> list[RunSpec]:
     for scheme in ("outcome", "external", "chance"):
         for rung in ("kuhn", "4rank", "4rank-2suit", "4rank-2suit-2dealt", "kuhn-3p"):
             for seed in SAMPLED_SEEDS:
-                specs.append(_spec(rung, f"mccfr-{scheme}", seed=seed, iterations=10_000_000))
+                specs.append(_spec(rung, f"mccfr-{scheme}", seed=seed,
+                                   iterations=MCCFR_VARIANCE_ITERATIONS))
     # The sampled algorithms also run on Leduc (2-player, cap 2), wall-clock
     # budgeted like H1 so they are directly comparable with its CFR/CFR+ cells.
     for scheme in ("outcome", "external", "chance"):

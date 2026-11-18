@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "spec": {
+    "game": "kuhn-3p",
+    "variant": "mccfr-outcome",
+    "seed": 2,
+    "iterations": 10000000,
+    "max_seconds": 25200.0,
+    "checkpoints": [
+      1,
+      2,
+      5,
+      10,
+      20,
+      50,
+      100,
+      200,
+      500,
+      1000,
+      2000,
+      5000,
+      10000,
+      20000,
+      50000,
+      100000,
+      200000,
+      500000,
+      1000000,
+      2000000,
+      5000000,
+      10000000
+    ],
+    "extra": {},
+    "spec_hash": "3a22777975f08a86"
+  },
+  "game": {
+    "name": "kuhn-3p",
+    "players": 3,
+    "info_sets": 48
+  },
+  "curve": [
+    {
+      "iterations": 1,
+      "train_seconds": 0.0019717999966815114,
+      "eval_seconds": 0.13458319997880608,
+      "nashconv_total": 2.0625,
+      "nashconv_mean": 0.6875,
+      "nashconv_max": 0.8229166666666667,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.546875,
+        0.6927083333333333,
+        0.8229166666666667
+      ]
+    },
+    {
+      "iterations": 2,
+      "train_seconds": 0.20334959999308921,
+      "eval_seconds": 0.10568339997553267,
+      "nashconv_total": 2.0625,
+      "nashconv_mean": 0.6875,
+      "nashconv_max": 0.8229166666666667,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.546875,
+        0.6927083333333333,
+        0.8229166666666667
+      ]
+    },
+    {
+      "iterations": 5,
+      "train_seconds": 0.22783519999939017,
+      "eval_seconds": 0.12904100000741892,
+      "nashconv_total": 1.8940972222222223,
+      "nashconv_mean": 0.6313657407407408,
+      "nashconv_max": 0.7942708333333334,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.41666666666666663,
+        0.6831597222222222,
+        0.7942708333333334
+      ]
+    },
+    {
+      "iterations": 10,
+      "train_seconds": 0.23809800000162795,
+      "eval_seconds": 0.14172980000148527,
+      "nashconv_total": 1.9910211066089216,
+      "nashconv_mean": 0.6636737022029738,
+      "nashconv_max": 0.8991530299631966,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.3745855823244087,
+        0.7172824943213163,
+        0.8991530299631966
+      ]
+    },
+    {
+      "iterations": 20,
+      "train_seconds": 0.26038409999455325,
+      "eval_seconds": 0.15314079998643138,
+      "nashconv_total": 1.6484697890678457,
+      "nashconv_mean": 0.5494899296892819,
+      "nashconv_max": 0.8741101374192106,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.31614351711336774,
+        0.4582161345352672,
+        0.8741101374192106
+      ]
+    },
+    {
+      "iterations": 50,
+      "train_seconds": 0.3007819000049494,
+      "eval_seconds": 0.13448959999368526,
+      "nashconv_total": 1.0621157136372732,
+      "nashconv_mean": 0.3540385712124244,
+      "nashconv_max": 0.6088290046971361,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.23244439562432068,
+        0.2208423133158165,
+        0.6088290046971361
+      ]
+    },
+    {
+      "iterations": 100,
+      "train_seconds": 0.34758400000282563,
+      "eval_seconds": 0.15471800000523217,
+      "nashconv_total": 0.9245241667206828,
+      "nashconv_mean": 0.3081747222402276,
+      "nashconv_max": 0.4347361317306327,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.35728893649458193,
+        0.1324990984954682,
+        0.4347361317306327
+      ]
+    },
+    {
+      "iterations": 200,
+      "train_seconds": 0.4515809000004083,
+      "eval_seconds": 0.12838490001740865,
+      "nashconv_total": 0.7176476196193716,
+      "nashconv_mean": 0.2392158732064572,
+      "nashconv_max": 0.30505378695030344,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.299298449422041,
+        0.11329538324702723,
+        0.30505378695030344
+      ]
+    }
+  ],
+  "time_budget": null,
+  "iterations_reached": 200,
+  "complete": false,
+  "env": {
+    "python": "3.13.3",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 186 Stepping 3, GenuineIntel",
+    "node": "Viking"
+  }
+}
