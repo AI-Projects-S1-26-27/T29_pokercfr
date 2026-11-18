@@ -460,3 +460,252 @@ def fig_nashconv_players(records: list[dict] | None = None, cap: int = 1,
     csv_path = (FIGURE_DIR if out_dir is None else Path(out_dir)) / "fig_nashconv_players.csv"
     csv_path.write_text("\n".join(lines) + "\n")
     return paths + [csv_path]
+
+
+def _cost_to_epsilon(record: dict, epsilon: float,
+                     epsilon_axis: str = "iterations") -> float | None:
+    """Iterations needed to reach `epsilon`, interpolated in log-log space.
+
+    Checkpoints are log-spaced, so taking the first one at or below epsilon
+    quantises the answer onto that grid -- which on this ladder swamped the
+    scaling signal entirely. Interpolating between the bracketing checkpoints
+    recovers a continuous estimate. None means the run never got there.
+    """
+    key = "train_seconds" if epsilon_axis == "seconds" else "iterations"
+    curve = [(p[key], p["exploitability"]) for p in record["curve"]
+             if p.get("exploitability") is not None and p["exploitability"] > 0
+             and p.get(key)]
+    previous = None
+    for iterations, value in curve:
+        if value <= epsilon:
+            if previous is None:
+                return float(iterations)
+            (i0, v0) = previous
+            if v0 <= epsilon or v0 == value:
+                return float(iterations)
+            # linear in log-log, which is the space the curve is a power law in
+            import math
+            t = (math.log(v0) - math.log(epsilon)) / (math.log(v0) - math.log(value))
+            return math.exp(math.log(i0) + t * (math.log(iterations) - math.log(i0)))
+        previous = (iterations, value)
+    return None
+
+
+def _ladder_epsilon(records: list[dict], variants: tuple[str, ...]) -> float:
+    """The tightest epsilon every included run actually reaches.
+
+    Chosen from the data rather than fixed in advance, because an epsilon that
+    some cell never reaches censors it, and an epsilon every cell clears in its
+    first few checkpoints measures the checkpoint grid instead of the algorithm.
+    """
+    finals = [r["curve"][-1]["exploitability"] for r in records
+              if r["spec"]["variant"] in variants and r["curve"]
+              and r["curve"][-1].get("exploitability")]
+    return max(finals) * 1.5 if finals else 1e-2
+
+
+def fig_scaling_exponents(records: list[dict] | None = None,
+                          out_dir: Path | None = None,
+                          epsilon: float | None = None) -> list[Path]:
+    """H2: how does cost to reach a fixed epsilon grow with information-set count?
+
+    One fitted slope per variant across the two-player ladder, with a bootstrap
+    interval. The slope IS the scaling law, and an interval excluding another
+    variant's slope is what turns "CFR+ looked faster" into "CFR+ scales
+    measurably better".
+
+    Restricted to the eight ablation corners. The DCFR grid runs on a different
+    iteration budget and the LP oracle is not iterative at all, so neither
+    belongs on an iterations-to-epsilon axis.
+    """
+    import matplotlib.pyplot as plt
+
+    from pokercfr.analysis.stats import fit_scaling_exponent
+    from pokercfr.solvers.cfr import ablation_cube
+
+    records = load_results() if records is None else records
+    LADDER = ("kuhn", "4rank", "4rank-2suit", "4rank-2suit-2dealt")
+    CORNERS = tuple(ablation_cube())
+
+    on_ladder = [r for r in records
+                 if r["game"]["name"] in LADDER and r["game"]["players"] == 2
+                 and r["spec"]["variant"] in CORNERS and r["curve"]]
+    if not on_ladder:
+        raise ResultError("no two-player ladder runs for the ablation corners yet")
+    eps = _ladder_epsilon(on_ladder, CORNERS) if epsilon is None else epsilon
+
+    fits: dict[str, dict] = {}
+    sources, censored = [], 0
+    for axis in ("iterations", "seconds"):
+        points: dict[str, list[tuple[float, float]]] = {}
+        for record in on_ladder:
+            reached = _cost_to_epsilon(record, eps, axis)
+            if reached is None or reached <= 0:
+                censored += axis == "iterations"
+                continue
+            points.setdefault(record["spec"]["variant"], []).append(
+                (float(record["game"]["info_sets"]), reached))
+            sources.append(record["_file"])
+        for variant, pairs in points.items():
+            if len(pairs) < 3:
+                continue
+            pairs.sort()
+            fits.setdefault(variant, {})[axis] = fit_scaling_exponent(
+                [x for x, _ in pairs], [y for _, y in pairs])
+
+    both = {v: f for v, f in fits.items() if len(f) == 2}
+    if not both:
+        raise ResultError("no corner has three ladder rungs on both axes yet")
+
+    order = sorted(both, key=lambda v: both[v]["seconds"].value)
+    fig, axes = plt.subplots(1, 2, figsize=(11.6, 0.42 * len(order) + 2.4),
+                             sharey=True)
+    titles = {"iterations": "iterations to $\\epsilon$",
+              "seconds": "wall-clock seconds to $\\epsilon$"}
+    ys = list(range(len(order)))
+    for ax, axis in zip(axes, ("iterations", "seconds"), strict=True):
+        est = [both[v][axis] for v in order]
+        ax.errorbar(
+            [e.value for e in est], ys,
+            xerr=[[max(0.0, e.value - e.ci95[0]) for e in est],
+                  [max(0.0, e.ci95[1] - e.value) for e in est]],
+            fmt="o", capsize=3, linewidth=1.2, markersize=5, color="#1f4e79")
+        ax.axvline(0.0, color="#c1121f", linestyle="--", linewidth=1)
+        ax.axvline(1.0, color="0.6", linestyle=":", linewidth=1)
+        ax.set_xlabel(f"exponent: {titles[axis]} vs information sets")
+        ax.set_title(titles[axis])
+        _style_axis(ax)
+    axes[0].set_yticks(ys)
+    axes[0].set_yticklabels(order)
+    fig.suptitle(f"H2: where the cost of a bigger game actually lands "
+                 f"($\\epsilon$ = {eps:.2g} chips/hand)", y=1.02)
+    axes[1].annotate("0 = no growth", xy=(0.0, len(order) - 0.6), fontsize=8,
+                     color="#c1121f", rotation=90, va="top", ha="right")
+    fig.tight_layout()
+
+    csv = (FIGURE_DIR if out_dir is None else Path(out_dir)) / "fig_scaling_exponents.csv"
+    csv.parent.mkdir(parents=True, exist_ok=True)
+    csv.write_text(
+        f"# epsilon = {eps:.6g} chips/hand, the tightest every included run reaches\n"
+        "variant,iter_exponent,iter_ci_low,iter_ci_high,"
+        "sec_exponent,sec_ci_low,sec_ci_high\n" + "".join(
+            f"{v},{both[v]['iterations'].value:.6f},{both[v]['iterations'].ci95[0]:.6f},"
+            f"{both[v]['iterations'].ci95[1]:.6f},{both[v]['seconds'].value:.6f},"
+            f"{both[v]['seconds'].ci95[0]:.6f},{both[v]['seconds'].ci95[1]:.6f}\n"
+            for v in order))
+    return save(fig, "fig_scaling_exponents", out_dir, sorted(set(sources))) + [csv]
+
+
+def fig_alpha_manifold(records: list[dict] | None = None,
+                       out_dir: Path | None = None) -> list[Path]:
+    """Which point on Kuhn's equilibrium family does each variant select?
+
+    Kuhn's equilibria form a one-parameter family indexed by the first player's
+    bluffing frequency alpha in [0, 1/3]. Exploitability cannot tell two
+    equilibria apart, so this is the only way to see that the variants disagree.
+    """
+    import matplotlib.pyplot as plt
+
+    source = RESULTS_DIR / "verify" / "alpha_manifold.json"
+    if not source.exists():
+        raise ResultError("run scripts/h10_alpha_manifold.py first")
+    data = json.loads(source.read_text())
+    traces = data["traces"]
+
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(11.0, 4.2),
+                                 gridspec_kw={"width_ratios": [1.35, 1]})
+    for variant, trace in sorted(traces.items()):
+        plus = variant.startswith("rm+") or variant == "cfr+"
+        ax.plot([p["iterations"] for p in trace], [p["alpha"] for p in trace],
+                marker="o", markersize=3, linewidth=1.3,
+                color="#c1121f" if plus else "#1f4e79",
+                alpha=0.85, label=variant)
+    ax.axhspan(0.0, 1 / 3, color="0.9", zorder=0)
+    ax.axhline(1 / 3, color="0.5", linestyle="--", linewidth=1)
+    ax.annotate(r"$\alpha = 1/3$, edge of the family", xy=(trace[0]["iterations"], 1 / 3),
+                xytext=(0, 4), textcoords="offset points", fontsize=8, color="0.35")
+    ax.set_xscale("log")
+    ax.set_xlabel("iterations")
+    ax.set_ylabel(r"$\alpha = P(\mathrm{bet} \mid J)$")
+    ax.set_title("Which equilibrium each variant converges to")
+    ax.legend(fontsize=7, ncol=2, frameon=False)
+    _style_axis(ax)
+
+    finals = [(t[-1]["alpha"], v) for v, t in traces.items()]
+    bx.scatter([a for a, _ in finals],
+               [3 * a for a, _ in finals], s=28, color="#1f4e79", label="measured")
+    lo, hi = min(a for a, _ in finals), max(a for a, _ in finals)
+    bx.plot([lo, hi], [3 * lo, 3 * hi], color="#c1121f", linewidth=1.2,
+            linestyle="--", label=r"closed form $3\alpha$")
+    for a, v in finals:
+        bx.annotate(v, xy=(a, 3 * a), xytext=(3, -3), textcoords="offset points",
+                    fontsize=6, color="0.35")
+    bx.set_xlabel(r"$\alpha$")
+    bx.set_ylabel(r"$P(\mathrm{bet} \mid K)$")
+    bx.set_title("Kuhn's identity holds at every selected point")
+    bx.legend(fontsize=8, frameon=False)
+    _style_axis(bx)
+    fig.tight_layout()
+    return save(fig, "fig_alpha_manifold", out_dir, ["verify/alpha_manifold.json"])
+
+
+def fig_oracle_agreement(records: list[dict] | None = None,
+                         out_dir: Path | None = None) -> list[Path]:
+    """Three independent routes to the same game value.
+
+    An iterative regret minimiser, an exact sequence-form linear program, and
+    Kuhn's closed form. Agreement between unrelated algorithms is far stronger
+    evidence of correctness than either matching itself.
+    """
+    import matplotlib.pyplot as plt
+
+    source = RESULTS_DIR / "verify" / "lp_values.json"
+    if not source.exists():
+        raise ResultError("run scripts/sid1_lp_values.py first")
+    data = json.loads(source.read_text())
+
+    rows = {}
+    for entry in data["cfr_plus_agreement"]:
+        rows.setdefault(entry["game"], entry)
+    games = [e["game"] for e in data["lp"] if e["game"] in rows]
+    if not games:
+        raise ResultError("no game has both an LP value and a CFR+ comparison")
+
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(11.0, 4.0))
+    diffs = [abs(rows[g]["abs_diff"]) or 1e-18 for g in games]
+    ax.barh(range(len(games)), diffs, color="#1f4e79", height=0.55)
+    ax.set_yticks(range(len(games)))
+    ax.set_yticklabels(games, fontsize=8)
+    ax.set_xscale("log")
+    ax.set_xlabel("|LP value $-$ CFR+ value|  (chips/hand)")
+    ax.set_title("Exact LP vs converged CFR+")
+    ax.axvline(1e-9, color="#c1121f", linestyle="--", linewidth=1)
+    ax.annotate("1e-9", xy=(1e-9, len(games) - 0.5), fontsize=8, color="#c1121f")
+    _style_axis(ax)
+
+    expl = [abs(e.get("exploitability_eval", 0.0)) or 1e-18 for e in data["lp"]
+            if e["game"] in rows]
+    bx.barh(range(len(games)), expl, color="#2a6f4e", height=0.55)
+    bx.set_yticks(range(len(games)))
+    bx.set_yticklabels(games, fontsize=8)
+    bx.set_xscale("log")
+    bx.set_xlabel("exploitability of the LP policy (chips/hand)")
+    bx.set_title("The LP solution is exact to machine precision")
+    _style_axis(bx)
+    fig.tight_layout()
+
+    kuhn = next((e for e in data["lp"] if e["game"] == "kuhn"), None)
+    csv = (FIGURE_DIR if out_dir is None else Path(out_dir)) / "fig_oracle_agreement.csv"
+    csv.parent.mkdir(parents=True, exist_ok=True)
+    lines = ["game,lp_value,cfr_plus_value,abs_diff,lp_policy_exploitability\n"]
+    for entry in data["lp"]:
+        g = entry["game"]
+        if g not in rows:
+            continue
+        lines.append(f"{g},{entry['value']:.17g},{rows[g]['cfr_plus_value']:.17g},"
+                     f"{rows[g]['abs_diff']:.3e},{entry.get('exploitability_eval', 0.0):.3e}\n")
+    if kuhn:
+        lines.append(f"# kuhn closed form (Kuhn 1950) = {-1/18:.17g}, "
+                     f"LP deviation = {abs(kuhn['value'] + 1/18):.3e}\n")
+    csv.write_text("".join(lines))
+    return save(fig, "fig_oracle_agreement", out_dir, ["verify/lp_values.json"]) + [csv]
