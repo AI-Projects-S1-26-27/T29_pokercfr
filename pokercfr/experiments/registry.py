@@ -344,16 +344,17 @@ def determinism_audit() -> list[RunSpec]:
 
 
 def determinism_audit_4h() -> list[RunSpec]:
-    """A bounded deterministic-only audit sized for about four hours wall time.
+    """A bounded deterministic-only audit with a four-hour per-cell target.
 
     Keeps a paired CFR/CFR+ sample across the two-player ladder and one small
     multiplayer rung. MCCFR is omitted while its solver is unimplemented. Budgets
-    are deliberately below the full audit so this matrix can run locally.
-    Re-estimate on the target machine before launching; CPU contention changes
-    elapsed wall time.
+    are deliberately below the full audit so each cell is estimated to finish
+    within four hours locally. This is an operational reproducibility check,
+    not part of the pre-registered research matrices. Re-estimate on the target
+    machine before launching; CPU contention changes elapsed wall time.
     """
     cells = (
-        ("kuhn", 6_500_000), ("4rank", 6_000_000),
+        ("kuhn", 5_500_000), ("4rank", 6_000_000),
         ("4rank-2suit", 3_000_000), ("4rank-2suit-2dealt", 400_000),
         ("kuhn-3p", 1_500_000),
     )
