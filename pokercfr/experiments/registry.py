@@ -343,6 +343,25 @@ def determinism_audit() -> list[RunSpec]:
     return specs
 
 
+def determinism_audit_4h() -> list[RunSpec]:
+    """A bounded deterministic-only audit sized for about four hours wall time.
+
+    Keeps a paired CFR/CFR+ sample across the two-player ladder and one small
+    multiplayer rung. MCCFR is omitted while its solver is unimplemented. Budgets
+    are deliberately below the full audit so this matrix can run locally.
+    Re-estimate on the target machine before launching; CPU contention changes
+    elapsed wall time.
+    """
+    cells = (
+        ("kuhn", 22_500_000), ("4rank", 9_000_000),
+        ("4rank-2suit", 4_500_000), ("4rank-2suit-2dealt", 1_800_000),
+        ("kuhn-3p", 4_500_000),
+    )
+    variants = ("cfr", "cfr+")
+    return [_spec(rung, variant, iterations=iterations)
+            for rung, iterations in cells for variant in variants]
+
+
 # Keyed by matrix name; `full` is added after full_matrix is defined, and is
 # deliberately NOT a member of this dict -- it iterates over it.
 PER_PERSON = {
@@ -369,7 +388,8 @@ def full_matrix() -> list[RunSpec]:
     return sorted(out, key=lambda s: (s.game, s.variant, s.seed, s.iterations))
 
 
-MATRICES = {**PER_PERSON, "full": full_matrix}
+MATRICES = {**PER_PERSON, "determinism-audit-4h": determinism_audit_4h,
+            "full": full_matrix}
 
 
 def print_estimate(specs: list[RunSpec]) -> None:
