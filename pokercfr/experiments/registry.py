@@ -101,6 +101,43 @@ BUDGET = {
 
 MAX_HOURS_PER_RUN = 7.0
 
+# Every post-registration change to the design, in the order made. Emitted into
+# the pre-registration record so a regenerated document shows what changed
+# rather than reading as though it was always the plan.
+AMENDMENTS = [
+    {
+        "date": "2026-11-18",
+        "change": "DCFR parameter grid runs at 100,000 iterations on every rung, "
+                  "was a flat 1,000,000.",
+        "reason": "The grid ran deeper than the cube corners it is compared against "
+                  "(2.5x on 4rank-2suit-2dealt) and cost 127 of cube-deep's 196 "
+                  "measured CPU-hours, 65% of the matrix, for an exploratory "
+                  "sensitivity sweep. The grid ranks (alpha, beta, gamma); it does "
+                  "not need convergence, and h1_dcfr_limits.py shows the ranking is "
+                  "stable at 2,000 iterations on two rungs.",
+        "effect": "cube-deep 196 -> 54 CPU-hours. The eight cube corners keep their "
+                  "full per-rung budgets, so R1 is unchanged. The DCFR unification "
+                  "check is unaffected and was already complete.",
+    },
+    {
+        "date": "2026-11-18",
+        "change": "Multiplayer iteration budgets reduced: 4rank-2suit-3p "
+                  "150,000 -> 130,000, 4rank-2suit-2dealt-3p 30,000 -> 16,000, "
+                  "4rank-2suit-4p 15,000 -> 7,000.",
+        "reason": "Alternating updates do one traversal per player, so on "
+                  "multiplayer rungs they cost N x more per iteration (measured "
+                  "0.431 vs 1.655 s/iter at four players). At the old budgets the "
+                  "alternating corners needed 6.8 h against the 7 h per-run cap and "
+                  "would have been truncated while the simultaneous corners "
+                  "finished. These cells are compared at EQUAL ITERATIONS, so a "
+                  "truncated corner beside a completed one is not a comparison.",
+        "effect": "Budgets now derive from the slowest corner's measured cost, so "
+                  "every corner reaches the same iteration count. Iteration pool "
+                  "185 -> 133 CPU-hours; longest single cell 6.80 -> 3.18 h. A run "
+                  "that hits the time cap is now recorded complete=false.",
+    },
+]
+
 # AMENDMENT 2026-11-18, for feasibility, recorded rather than applied silently.
 #
 # The DCFR parameter grid was running at a flat 1,000,000 iterations on every

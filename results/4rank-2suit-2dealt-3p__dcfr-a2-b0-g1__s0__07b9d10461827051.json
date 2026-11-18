@@ -149,10 +149,40 @@
         0.006974737841425402,
         0.0051718958577978945
       ]
+    },
+    {
+      "iterations": 500,
+      "train_seconds": 249.88394979282748,
+      "eval_seconds": 3.3194611250655726,
+      "nashconv_total": 0.009262621018768461,
+      "nashconv_mean": 0.003087540339589487,
+      "nashconv_max": 0.003811328464060783,
+      "nashconv_max_seat": 1,
+      "exploitability": null,
+      "gains": [
+        0.0025892230259513954,
+        0.003811328464060783,
+        0.0028620695287562836
+      ]
+    },
+    {
+      "iterations": 1000,
+      "train_seconds": 529.3609163758811,
+      "eval_seconds": 3.936507625039667,
+      "nashconv_total": 0.005533429877559833,
+      "nashconv_mean": 0.0018444766258532777,
+      "nashconv_max": 0.0019455469427345322,
+      "nashconv_max_seat": 1,
+      "exploitability": null,
+      "gains": [
+        0.0017074527127965908,
+        0.0019455469427345322,
+        0.0018804302220287103
+      ]
     }
   ],
   "time_budget": null,
-  "iterations_reached": 200,
+  "iterations_reached": 1000,
   "complete": false,
   "env": {
     "python": "3.12.14",

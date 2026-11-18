@@ -197,10 +197,25 @@
         0.0005230318333741277,
         0.0006226643298521059
       ]
+    },
+    {
+      "iterations": 5000,
+      "train_seconds": 312.1733102079015,
+      "eval_seconds": 0.42273441690485924,
+      "nashconv_total": 0.0007195769094865267,
+      "nashconv_mean": 0.00023985896982884223,
+      "nashconv_max": 0.0002932961161588449,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.00025876823659532616,
+        0.00016751255673235556,
+        0.0002932961161588449
+      ]
     }
   ],
   "time_budget": null,
-  "iterations_reached": 2000,
+  "iterations_reached": 5000,
   "complete": false,
   "env": {
     "python": "3.12.14",
