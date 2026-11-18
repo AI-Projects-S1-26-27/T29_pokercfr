@@ -53,6 +53,7 @@ FIGURES = (
     "fig_alpha_manifold",
     "fig_strategy_heatmap",
     "fig_oracle_agreement",
+    "fig_mccfr_variance",
 )
 
 
@@ -709,3 +710,110 @@ def fig_oracle_agreement(records: list[dict] | None = None,
                      f"LP deviation = {abs(kuhn['value'] + 1/18):.3e}\n")
     csv.write_text("".join(lines))
     return save(fig, "fig_oracle_agreement", out_dir, ["verify/lp_values.json"]) + [csv]
+
+
+# --- MCCFR sampling variance ------------------------------------------------------
+
+MCCFR_STYLE = {
+    "mccfr-outcome": {"color": "#8c4bbd", "linestyle": "-", "label": "MCCFR outcome"},
+    "mccfr-external": {"color": "#1baf7a", "linestyle": "--", "label": "MCCFR external"},
+    "mccfr-chance": {"color": "#8c4bbd", "linestyle": "-", "label": "MCCFR chance"},
+}
+
+
+def fig_mccfr_variance(records: list[dict] | None = None,
+                       out_dir: Path | None = None) -> list[Path]:
+    """What sampling costs in seed-to-seed spread, and whether it pays for itself.
+
+    MCCFR buys cheaper iterations with variance. Both halves of that trade are
+    measurable here: the spread across ten seeds at each checkpoint, and the level
+    reached against full traversal on the same game at the same wall clock.
+    """
+    import matplotlib.pyplot as plt
+
+    if records is None:
+        records = load_results()
+    sampled = [r for r in records if r["spec"]["variant"].startswith("mccfr-")]
+    if not sampled:
+        raise NotImplementedError("no mccfr-* results yet")
+
+    game = sampled[0]["spec"]["game"]
+    sampled = [r for r in sampled if r["spec"]["game"] == game]
+    y_key, y_label = _metric(sampled[0])
+
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(11.0, 4.2))
+    files, spread = [], {}
+
+    for variant in sorted({r["spec"]["variant"] for r in sampled}):
+        cell = sorted((r for r in sampled if r["spec"]["variant"] == variant),
+                      key=lambda r: r["spec"]["seed"])
+        files += [r["_file"] for r in cell]
+        style = MCCFR_STYLE.get(variant, {"color": "#8c4bbd", "linestyle": "-",
+                                          "label": variant})
+        secs = np.array([[p["train_seconds"] for p in r["curve"]] for r in cell], dtype=float)
+        its = np.array([p["iterations"] for p in cell[0]["curve"]], dtype=float)
+        ys = np.array([[p[y_key] for p in r["curve"]] for r in cell], dtype=float)
+        xs = np.median(secs, axis=0)
+        for row_x, row_y in zip(secs, ys, strict=True):
+            ax.plot(row_x, row_y, color=style["color"], linewidth=0.6, alpha=0.30, zorder=2)
+        ax.plot(xs, ys.mean(axis=0), color=style["color"], linestyle=style["linestyle"],
+                linewidth=2.0, marker="D", markersize=3.5, zorder=4,
+                label=f"{style['label']} (mean of {len(cell)} seeds)")
+        spread[variant] = (its, 100.0 * ys.std(axis=0, ddof=1) / ys.mean(axis=0))
+
+    for variant in ("cfr", "cfr+"):
+        full = [r for r in records
+                if r["spec"]["game"] == game and r["spec"]["variant"] == variant]
+        if not full:
+            continue
+        run = full[0]
+        files.append(run["_file"])
+        pts = [(p["train_seconds"], p[y_key]) for p in run["curve"] if p[y_key] > 0.0]
+        style = VARIANT_STYLE[variant]
+        ax.plot([p[0] for p in pts], [p[1] for p in pts], color=style["color"],
+                linestyle=style["linestyle"], linewidth=1.6, marker=style["marker"],
+                markersize=3.0, zorder=3, label=f"{style['label']} (full traversal)")
+
+    ax.set_xlabel("training wall-clock, seconds")
+    ax.set_ylabel(y_label)
+    ax.set_title(f"At equal wall clock on {game}, sampling does not pay")
+    ax.legend(fontsize=7.5, frameon=False, loc="lower left")
+    _style_axis(ax)
+
+    for variant, (xs, cv) in spread.items():
+        style = MCCFR_STYLE.get(variant, {"color": "#8c4bbd", "linestyle": "-",
+                                          "label": variant})
+        bx.plot(xs, cv, color=style["color"], linestyle=style["linestyle"],
+                linewidth=2.0, marker="D", markersize=3.5, label=style["label"])
+    bx.set_xscale("log")
+    bx.set_xlabel("iterations")
+    bx.set_ylabel("spread across seeds, per cent of the mean")
+    bx.set_title("Sampling noise grows as a share of the remaining error")
+    bx.grid(True, which="major", color=GRID, linewidth=0.6)
+    bx.xaxis.set_major_locator(LogLocator(base=10))
+    bx.xaxis.set_minor_formatter(NullFormatter())
+    bx.tick_params(colors=MUTED, labelsize=8)
+    for side in ("top", "right"):
+        bx.spines[side].set_visible(False)
+    for side in ("left", "bottom"):
+        bx.spines[side].set_color(MUTED)
+    if len(spread) > 1:
+        bx.legend(fontsize=7.5, frameon=False, loc="upper left")
+    fig.tight_layout()
+
+    csv = (FIGURE_DIR if out_dir is None else Path(out_dir)) / "fig_mccfr_variance.csv"
+    csv.parent.mkdir(parents=True, exist_ok=True)
+    lines = [f"game,variant,iterations,seeds,{y_key}_mean,{y_key}_sd,cv_percent,"
+             "train_seconds_mean\n"]
+    for variant in sorted({r["spec"]["variant"] for r in sampled}):
+        cell = sorted((r for r in sampled if r["spec"]["variant"] == variant),
+                      key=lambda r: r["spec"]["seed"])
+        n = len(cell)
+        for i, it in enumerate(p["iterations"] for p in cell[0]["curve"]):
+            vals = np.array([r["curve"][i][y_key] for r in cell], dtype=float)
+            secs = np.mean([r["curve"][i]["train_seconds"] for r in cell])
+            sd = vals.std(ddof=1) if n > 1 else 0.0
+            lines.append(f"{game},{variant},{it},{n},{vals.mean():.6e},{sd:.6e},"
+                         f"{100.0 * sd / vals.mean():.2f},{secs:.1f}\n")
+    csv.write_text("".join(lines))
+    return save(fig, "fig_mccfr_variance", out_dir, files) + [csv]
