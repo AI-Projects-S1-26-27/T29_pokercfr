@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "spec": {
+    "game": "4rank-2suit-4p",
+    "variant": "rm+/uniform/sim",
+    "seed": 0,
+    "iterations": 3000,
+    "max_seconds": 25200.0,
+    "checkpoints": [
+      1,
+      2,
+      5,
+      10,
+      20,
+      50,
+      100,
+      200,
+      500,
+      1000,
+      2000,
+      3000
+    ],
+    "extra": {},
+    "spec_hash": "c47c762ddd0d5abc"
+  },
+  "game": {
+    "name": "4rank-2suit-4p",
+    "players": 4,
+    "info_sets": 256
+  },
+  "curve": [
+    {
+      "iterations": 1,
+      "train_seconds": 1.6164728330913931,
+      "eval_seconds": 14.151313374983147,
+      "nashconv_total": 3.2288690476190505,
+      "nashconv_mean": 0.8072172619047626,
+      "nashconv_max": 0.9472470238095249,
+      "nashconv_max_seat": 3,
+      "exploitability": null,
+      "gains": [
+        0.618675595238095,
+        0.7787946428571454,
+        0.8841517857142852,
+        0.9472470238095249
+      ]
+    },
+    {
+      "iterations": 2,
+      "train_seconds": 3.4514630001503974,
+      "eval_seconds": 14.066587583976798,
+      "nashconv_total": 1.848772321428575,
+      "nashconv_mean": 0.46219308035714374,
+      "nashconv_max": 0.5071242559523805,
+      "nashconv_max_seat": 0,
+      "exploitability": null,
+      "gains": [
+        0.5071242559523805,
+        0.4309244791666669,
+        0.4388625372023828,
+        0.4718610491071448
+      ]
+    },
+    {
+      "iterations": 5,
+      "train_seconds": 9.415397041128017,
+      "eval_seconds": 14.143052165978588,
+      "nashconv_total": 0.9297679023073799,
+      "nashconv_mean": 0.23244197557684498,
+      "nashconv_max": 0.2931881373109822,
+      "nashconv_max_seat": 0,
+      "exploitability": null,
+      "gains": [
+        0.2931881373109822,
+        0.2561145709766258,
+        0.19771178681192247,
+        0.18275340720784938
+      ]
+    },
+    {
+      "iterations": 10,
+      "train_seconds": 18.080712916096672,
+      "eval_seconds": 13.859352333005518,
+      "nashconv_total": 0.5569145434998833,
+      "nashconv_mean": 0.13922863587497084,
+      "nashconv_max": 0.176217389521806,
+      "nashconv_max_seat": 0,
+      "exploitability": null,
+      "gains": [
+        0.176217389521806,
+        0.15891325554939323,
+        0.11295793418206868,
+        0.10882596424661542
+      ]
+    },
+    {
+      "iterations": 20,
+      "train_seconds": 34.80793449911289,
+      "eval_seconds": 13.770114750019275,
+      "nashconv_total": 0.4107145059844046,
+      "nashconv_mean": 0.10267862649610116,
+      "nashconv_max": 0.11109364422467094,
+      "nashconv_max_seat": 1,
+      "exploitability": null,
+      "gains": [
+        0.1073855888865804,
+        0.11109364422467094,
+        0.1110310991817289,
+        0.08120417369142437
+      ]
+    },
+    {
+      "iterations": 50,
+      "train_seconds": 81.14776516612619,
+      "eval_seconds": 12.067401458043605,
+      "nashconv_total": 0.22634553428428428,
+      "nashconv_mean": 0.05658638357107107,
+      "nashconv_max": 0.06627104717573942,
+      "nashconv_max_seat": 0,
+      "exploitability": null,
+      "gains": [
+        0.06627104717573942,
+        0.0649293689569464,
+        0.053351819258353986,
+        0.04179329889324446
+      ]
+    },
+    {
+      "iterations": 100,
+      "train_seconds": 156.9277742910199,
+      "eval_seconds": 12.161359707941301,
+      "nashconv_total": 0.12312367179068628,
+      "nashconv_mean": 0.03078091794767157,
+      "nashconv_max": 0.03808543403061352,
+      "nashconv_max_seat": 0,
+      "exploitability": null,
+      "gains": [
+        0.03808543403061352,
+        0.03617451197206741,
+        0.03065417929439161,
+        0.018209546493613747
+      ]
+    },
+    {
+      "iterations": 200,
+      "train_seconds": 310.5242627909174,
+      "eval_seconds": 11.972401250037365,
+      "nashconv_total": 0.06361484099262443,
+      "nashconv_mean": 0.015903710248156108,
+      "nashconv_max": 0.01895478658754506,
+      "nashconv_max_seat": 1,
+      "exploitability": null,
+      "gains": [
+        0.01569845865365784,
+        0.01895478658754506,
+        0.017585924839460615,
+        0.011375670911960921
+      ]
+    },
+    {
+      "iterations": 500,
+      "train_seconds": 761.057916957885,
+      "eval_seconds": 12.228393167024478,
+      "nashconv_total": 0.026863895763675115,
+      "nashconv_mean": 0.006715973940918779,
+      "nashconv_max": 0.008110733547847842,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.0053911558610251695,
+        0.0075747029347204824,
+        0.008110733547847842,
+        0.005787303420081623
+      ]
+    },
+    {
+      "iterations": 1000,
+      "train_seconds": 1539.9371096239192,
+      "eval_seconds": 16.764400249929167,
+      "nashconv_total": 0.014127813601495752,
+      "nashconv_mean": 0.003531953400373938,
+      "nashconv_max": 0.004402066884113271,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.003044735667238469,
+        0.003648319945516173,
+        0.004402066884113271,
+        0.003032691104627838
+      ]
+    },
+    {
+      "iterations": 2000,
+      "train_seconds": 3706.9944311239524,
+      "eval_seconds": 16.44991199998185,
+      "nashconv_total": 0.007505245096900114,
+      "nashconv_mean": 0.0018763112742250284,
+      "nashconv_max": 0.0023469441701685113,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.001741977148902285,
+        0.0018296374546418852,
+        0.0023469441701685113,
+        0.001586686323187432
+      ]
+    },
+    {
+      "iterations": 3000,
+      "train_seconds": 5740.189734456944,
+      "eval_seconds": 18.226430790964514,
+      "nashconv_total": 0.005242763925821876,
+      "nashconv_mean": 0.001310690981455469,
+      "nashconv_max": 0.0016700613139910949,
+      "nashconv_max_seat": 2,
+      "exploitability": null,
+      "gains": [
+        0.0012175735277395218,
+        0.001224211575763759,
+        0.0016700613139910949,
+        0.0011309175083275003
+      ]
+    }
+  ],
+  "time_budget": null,
+  "iterations_reached": 3000,
+  "complete": true,
+  "env": {
+    "python": "3.12.15",
+    "machine": "arm64",
+    "processor": "arm",
+    "node": "Aarushs-MacBook-Air.local"
+  }
+}
