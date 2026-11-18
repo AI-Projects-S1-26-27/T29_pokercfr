@@ -40,8 +40,21 @@ class RunSpec:
     checkpoints: tuple[int, ...] = ()
     extra: dict = field(default_factory=dict)
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.game, str) or not self.game:
+            raise ValueError("game must be a non-empty string")
+        if not isinstance(self.variant, str) or not self.variant:
+            raise ValueError("variant must be a non-empty string")
+        if self.seed < 0:
+            raise ValueError("seed must be non-negative")
+        if self.iterations < 1:
+            raise ValueError("iterations must be positive")
+        if self.max_seconds is not None and self.max_seconds <= 0:
+            raise ValueError("max_seconds must be positive when provided")
+
     def spec_hash(self) -> str:
-        payload = json.dumps(asdict(self), sort_keys=True, separators=(",", ":"))
+        payload = json.dumps(asdict(self), sort_keys=True, separators=(",", ":"),
+                             ensure_ascii=True, allow_nan=False)
         return hashlib.sha256(payload.encode()).hexdigest()[:16]
 
     @property
