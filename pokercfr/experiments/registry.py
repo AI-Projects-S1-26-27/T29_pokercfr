@@ -353,9 +353,9 @@ def determinism_audit_4h() -> list[RunSpec]:
     elapsed wall time.
     """
     cells = (
-        ("kuhn", 22_500_000), ("4rank", 9_000_000),
-        ("4rank-2suit", 4_500_000), ("4rank-2suit-2dealt", 1_800_000),
-        ("kuhn-3p", 4_500_000),
+        ("kuhn", 6_500_000), ("4rank", 6_000_000),
+        ("4rank-2suit", 3_000_000), ("4rank-2suit-2dealt", 400_000),
+        ("kuhn-3p", 1_500_000),
     )
     variants = ("cfr", "cfr+")
     return [_spec(rung, variant, iterations=iterations)
