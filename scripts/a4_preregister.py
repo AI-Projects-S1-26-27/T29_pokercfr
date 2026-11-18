@@ -154,6 +154,7 @@ def build(by_matrix, distinct) -> dict:
         "generated_utc": datetime.now(UTC).isoformat(timespec="seconds"),
         "git_head_at_freeze": git_head(),
         "design_digest": digest,
+        "amendments": getattr(R, "AMENDMENTS", []),
         "n_cells": len(cells),
         "n_collisions": 0,
         "epsilon": R.EPSILON,
@@ -214,6 +215,16 @@ def render_md(prereg: dict, by_matrix: dict[str, list]) -> str:
     w(f"- H3 Leduc cells: seeds {list(c['h3_seeds'])}; the 5-player stretch cell has 1.")
     w(f"- Sampled (MCCFR) algorithms: seeds {list(c['sampled_seeds'])}, "
       f"{len(c['sampled_seeds'])} per cell.\n")
+
+    for i, a in enumerate(prereg.get("amendments", []), 1):
+        if i == 1:
+            w("## Amendments after registration\n")
+            w("Changes made after the design was first registered, recorded so this "
+              "document shows what changed rather than reading as though it was "
+              "always the plan.\n")
+        w(f"**{i}. {a['date']} — {a['change']}**\n")
+        w(f"*Why:* {a['reason']}\n")
+        w(f"*Effect:* {a['effect']}\n")
 
     w("## Raise caps and budgets\n")
     w(f"- H1: raise caps {list(c['h1_caps'])} on 2-player Leduc, "

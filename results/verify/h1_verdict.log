@@ -1,0 +1,16 @@
+H1 registered cells: 120 (3 caps x 8 variants x 5 seeds)
+H1 cells landed: 120 / 120 (100%)
+
+ cap  seeds           cfr          cfr+  cfr+ wins  verdict
+   1      5    0.00353207    0.00000554      5/5  SUPPORTED
+   2      5    0.00828134    0.00000777      5/5  SUPPORTED
+   3      5    0.01295135    0.00008572      5/5  SUPPORTED
+
+=== exploratory: all eight corners, per cap (not part of H1) ===
+  cap 1: cfr+=5.54e-06, rm+/uniform/alt=1.76e-04, rm+/linear/sim=4.99e-04, rm/uniform/alt=5.89e-04, rm+/uniform/sim=8.74e-04, cfr=3.53e-03, rm/linear/alt=9.57e-03, linear-cfr=1.78e-02
+  cap 2: cfr+=7.77e-06, rm+/uniform/alt=9.46e-04, rm+/linear/sim=1.24e-03, rm/uniform/alt=2.49e-03, rm+/uniform/sim=2.97e-03, cfr=8.28e-03, rm/linear/alt=3.21e-02, linear-cfr=4.25e-02
+  cap 3: cfr+=8.57e-05, rm+/linear/sim=1.63e-03, rm+/uniform/alt=2.55e-03, rm+/uniform/sim=3.73e-03, rm/uniform/alt=6.72e-03, cfr=1.30e-02, rm/linear/alt=2.62e-02, linear-cfr=9.28e-02
+
+==================================================================
+H1 VERDICT: SUPPORTED  (caps supported: [1, 2, 3] of [1, 2, 3])
+wrote results/verify/h1_verdict.json

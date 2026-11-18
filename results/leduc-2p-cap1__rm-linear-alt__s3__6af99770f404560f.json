@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "spec": {
+    "game": "leduc-2p-cap1",
+    "variant": "rm/linear/alt",
+    "seed": 3,
+    "iterations": 1000000,
+    "max_seconds": 25200.0,
+    "checkpoints": [
+      1,
+      2,
+      5,
+      10,
+      20,
+      50,
+      100,
+      200,
+      500,
+      1000,
+      2000,
+      5000,
+      10000,
+      20000,
+      50000,
+      100000,
+      200000,
+      500000,
+      1000000
+    ],
+    "extra": {
+      "time_budget": 600.0
+    },
+    "spec_hash": "6af99770f404560f"
+  },
+  "game": {
+    "name": "leduc-2p-cap1",
+    "players": 2,
+    "info_sets": 384
+  },
+  "curve": [
+    {
+      "iterations": 986,
+      "train_seconds": 30.007027667830698,
+      "eval_seconds": 0.11574287503026426,
+      "nashconv_total": 0.030795549434412803,
+      "nashconv_mean": 0.015397774717206401,
+      "nashconv_max": 0.024605469902502244,
+      "nashconv_max_seat": 0,
+      "exploitability": 0.015397774717206401,
+      "gains": [
+        0.024605469902502244,
+        0.006190079531910558
+      ],
+      "time_fraction": 0.05
+    },
+    {
+      "iterations": 1939,
+      "train_seconds": 60.01223050185945,
+      "eval_seconds": 0.11496704199817032,
+      "nashconv_total": 0.016429609820300978,
+      "nashconv_mean": 0.008214804910150489,
+      "nashconv_max": 0.012612423085519547,
+      "nashconv_max_seat": 0,
+      "exploitability": 0.008214804910150489,
+      "gains": [
+        0.012612423085519547,
+        0.0038171867347814303
+      ],
+      "time_fraction": 0.1
+    },
+    {
+      "iterations": 3865,
+      "train_seconds": 120.02897921099793,
+      "eval_seconds": 0.1185035000089556,
+      "nashconv_total": 0.01008148059984218,
+      "nashconv_mean": 0.00504074029992109,
+      "nashconv_max": 0.008525946232765605,
+      "nashconv_max_seat": 0,
+      "exploitability": 0.00504074029992109,
+      "gains": [
+        0.008525946232765605,
+        0.0015555343670765748
+      ],
+      "time_fraction": 0.2
+    },
+    {
+      "iterations": 9491,
+      "train_seconds": 300.33205137809273,
+      "eval_seconds": 0.14560479205101728,
+      "nashconv_total": 0.021323334817570816,
+      "nashconv_mean": 0.010661667408785408,
+      "nashconv_max": 0.016613524460743406,
+      "nashconv_max_seat": 1,
+      "exploitability": 0.010661667408785408,
+      "gains": [
+        0.00470981035682741,
+        0.016613524460743406
+      ],
+      "time_fraction": 0.5
+    },
+    {
+      "iterations": 18501,
+      "train_seconds": 600.0136690870859,
+      "eval_seconds": 0.13124129199422896,
+      "nashconv_total": 0.023233769446284414,
+      "nashconv_mean": 0.011616884723142207,
+      "nashconv_max": 0.013128533689410124,
+      "nashconv_max_seat": 0,
+      "exploitability": 0.011616884723142207,
+      "gains": [
+        0.013128533689410124,
+        0.01010523575687429
+      ],
+      "time_fraction": 1.0
+    }
+  ],
+  "time_budget": 600.0,
+  "iterations_reached": 18501,
+  "complete": true,
+  "env": {
+    "python": "3.12.14",
+    "machine": "arm64",
+    "processor": "arm",
+    "node": "Himnishs-MacBook-Air.local"
+  }
+}
